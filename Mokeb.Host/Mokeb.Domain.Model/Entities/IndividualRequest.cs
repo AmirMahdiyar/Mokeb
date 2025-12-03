@@ -28,7 +28,7 @@ namespace Mokeb.Domain.Model.Entities
         private void CheckOverallAmount(uint maleCount, uint femaleCount)
         {
             var principalGender = Principal.Gender;
-            if ((maleCount + femaleCount) > 5)
+            if ((maleCount + femaleCount) > 6)
                 throw new IndividualOverallCapacityException();
         }
         #endregion
