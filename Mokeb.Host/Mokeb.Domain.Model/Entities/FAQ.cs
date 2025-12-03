@@ -1,5 +1,5 @@
 ﻿using Mokeb.Domain.Model.Base;
-using Mokeb.Domain.Model.Exceptions;
+using Mokeb.Domain.Model.Exceptions.FAQExceptions;
 
 namespace Mokeb.Domain.Model.Entities
 {

@@ -4,8 +4,8 @@ namespace Mokeb.Domain.Model.States
 {
     public abstract class ConvoyState
     {
-        protected ConvoyPrincipal _principal;
-        public void SetConvoy(ConvoyPrincipal principal)
+        protected CaravanPrincipal _principal;
+        public void SetConvoy(CaravanPrincipal principal)
         {
             _principal = principal;
         }

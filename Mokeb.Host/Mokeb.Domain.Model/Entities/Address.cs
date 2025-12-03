@@ -1,4 +1,4 @@
-﻿using Mokeb.Domain.Model.Exceptions;
+﻿using Mokeb.Domain.Model.Exceptions.AddressExceptions;
 
 namespace Mokeb.Domain.Model.Entities
 {

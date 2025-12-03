@@ -1,6 +1,10 @@
 ﻿using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Enums;
-using Mokeb.Domain.Model.Exceptions;
+using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
+using Mokeb.Domain.Model.Exceptions.CompanionExceptions;
+using Mokeb.Domain.Model.Exceptions.IndividualExceptions;
+using Mokeb.Domain.Model.Exceptions.RequestExceptions;
+using Mokeb.Domain.Model.Exceptions.RoomExceptions;
 
 namespace Mokeb.Domain.Model.Entities
 {
@@ -11,6 +15,8 @@ namespace Mokeb.Domain.Model.Entities
 
         public Room(string name, Gender gender, DateOnly dateOfStartingService, DateOnly dateOfEndingService, uint capacity)
         {
+            CheckName(name);
+
             Name = name;
             Gender = gender;
             DateOfStartingService = dateOfStartingService;
@@ -108,6 +114,12 @@ namespace Mokeb.Domain.Model.Entities
             if (!_companions.Any(x => x == companion))
                 throw new CompanionNotFoundException();
         }
+        private void CheckName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new NameIsInvalidException();
+        }
+
         #endregion
     }
 }
