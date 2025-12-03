@@ -14,6 +14,8 @@ namespace Mokeb.Domain.Model.Entities
         }
         public DateTime? DateOfAcceptingRequest { get; private set; }
 
+        public Guid ConvoyPrincipalId { get; private set; }
+
         #region behaviors
         public override void ChangeToAccepted()
         {
