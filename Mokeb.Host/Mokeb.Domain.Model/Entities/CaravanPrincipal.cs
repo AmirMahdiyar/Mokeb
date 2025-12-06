@@ -1,31 +1,21 @@
 ﻿using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Enums;
-using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
-using Mokeb.Domain.Model.Exceptions.RoomExceptions;
 using Mokeb.Domain.Model.States;
+using Mokeb.Domain.Model.ValueObjects;
 
 namespace Mokeb.Domain.Model.Entities
 {
     public class CaravanPrincipal : Principal
     {
-        protected internal List<CaravanRequest> _requests = new List<CaravanRequest>();
         protected internal List<Pilgrim> _pilgrims = new List<Pilgrim>();
-        private List<Room> _rooms = new List<Room>();
-        private const Role role = Role.CaravanAccount;
         private CaravanPrincipal() { } // For ef
-        public CaravanPrincipal(string name, string familyName, string nationalNumber, string gmail,
-            string phoneNumber, string emergencyPhoneNumber, DateOnly dateOfBirth,
-            Gender gender, string passportNumber, string username, string password)
+        public CaravanPrincipal(string name, string familyName, string nationalNumber,
+            DateOnly dateOfBirth, Gender gender, string passportNumber, ContactInformation contactInformation, IdentityInformation identityInformation)
         {
             CheckName(name);
             CheckFamilyName(familyName);
             CheckNationalNumber(nationalNumber);
-            CheckGmail(gmail);
             CheckPassportNumber(passportNumber);
-            CheckPhoneNumber(phoneNumber);
-            CheckPhoneNumber(emergencyPhoneNumber);
-            CheckUsername(username);
-            CheckPassword(password);
 
             SetState(new NoneState());
 
@@ -33,19 +23,13 @@ namespace Mokeb.Domain.Model.Entities
             Name = name;
             FamilyName = familyName;
             NationalNumber = nationalNumber;
-            Gmail = gmail;
-            PhoneNumber = phoneNumber;
-            EmergencyPhoneNumber = emergencyPhoneNumber;
             DateOfBirth = dateOfBirth;
-            Role = role;
             Gender = gender;
             PassportNumber = passportNumber;
-            Username = username;
-            Password = password;
+            ContactInformation = contactInformation;
+            IdentityInformation = identityInformation;
         }
-        public IEnumerable<CaravanRequest> Requests => _requests.AsReadOnly();
         public IEnumerable<Pilgrim> Pilgrims => _pilgrims.AsReadOnly();
-        public IEnumerable<Room> Rooms => _rooms.AsReadOnly();
         public DateTime? TimeOfAcception
         {
             get
@@ -60,9 +44,7 @@ namespace Mokeb.Domain.Model.Entities
             get
             {
                 if (ConvoyState is InProcessState && TimeOfAcception is not null)
-                {
                     return TimeOfAcception.Value.AddHours(6);
-                }
                 return null;
             }
         }
@@ -89,18 +71,6 @@ namespace Mokeb.Domain.Model.Entities
         public void ChangeStateToDelayEntrance()
         {
             SetState(new DelayInEntranceState());
-        }
-        public void AddRoom(Room room)
-        {
-            if (Rooms.Any(x => x == room))
-                throw new ThisConvoyAlreadyHasThisRoomException();
-            _rooms.Add(room);
-        }
-        public void RemoveRoom(Room room)
-        {
-            if (!Rooms.Any(y => y == room))
-                throw new RoomNotFoundException();
-            _rooms.Remove(room);
         }
         public void AddPilgrim(Pilgrim pilgrim)
         {

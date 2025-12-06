@@ -19,7 +19,11 @@ namespace Mokeb.Domain.Model.States
         private void InProcessCondition()
         {
             if (_principal.EstimatedTimeForAddingPilgrims < DateTime.Now)
+            {
+                _principal.ChangeStateToDone();
+                _principal.Requests.LastOrDefault().ChangeToDone();
                 throw new ConvoyIsOutOfTimeException();
+            }
         }
 
     }

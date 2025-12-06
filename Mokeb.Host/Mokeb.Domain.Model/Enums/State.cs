@@ -4,6 +4,7 @@
     {
         Accepted,
         Rejected,
-        InView
+        InView,
+        Done
     }
 }

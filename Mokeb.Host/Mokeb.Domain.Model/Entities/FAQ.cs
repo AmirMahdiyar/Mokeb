@@ -27,12 +27,12 @@ namespace Mokeb.Domain.Model.Entities
         #region Behaviors
         public void CheckQuestion(string question)
         {
-            if (string.IsNullOrEmpty(Question))
+            if (string.IsNullOrEmpty(question))
                 throw new QuestionIsInvalidException();
         }
         public void CheckAnswer(string answer)
         {
-            if (string.IsNullOrEmpty(Answer))
+            if (string.IsNullOrEmpty(answer))
                 throw new AnswerIsInvalidException();
         }
         #endregion
