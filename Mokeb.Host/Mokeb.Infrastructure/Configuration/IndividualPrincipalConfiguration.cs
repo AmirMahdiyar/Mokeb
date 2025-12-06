@@ -4,11 +4,11 @@ using Mokeb.Domain.Model.Entities;
 
 namespace Mokeb.Infrastructure.Configuration
 {
-    public class CaravanPrincipalConfiguration : IEntityTypeConfiguration<CaravanPrincipal>
+    public class IndividualPrincipalConfiguration : IEntityTypeConfiguration<IndividualPrincipal>
     {
-        public void Configure(EntityTypeBuilder<CaravanPrincipal> builder)
+        public void Configure(EntityTypeBuilder<IndividualPrincipal> builder)
         {
-            builder.ToTable("CaravanPrincipals");
+            builder.ToTable("IndividualPrincipals");
 
             builder.HasKey(x => x.Id);
 
@@ -25,7 +25,8 @@ namespace Mokeb.Infrastructure.Configuration
                 .HasMaxLength(50);
             builder.Property(x => x.DateOfBirth)
                 .IsRequired();
-            builder.Property(x => x.Gender).IsRequired();
+            builder.Property(x => x.Gender)
+                .IsRequired();
 
             builder.OwnsOne(x => x.ContactInformation, ci =>
             {
@@ -48,21 +49,13 @@ namespace Mokeb.Infrastructure.Configuration
                   .IsRequired()
                   .HasMaxLength(200);
                 ii.Property(p => p.Role)
-                  .HasConversion<string>()
                   .IsRequired();
             });
 
-            builder.OwnsMany(x => x.Pilgrims, builder =>
-            {
-                builder.ToTable("Pilgrims");
-
-                builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-                builder.Property(x => x.FamilyName).IsRequired().HasMaxLength(100);
-                builder.Property(x => x.NationalNumber).IsRequired().HasMaxLength(10);
-                builder.Property(x => x.PhoneNumber).HasMaxLength(11);
-            });
-            builder.Ignore(x => x.ConvoyState);
-
+            builder.HasMany(x => x.Companion)
+                   .WithOne()
+                   .HasForeignKey(x => x.PrincipalId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

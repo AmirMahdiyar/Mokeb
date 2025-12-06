@@ -1,11 +1,10 @@
-﻿using Mokeb.Domain.Model.Base;
-using Mokeb.Domain.Model.Enums;
+﻿using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
 using System.Text.RegularExpressions;
 
 namespace Mokeb.Domain.Model.Entities
 {
-    public class Pilgrim : BaseEntity<Guid>
+    public class Pilgrim
     {
         public Pilgrim(string name, string familyName, string nationalNumber, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber)
         {
@@ -15,7 +14,6 @@ namespace Mokeb.Domain.Model.Entities
             CheckPassportNumber(passportNumber);
             CheckPhoneNumber(phoneNumber);
 
-            Id = Guid.NewGuid();
             Name = name;
             FamilyName = familyName;
             NationalNumber = nationalNumber;

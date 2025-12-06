@@ -23,7 +23,7 @@ namespace Mokeb.Domain.Model.Entities
         public Gender Gender { get; private set; }
         public uint Capacity { get; private set; }
 
-        public IEnumerable<RoomAvailability> AvailableAvailability => _availability.AsReadOnly();
+        public IEnumerable<RoomAvailability> RoomAvailabilities => _availability.AsReadOnly();
 
         #region Validations
         public void CheckName(string name)

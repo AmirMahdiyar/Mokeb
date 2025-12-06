@@ -20,8 +20,8 @@ namespace Mokeb.Domain.Model.Entities
         public DateTime TimeOfEntrance { get; private set; }
         public DateTime TimeOfExit { get; private set; }
         public State State { get; private set; } = State.InView;
-        public DateTime DateOfAcceptingRequest { get; private set; }
-        public List<int> RoomIds { get; private set; }
+        public DateTime? DateOfAcceptingRequest { get; private set; }
+        public List<RequestRoom> Rooms { get; private set; } = new List<RequestRoom>();
 
         public IEnumerable<Travelers> Travelers => _travelers.AsReadOnly();
 

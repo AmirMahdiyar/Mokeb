@@ -7,6 +7,7 @@ namespace Mokeb.Domain.Model.Entities
 {
     public class PublicCommunication : BaseEntity<Guid>
     {
+        private PublicCommunication() { } //For ef
         public PublicCommunication(string phoneNumber, Address iranAddress, Address mokebAddress)
         {
             CheckPhoneNumber(phoneNumber);

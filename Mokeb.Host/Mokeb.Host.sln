@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mokeb.Infrastructure", "Mok
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mokeb.Common", "Mokeb.Common\Mokeb.Common.csproj", "{2134F351-C083-4C57-9CAB-ED913AA2E149}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mokeb.DI", "Mokeb.DI\Mokeb.DI.csproj", "{4A2768A0-6B31-415E-AEEC-D902DC074F00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{2134F351-C083-4C57-9CAB-ED913AA2E149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2134F351-C083-4C57-9CAB-ED913AA2E149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2134F351-C083-4C57-9CAB-ED913AA2E149}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2768A0-6B31-415E-AEEC-D902DC074F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2768A0-6B31-415E-AEEC-D902DC074F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2768A0-6B31-415E-AEEC-D902DC074F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2768A0-6B31-415E-AEEC-D902DC074F00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
