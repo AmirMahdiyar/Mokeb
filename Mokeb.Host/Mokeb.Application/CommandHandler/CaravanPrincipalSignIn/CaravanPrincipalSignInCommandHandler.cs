@@ -29,7 +29,7 @@ namespace Mokeb.Application.CommandHandler.CaravanPrincipalSignIn
         #region Private Methods
         private async Task CheckCaravanExistance(string username, string nationalNumber, string passportNumber, CancellationToken ct)
         {
-            var result = await _caravanRepository.IsCaravanByIdenticalInformationExists(username, nationalNumber, passportNumber, ct);
+            var result = await _caravanRepository.IsCaravanByIdenticalInformationExistsAsync(username, nationalNumber, passportNumber, ct);
             if (result)
                 throw new CarvanExistException();
         }

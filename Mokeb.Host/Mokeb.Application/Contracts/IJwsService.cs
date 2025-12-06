@@ -1,11 +1,11 @@
-﻿using Mokeb.Domain.Model.Entities;
+﻿using Mokeb.Domain.Model.Base;
 
 namespace Mokeb.Application.Contracts
 {
     public interface IJwsService
     {
-        Task<string> CreateJwsToken(IndividualPrincipal individualPrincipal, CancellationToken cancellationToken);
-        Task DeleteJwsToken(IndividualPrincipal individualPrincipal, string jwsToken);
+        Task<string> CreateJwsToken(Principal individualPrincipal, CancellationToken cancellationToken);
+        Task DeleteJwsToken(Principal individualPrincipal, string jwsToken);
 
     }
 }

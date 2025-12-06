@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Mokeb.Application.Contracts;
 using Mokeb.Common.Utils;
-using Mokeb.Domain.Model.Entities;
+using Mokeb.Domain.Model.Base;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,7 +21,7 @@ namespace Mokeb.Application.Services
             _redisCache = redisCache;
         }
 
-        public async Task<string> CreateJwsToken(IndividualPrincipal individualPrincipal, CancellationToken cancellationToken)
+        public async Task<string> CreateJwsToken(Principal individualPrincipal, CancellationToken cancellationToken)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwsOptions.Key));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -50,7 +50,7 @@ namespace Mokeb.Application.Services
 
         }
 
-        public async Task DeleteJwsToken(IndividualPrincipal individualPrincipal, string jwsToken)
+        public async Task DeleteJwsToken(Principal individualPrincipal, string jwsToken)
         {
             await _redisCache.RemoveFromRedis($"Jws:{individualPrincipal.Id}:{jwsToken}");
         }

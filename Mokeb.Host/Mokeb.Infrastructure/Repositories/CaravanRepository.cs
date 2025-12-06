@@ -19,7 +19,12 @@ namespace Mokeb.Infrastructure.Repositories
             _principal.Add(caravanPrincipal);
         }
 
-        public async Task<bool> IsCaravanByIdenticalInformationExists(string username, string nationalNumber, string passportNumber, CancellationToken ct)
+        public async Task<CaravanPrincipal> GetCaravanAsync(string username, string password, CancellationToken ct)
+        {
+            return await _principal.SingleOrDefaultAsync(x => x.IdentityInformation.Username == username && x.IdentityInformation.Password == password, ct);
+        }
+
+        public async Task<bool> IsCaravanByIdenticalInformationExistsAsync(string username, string nationalNumber, string passportNumber, CancellationToken ct)
         {
             return await _principal.AnyAsync(x => x.IdentityInformation.Username == username || x.NationalNumber == nationalNumber || x.PassportNumber == passportNumber, ct);
         }
