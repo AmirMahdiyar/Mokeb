@@ -1,7 +1,6 @@
-﻿
-using Mokeb.Common.Base.ApplicationExceptions;
+﻿using Mokeb.Common.Base.ApplicationExceptions;
 
-namespace Mokeb.Application.CommandHandler.CaravanPrincipalLogIn
+namespace Mokeb.Application.Exceptions
 {
     public class UsernameOrPasswordIsWrongException : InputIsWrongApplicationException
     {

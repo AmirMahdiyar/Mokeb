@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Mokeb.Application.Contracts;
+using Mokeb.Application.Exceptions;
 using Mokeb.Common.Base.Helper;
 using Mokeb.Domain.Model.Entities;
 
@@ -9,13 +10,11 @@ namespace Mokeb.Application.CommandHandler.CaravanPrincipalLogIn
     {
         private readonly ICaravanPrincipalRepository _caravanRepository;
         private readonly IJwsService _jwsService;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public CaravanPrincipalLogInCommandHandler(ICaravanPrincipalRepository caravanRepository, IJwsService jwsService, IUnitOfWork unitOfWork)
+        public CaravanPrincipalLogInCommandHandler(ICaravanPrincipalRepository caravanRepository, IJwsService jwsService)
         {
             _caravanRepository = caravanRepository;
             _jwsService = jwsService;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<CaravanPrincipalLogInCommandResponse> Handle(CaravanPrincipalLogInCommand request, CancellationToken cancellationToken)

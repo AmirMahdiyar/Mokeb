@@ -7,21 +7,26 @@ namespace Mokeb.Infrastructure.Repositories
 {
     public class IndividualRepository : IIndividualRepository
     {
-        private readonly DbSet<IndividualPrincipal> _context;
+        private readonly DbSet<IndividualPrincipal> _individual;
 
         public IndividualRepository(MokebDbContext context)
         {
-            _context = context.Set<IndividualPrincipal>();
+            _individual = context.Set<IndividualPrincipal>();
         }
 
         public void AddIndividualPrincipal(IndividualPrincipal individualPrincipal)
         {
-            _context.Add(individualPrincipal);
+            _individual.Add(individualPrincipal);
+        }
+
+        public async Task<IndividualPrincipal> GetIndividualAsync(string username, string password, CancellationToken ct)
+        {
+            return await _individual.SingleOrDefaultAsync(x => x.IdentityInformation.Username == username && x.IdentityInformation.Password == password, ct);
         }
 
         public async Task<bool> IsIndividualByIdenticalInformationExists(string username, string nationalNumber, string passportNumber, CancellationToken ct)
         {
-            return await _context.AnyAsync(x => x.IdentityInformation.Username == username || x.NationalNumber == nationalNumber || x.PassportNumber == passportNumber, ct);
+            return await _individual.AnyAsync(x => x.IdentityInformation.Username == username || x.NationalNumber == nationalNumber || x.PassportNumber == passportNumber, ct);
         }
     }
 }
