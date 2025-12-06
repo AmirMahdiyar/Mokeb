@@ -22,7 +22,7 @@ namespace Mokeb.Domain.Model.Entities
         public DateTime TimeOfExit { get; private set; }
         public State State { get; private set; } = State.InView;
         public DateTime DateOfAcceptingRequest { get; private set; }
-        public List<RequestRoom> Rooms { get; private set; }
+        public List<RequestRoom> Rooms { get; private set; } = new List<RequestRoom>();
 
         public IEnumerable<Travelers> Travelers => _travelers.AsReadOnly();
 
