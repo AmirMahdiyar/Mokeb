@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mokeb.Application\Mokeb.Application.csproj" />
     <ProjectReference Include="..\Mokeb.Domain.Model\Mokeb.Domain.Model.csproj" />
   </ItemGroup>
 
