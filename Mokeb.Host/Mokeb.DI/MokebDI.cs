@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Mokeb.Application.CommandHandler.CaravanPrincipalSignIn;
 using Mokeb.Application.Contracts;
 using Mokeb.Application.Services;
 using Mokeb.Common.Utils;
 using Mokeb.Infrastructure.Context;
+using Mokeb.Infrastructure.Repositories;
+using Mokeb.Infrastructure.unitOfWork;
 using StackExchange.Redis;
 
 namespace Mokeb.DI
@@ -28,6 +31,14 @@ namespace Mokeb.DI
 
             service.AddSingleton<IRedisCache, RedisCache>();
             service.AddScoped<IJwsService, JwsService>();
+            service.AddScoped<IIndividualRepository, IndividualRepository>();
+            service.AddScoped<ICaravanPrincipalRepository, CaravanRepository>();
+            service.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            service.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(CaravanPrincipalSignInCommand).Assembly);
+            });
 
             return service;
         }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Mokeb.Application.Contracts;
+using Mokeb.Application.Exceptions;
 using Mokeb.Common.Base.ApplicationExceptions;
 
 namespace Mokeb.Application.CommandHandler.IndividualPrincipalSignIn

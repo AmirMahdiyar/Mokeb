@@ -22,8 +22,4 @@
     <ProjectReference Include="..\Mokeb.Domain.Model\Mokeb.Domain.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
 </Project>

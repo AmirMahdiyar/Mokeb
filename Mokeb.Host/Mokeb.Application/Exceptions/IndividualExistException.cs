@@ -1,7 +1,6 @@
-﻿
-using Mokeb.Common.Base.ApplicationExceptions;
+﻿using Mokeb.Common.Base.ApplicationExceptions;
 
-namespace Mokeb.Application.CommandHandler.IndividualPrincipalSignIn
+namespace Mokeb.Application.Exceptions
 {
     public class IndividualExistException : ObjectFoundApplicationException
     {
