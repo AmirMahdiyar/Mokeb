@@ -5,7 +5,7 @@ namespace Mokeb.Domain.Model.ValueObjects
 {
     public class IdentityInformation
     {
-        public IdentityInformation(string username, string password, Role role)
+        public IdentityInformation(string username, string password, Role role, BloodType bloodType)
         {
             CheckUsername(username);
             CheckPassword(password);
@@ -13,11 +13,13 @@ namespace Mokeb.Domain.Model.ValueObjects
             Username = username;
             Password = password;
             Role = role;
+            BloodType = bloodType;
         }
 
         public string Username { get; protected set; }
         public string Password { get; protected set; }
         public Role Role { get; protected set; }
+        public BloodType BloodType { get; protected set; }
 
         #region Behaviors
         public void ChangeUsername(string username)
