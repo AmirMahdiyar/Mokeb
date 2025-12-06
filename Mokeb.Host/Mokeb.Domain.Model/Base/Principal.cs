@@ -1,24 +1,25 @@
-﻿using Mokeb.Domain.Model.Enums;
+﻿using Mokeb.Domain.Model.Entities;
+using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
+using Mokeb.Domain.Model.Exceptions.IndividualExceptions;
+using Mokeb.Domain.Model.ValueObjects;
 using System.Text.RegularExpressions;
 
 namespace Mokeb.Domain.Model.Base
 {
     public abstract class Principal : BaseEntity<Guid>
     {
+        private List<Request> _requests = new List<Request>();
         public string Name { get; protected set; }
         public string FamilyName { get; protected set; }
         public string NationalNumber { get; protected set; }
-        public string Gmail { get; protected set; }
-        public string PhoneNumber { get; protected set; }
-        public string EmergencyPhoneNumber { get; protected set; }
-        public DateOnly DateOfBirth { get; protected set; }
-        public Role Role { get; protected set; }
-        public Gender Gender { get; protected set; }
         public string PassportNumber { get; protected set; }
-        public string Username { get; protected set; }
-        public string Password { get; protected set; }
+        public DateOnly DateOfBirth { get; protected set; }
+        public Gender Gender { get; protected set; }
+        public ContactInformation ContactInformation { get; protected set; }
+        public IdentityInformation IdentityInformation { get; protected set; }
 
+        public IEnumerable<Request> Requests => _requests.AsReadOnly();
 
 
         #region Behaviors
@@ -37,21 +38,6 @@ namespace Mokeb.Domain.Model.Base
             CheckNationalNumber(nationalNumber);
             NationalNumber = nationalNumber;
         }
-        public void ChangeGmail(string gmail)
-        {
-            CheckGmail(gmail);
-            Gmail = gmail;
-        }
-        public void ChangePhoneNumber(string phoneNumber)
-        {
-            CheckPhoneNumber(phoneNumber);
-            PhoneNumber = phoneNumber;
-        }
-        public void ChangeEmergencyPhoneNumber(string emergencyPhoneNumber)
-        {
-            CheckPhoneNumber(emergencyPhoneNumber);
-            EmergencyPhoneNumber = emergencyPhoneNumber;
-        }
         public void ChangeDateOfBirth(DateOnly dateOfBirth)
         {
             DateOfBirth = dateOfBirth;
@@ -65,15 +51,15 @@ namespace Mokeb.Domain.Model.Base
             CheckPassportNumber(passportNumber);
             PassportNumber = passportNumber;
         }
-        public void ChangeUsername(string username)
+        public void AddRequest(Request request)
         {
-            CheckUsername(username);
-            Username = username;
+            _requests.Add(request);
         }
-        public void ChangePassword(string password)
+        public void RemoveRequest(Request request)
         {
-            CheckPassword(password);
-            Password = password;
+            if (!_requests.Any(x => x == request))
+                throw new RequestNotFoundException();
+            _requests.Remove(request);
         }
         #endregion
         #region Validations
@@ -87,21 +73,6 @@ namespace Mokeb.Domain.Model.Base
         {
             if (string.IsNullOrWhiteSpace(password))
                 throw new PasswordInvalidException();
-        }
-
-        public void CheckGmail(string gmail)
-        {
-            var pattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
-            if (string.IsNullOrWhiteSpace(gmail) || !Regex.IsMatch(gmail, pattern))
-            {
-                throw new GmailIsInvalidException();
-            }
-        }
-        public void CheckPhoneNumber(string phoneNumber)
-        {
-            var pattern = @"^09\d{9}$";
-            if (string.IsNullOrWhiteSpace(phoneNumber) || !Regex.IsMatch(phoneNumber, pattern))
-                throw new PhoneNumberIsInvalidException();
         }
         public void CheckName(string name)
         {

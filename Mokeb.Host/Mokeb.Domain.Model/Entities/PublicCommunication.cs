@@ -1,5 +1,6 @@
 ﻿using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
+using Mokeb.Domain.Model.ValueObjects;
 using System.Text.RegularExpressions;
 
 namespace Mokeb.Domain.Model.Entities

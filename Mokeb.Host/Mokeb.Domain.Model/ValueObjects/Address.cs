@@ -1,6 +1,6 @@
 ﻿using Mokeb.Domain.Model.Exceptions.AddressExceptions;
 
-namespace Mokeb.Domain.Model.Entities
+namespace Mokeb.Domain.Model.ValueObjects
 {
     public class Address
     {
