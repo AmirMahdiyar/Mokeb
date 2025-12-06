@@ -50,6 +50,9 @@ namespace Mokeb.Infrastructure.Configuration
                   .HasMaxLength(200);
                 ii.Property(p => p.Role)
                   .IsRequired();
+                ii.Property(x => x.BloodType)
+                .IsRequired()
+                .HasConversion<string>();
             });
 
             builder.HasMany(x => x.Companion)

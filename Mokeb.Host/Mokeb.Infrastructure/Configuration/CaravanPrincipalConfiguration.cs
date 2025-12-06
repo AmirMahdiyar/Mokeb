@@ -50,6 +50,9 @@ namespace Mokeb.Infrastructure.Configuration
                 ii.Property(p => p.Role)
                   .HasConversion<string>()
                   .IsRequired();
+                ii.Property(x => x.BloodType)
+                .IsRequired()
+                .HasConversion<string>();
             });
 
             builder.OwnsMany(x => x.Pilgrims, builder =>
