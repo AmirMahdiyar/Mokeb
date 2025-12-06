@@ -1,6 +1,7 @@
 ﻿using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.Exceptions.RequestExceptions;
+using Mokeb.Domain.Model.ValueObjects;
 
 namespace Mokeb.Domain.Model.Entities
 {
@@ -21,7 +22,7 @@ namespace Mokeb.Domain.Model.Entities
         public DateTime TimeOfExit { get; private set; }
         public State State { get; private set; } = State.InView;
         public DateTime DateOfAcceptingRequest { get; private set; }
-        public List<int> RoomIds { get; private set; }
+        public List<RequestRoom> Rooms { get; private set; }
 
         public IEnumerable<Travelers> Travelers => _travelers.AsReadOnly();
 
