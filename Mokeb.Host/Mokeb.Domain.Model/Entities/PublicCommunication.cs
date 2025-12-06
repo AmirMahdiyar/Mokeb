@@ -15,7 +15,7 @@ namespace Mokeb.Domain.Model.Entities
             IranAddress = iranAddress;
             MokebAddress = mokebAddress;
         }
-
+        private PublicCommunication() { } // For ef
         public string PhoneNumber { get; private set; }
         public Address IranAddress { get; private set; }
         public Address MokebAddress { get; private set; }
