@@ -3,7 +3,7 @@ using Mokeb.Domain.Model.Entities;
 using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.ValueObjects;
 
-namespace Mokeb.Application.CommandHandler.CaravanPrincipalSignIn
+namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn
 {
     public static class CaravanMapper
     {

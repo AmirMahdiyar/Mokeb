@@ -3,7 +3,7 @@ using Mokeb.Application.CommandHandler.Base;
 using Mokeb.Application.CommandHandler.Base.Extension;
 using Mokeb.Domain.Model.Enums;
 
-namespace Mokeb.Application.CommandHandler.IndividualPrincipalSignIn
+namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn
 {
     public class IndividualPrincipalSignInCommand : CommandBase, IRequest<IndividualPrincipalSignInCommandResponse>
     {

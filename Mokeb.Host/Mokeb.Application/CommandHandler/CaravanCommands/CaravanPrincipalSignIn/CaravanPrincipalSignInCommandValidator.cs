@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Mokeb.Application.CommandHandler.CaravanPrincipalSignIn
+namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn
 {
     public class CaravanPrincipalSignInCommandValidator : AbstractValidator<CaravanPrincipalSignInCommand>
     {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Mokeb.Application.CommandHandler.IndividualPrincipalSignIn
+namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn
 {
     public class IndividualPrincipalSignInCommandValidator : AbstractValidator<IndividualPrincipalSignInCommand>
     {

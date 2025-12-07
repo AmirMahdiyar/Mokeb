@@ -3,7 +3,7 @@ using Mokeb.Application.Contracts;
 using Mokeb.Application.Exceptions;
 using Mokeb.Common.Base.ApplicationExceptions;
 
-namespace Mokeb.Application.CommandHandler.CaravanPrincipalSignIn
+namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn
 {
     public class CaravanPrincipalSignInCommandHandler : IRequestHandler<CaravanPrincipalSignInCommand, CaravanPrincipalSignInCommandResponse>
     {

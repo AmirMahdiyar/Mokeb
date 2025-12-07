@@ -4,7 +4,7 @@ using Mokeb.Application.Exceptions;
 using Mokeb.Common.Base.Helper;
 using Mokeb.Domain.Model.Entities;
 
-namespace Mokeb.Application.CommandHandler.CaravanPrincipalLogIn
+namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn
 {
     public class CaravanPrincipalLogInCommandHandler : IRequestHandler<CaravanPrincipalLogInCommand, CaravanPrincipalLogInCommandResponse>
     {

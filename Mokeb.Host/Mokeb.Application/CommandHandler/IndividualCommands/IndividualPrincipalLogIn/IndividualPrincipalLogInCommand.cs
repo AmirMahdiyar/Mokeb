@@ -2,7 +2,7 @@
 using Mokeb.Application.CommandHandler.Base;
 using Mokeb.Application.CommandHandler.Base.Extension;
 
-namespace Mokeb.Application.CommandHandler.IndividualPrincipalLogIn
+namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalLogIn
 {
     public class IndividualPrincipalLogInCommand : CommandBase, IRequest<IndividualPrincipalLogInCommandResponse>
     {

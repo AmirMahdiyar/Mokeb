@@ -3,7 +3,7 @@ using Mokeb.Application.CommandHandler.Base;
 using Mokeb.Application.CommandHandler.Base.Extension;
 using Mokeb.Domain.Model.Enums;
 
-namespace Mokeb.Application.CommandHandler.CaravanPrincipalSignIn
+namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn
 {
     public class CaravanPrincipalSignInCommand : CommandBase, IRequest<CaravanPrincipalSignInCommandResponse>
     {

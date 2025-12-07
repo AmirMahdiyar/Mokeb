@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Mokeb.Application.CommandHandler.Base;
 
-namespace Mokeb.Application.CommandHandler.AdminLogIn
+namespace Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn
 {
     public class AdminLogInCommand : CommandBase, IRequest<AdminLogInCommandResponse>
     {

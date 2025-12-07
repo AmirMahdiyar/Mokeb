@@ -4,7 +4,7 @@ using Mokeb.Application.Exceptions;
 using Mokeb.Common.Base.Helper;
 using Mokeb.Domain.Model.Entities;
 
-namespace Mokeb.Application.CommandHandler.IndividualPrincipalLogIn
+namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalLogIn
 {
     public class IndividualPrincipalLogInCommandHandler : IRequestHandler<IndividualPrincipalLogInCommand, IndividualPrincipalLogInCommandResponse>
     {

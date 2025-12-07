@@ -4,7 +4,7 @@ using Mokeb.Application.Exceptions;
 using Mokeb.Common.Base.Helper;
 using Mokeb.Domain.Model.Entities;
 
-namespace Mokeb.Application.CommandHandler.AdminLogIn
+namespace Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn
 {
     public class AdminLogInCommandHandler : IRequestHandler<AdminLogInCommand, AdminLogInCommandResponse>
     {

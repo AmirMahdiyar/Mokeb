@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Mokeb.Application.CommandHandler.CaravanPrincipalLogIn;
-using Mokeb.Application.CommandHandler.CaravanPrincipalSignIn;
+using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
+using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 
 namespace Mokeb.Host.Controllers

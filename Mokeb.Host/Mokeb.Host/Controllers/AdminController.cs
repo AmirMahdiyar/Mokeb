@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Mokeb.Application.CommandHandler.AdminLogIn;
+using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 
 namespace Mokeb.Host.Controllers

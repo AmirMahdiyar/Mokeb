@@ -3,7 +3,7 @@ using Mokeb.Domain.Model.Entities;
 using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.ValueObjects;
 
-namespace Mokeb.Application.CommandHandler.IndividualPrincipalSignIn
+namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn
 {
     public static class IndividualMapper
     {

@@ -1,4 +1,4 @@
-﻿namespace Mokeb.Application.CommandHandler.AdminLogIn
+﻿namespace Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn
 {
     public class AdminLogInCommandResponse
     {

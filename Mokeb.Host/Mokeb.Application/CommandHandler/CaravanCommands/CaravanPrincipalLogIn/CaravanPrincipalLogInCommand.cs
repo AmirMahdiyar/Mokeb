@@ -2,7 +2,7 @@
 using Mokeb.Application.CommandHandler.Base;
 using Mokeb.Application.CommandHandler.Base.Extension;
 
-namespace Mokeb.Application.CommandHandler.CaravanPrincipalLogIn
+namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn
 {
     public class CaravanPrincipalLogInCommand : CommandBase, IRequest<CaravanPrincipalLogInCommandResponse>
     {

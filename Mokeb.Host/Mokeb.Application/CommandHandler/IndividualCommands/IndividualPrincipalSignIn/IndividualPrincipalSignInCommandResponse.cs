@@ -1,4 +1,4 @@
-﻿namespace Mokeb.Application.CommandHandler.IndividualPrincipalSignIn
+﻿namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn
 {
     public class IndividualPrincipalSignInCommandResponse
     {

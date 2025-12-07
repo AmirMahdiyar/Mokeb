@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Mokeb.Application.CommandHandler.AdminLogIn
+namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn
 {
-    public class AdminLogInCommandValidator : AbstractValidator<AdminLogInCommand>
+    public class CaravanPrincipalLogInCommandValidator : AbstractValidator<CaravanPrincipalLogInCommand>
     {
-        public AdminLogInCommandValidator()
+        public CaravanPrincipalLogInCommandValidator()
         {
             RuleFor(x => x.Username)
                 .NotEmpty()

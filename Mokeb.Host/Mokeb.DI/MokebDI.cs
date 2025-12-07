@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Mokeb.Application.CommandHandler.CaravanPrincipalSignIn;
+using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.Contracts;
 using Mokeb.Application.Services;
 using Mokeb.Common.Utils;

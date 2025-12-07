@@ -1,4 +1,4 @@
-﻿namespace Mokeb.Application.CommandHandler.CaravanPrincipalLogIn
+﻿namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn
 {
     public class CaravanPrincipalLogInCommandResponse
     {
