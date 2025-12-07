@@ -8,9 +8,6 @@ namespace Mokeb.Application.Contracts
         Task<string> CreateJwsToken(Principal principal, CancellationToken cancellationToken);
         Task<string> CreateJwsTokenForAdmin(Admin admin, CancellationToken cancellationToken);
 
-        Task DeleteJwsToken(Principal individualPrincipal, string jwsToken);
-        Task DeleteJwsTokenForAdmin(Admin admin, string jwsToken);
-
-
+        Task DeleteJwsTokenAsync(Guid Id, string jwsToken);
     }
 }

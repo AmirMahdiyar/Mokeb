@@ -52,9 +52,9 @@ namespace Mokeb.Application.Services
         }
 
 
-        public async Task DeleteJwsToken(Principal individualPrincipal, string jwsToken)
+        public async Task DeleteJwsTokenAsync(Guid Id, string jwsToken)
         {
-            await _redisCache.RemoveFromRedis($"Jws:{individualPrincipal.Id}:{jwsToken}");
+            await _redisCache.RemoveFromRedis($"Jws:{Id}:{jwsToken}");
         }
         public async Task<string> CreateJwsTokenForAdmin(Admin admin, CancellationToken cancellationToken)
         {
@@ -82,11 +82,6 @@ namespace Mokeb.Application.Services
             await _redisCache.AddToRedis($"Jws:{admin.Id}:{jwsToken}", "", TimeSpan.FromHours(int.Parse(_jwsOptions.Expires)));
 
             return jwsToken;
-        }
-
-        public async Task DeleteJwsTokenForAdmin(Admin admin, string jwsToken)
-        {
-            await _redisCache.RemoveFromRedis($"Jws:{admin.Id}:{jwsToken}");
         }
     }
 }

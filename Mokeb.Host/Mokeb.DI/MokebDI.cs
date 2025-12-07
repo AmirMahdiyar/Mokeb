@@ -28,11 +28,11 @@ namespace Mokeb.DI
             });
             service.Configure<JwsInformationOptions>(configuration.GetSection("Jws"));
 
-
             service.AddSingleton<IRedisCache, RedisCache>();
             service.AddScoped<IJwsService, JwsService>();
             service.AddScoped<IIndividualRepository, IndividualRepository>();
             service.AddScoped<ICaravanPrincipalRepository, CaravanRepository>();
+            service.AddScoped<IAdminRepository, AdminRepository>();
             service.AddScoped<IUnitOfWork, UnitOfWork>();
 
             service.AddMediatR(cfg =>
