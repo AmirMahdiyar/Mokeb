@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AddingRoom;
+using Mokeb.Application.CommandHandler.AdminCommands.AddingRoomAvailability;
 using Mokeb.Application.CommandHandler.AdminCommands.RemovingRoom;
 
 namespace Mokeb.Host.Controllers
@@ -33,6 +34,16 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("Room Removed Successfully");
             return BadRequest("Room Didn't Remove");
+        }
+        [HttpPost("{roomId}/RoomAvailability")]
+        public async Task<IActionResult> AddRoomAvailability([FromRoute] Guid roomId, [FromBody] AddingRoomAvailabilityCommand command, CancellationToken ct)
+        {
+            command.roomId = roomId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("RoomAvailability Added Successfully");
+            return BadRequest("RoomAvailability Didn't add");
         }
     }
 }

@@ -19,17 +19,22 @@ namespace Mokeb.Infrastructure.Repositories
             _rooms.Add(room);
         }
 
+        public async Task<bool> CheckAvailabilityDayOfARoomAsync(Guid roomId, DateOnly date, CancellationToken ct)
+        {
+            return await _rooms.Include(x => x.RoomAvailabilities).Where(x => x.Id == roomId).SelectMany(x => x.RoomAvailabilities).AnyAsync(x => x.AvailableDay == date, ct);
+        }
+
         public async Task<bool> CheckRoomExistanceByIdAsync(Guid roomId, CancellationToken ct)
         {
-            return await _rooms.AnyAsync(x => x.Id == roomId);
+            return await _rooms.AnyAsync(x => x.Id == roomId, ct);
         }
 
         public async Task<bool> CheckRoomExistanceByNameAsync(string roomName, CancellationToken ct)
         {
-            return await _rooms.AnyAsync(x => x.Name.ToLower() == roomName.ToLower());
+            return await _rooms.AnyAsync(x => x.Name.ToLower() == roomName.ToLower(), ct);
         }
 
-        public async Task<Room> GetRoomById(Guid roomId, CancellationToken ct)
+        public async Task<Room> GetRoomByIdAsync(Guid roomId, CancellationToken ct)
         {
             return await _rooms.SingleOrDefaultAsync(x => x.Id == roomId, ct);
         }

@@ -8,6 +8,7 @@ namespace Mokeb.Application.Contracts
         void RemoveRoomById(Room room);
         Task<bool> CheckRoomExistanceByNameAsync(string roomName, CancellationToken ct);
         Task<bool> CheckRoomExistanceByIdAsync(Guid roomId, CancellationToken ct);
-        Task<Room> GetRoomById(Guid roomId, CancellationToken ct);
+        Task<bool> CheckAvailabilityDayOfARoomAsync(Guid roomId, DateOnly date, CancellationToken ct);
+        Task<Room> GetRoomByIdAsync(Guid roomId, CancellationToken ct);
     }
 }

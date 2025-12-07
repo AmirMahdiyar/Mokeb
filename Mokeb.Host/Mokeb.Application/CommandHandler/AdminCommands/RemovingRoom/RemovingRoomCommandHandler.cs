@@ -19,7 +19,7 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.RemovingRoom
         public async Task<RemovingRoomCommandResponse> Handle(RemovingRoomCommand request, CancellationToken cancellationToken)
         {
             await CheckRoomExistance(request.roomId, cancellationToken);
-            var room = await _roomRepository.GetRoomById(request.roomId, cancellationToken);
+            var room = await _roomRepository.GetRoomByIdAsync(request.roomId, cancellationToken);
             _roomRepository.RemoveRoomById(room);
             var savingResult = await _unitOfWork.Commit(cancellationToken);
             savingResult.ThrowIfNoChanges<NoChangesApplicationException>();
