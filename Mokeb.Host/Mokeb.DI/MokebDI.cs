@@ -34,6 +34,7 @@ namespace Mokeb.DI
             service.AddScoped<ICaravanPrincipalRepository, CaravanRepository>();
             service.AddScoped<IAdminRepository, AdminRepository>();
             service.AddScoped<IUnitOfWork, UnitOfWork>();
+            service.AddScoped<IRoomRepository, RoomRepository>();
 
             service.AddMediatR(cfg =>
             {
