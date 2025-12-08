@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AddingRoom;
 using Mokeb.Application.CommandHandler.AdminCommands.AddingRoomAvailability;
 using Mokeb.Application.CommandHandler.AdminCommands.RemovingRoom;
+using Mokeb.Application.CommandHandler.AdminCommands.RemovingRoomAvailability;
 
 namespace Mokeb.Host.Controllers
 {
@@ -44,6 +45,17 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("RoomAvailability Added Successfully");
             return BadRequest("RoomAvailability Didn't add");
+        }
+        [HttpPut("{roomId}/{roomAvailabilityId}/ChangeDate")]
+        public async Task<IActionResult> ChangeDateOfAvailableRoom([FromRoute] Guid roomId, [FromRoute] Guid roomAvailabilityId, [FromBody] UpdatingRoomAvailabilityDateCommand command, CancellationToken ct)
+        {
+            command.RoomId = roomId;
+            command.AvailabilityId = roomAvailabilityId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("Date Changed Successfully");
+            return BadRequest("Date Didn't change");
         }
     }
 }

@@ -12,8 +12,8 @@ using Mokeb.Infrastructure.Context;
 namespace Mokeb.Infrastructure.Migrations
 {
     [DbContext(typeof(MokebDbContext))]
-    [Migration("20251206125740_InitialDbContext")]
-    partial class InitialDbContext
+    [Migration("20251208085242_InitialDb")]
+    partial class InitialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -350,6 +350,10 @@ namespace Mokeb.Infrastructure.Migrations
                             b1.Property<Guid>("CaravanPrincipalId")
                                 .HasColumnType("uniqueidentifier");
 
+                            b1.Property<string>("BloodType")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
                             b1.Property<string>("Password")
                                 .IsRequired()
                                 .HasMaxLength(200)
@@ -473,6 +477,10 @@ namespace Mokeb.Infrastructure.Migrations
                         {
                             b1.Property<Guid>("IndividualPrincipalId")
                                 .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("BloodType")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Password")
                                 .IsRequired()
@@ -631,7 +639,7 @@ namespace Mokeb.Infrastructure.Migrations
                         .WithMany("Requests")
                         .HasForeignKey("IndividualPrincipalId");
 
-                    b.OwnsMany("Mokeb.Domain.Model.Enums.RequestRoom", "Rooms", b1 =>
+                    b.OwnsMany("Mokeb.Domain.Model.ValueObjects.RequestRoom", "Rooms", b1 =>
                         {
                             b1.Property<Guid>("RequestId")
                                 .HasColumnType("uniqueidentifier");
@@ -659,16 +667,13 @@ namespace Mokeb.Infrastructure.Migrations
 
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Room", b =>
                 {
-                    b.OwnsMany("Mokeb.Domain.Model.Entities.RoomAvailability", "AvailableAvailability", b1 =>
+                    b.OwnsMany("Mokeb.Domain.Model.Entities.RoomAvailability", "RoomAvailabilities", b1 =>
                         {
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<long>("AvailableCapacity")
                                 .HasColumnType("bigint");
@@ -684,7 +689,7 @@ namespace Mokeb.Infrastructure.Migrations
                                 .HasForeignKey("RoomId");
                         });
 
-                    b.Navigation("AvailableAvailability");
+                    b.Navigation("RoomAvailabilities");
                 });
 
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Travelers", b =>

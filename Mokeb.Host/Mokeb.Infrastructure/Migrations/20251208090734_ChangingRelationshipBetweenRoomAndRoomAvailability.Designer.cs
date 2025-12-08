@@ -12,8 +12,8 @@ using Mokeb.Infrastructure.Context;
 namespace Mokeb.Infrastructure.Migrations
 {
     [DbContext(typeof(MokebDbContext))]
-    [Migration("20251206171309_addingBloodTypeColumn")]
-    partial class addingBloodTypeColumn
+    [Migration("20251208090734_ChangingRelationshipBetweenRoomAndRoomAvailability")]
+    partial class ChangingRelationshipBetweenRoomAndRoomAvailability
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,6 +267,27 @@ namespace Mokeb.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms", (string)null);
+                });
+
+            modelBuilder.Entity("Mokeb.Domain.Model.Entities.RoomAvailability", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("AvailableCapacity")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateOnly>("AvailableDay")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomAvailability");
                 });
 
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Travelers", b =>
@@ -665,34 +686,13 @@ namespace Mokeb.Infrastructure.Migrations
                     b.Navigation("Rooms");
                 });
 
-            modelBuilder.Entity("Mokeb.Domain.Model.Entities.Room", b =>
+            modelBuilder.Entity("Mokeb.Domain.Model.Entities.RoomAvailability", b =>
                 {
-                    b.OwnsMany("Mokeb.Domain.Model.Entities.RoomAvailability", "RoomAvailabilities", b1 =>
-                        {
-                            b1.Property<Guid>("RoomId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<long>("AvailableCapacity")
-                                .HasColumnType("bigint");
-
-                            b1.Property<DateOnly>("AvailableDay")
-                                .HasColumnType("date");
-
-                            b1.HasKey("RoomId", "Id");
-
-                            b1.ToTable("RoomAvailability");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RoomId");
-                        });
-
-                    b.Navigation("RoomAvailabilities");
+                    b.HasOne("Mokeb.Domain.Model.Entities.Room", null)
+                        .WithMany("RoomAvailabilities")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Travelers", b =>
@@ -718,6 +718,11 @@ namespace Mokeb.Infrastructure.Migrations
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Request", b =>
                 {
                     b.Navigation("Travelers");
+                });
+
+            modelBuilder.Entity("Mokeb.Domain.Model.Entities.Room", b =>
+                {
+                    b.Navigation("RoomAvailabilities");
                 });
 #pragma warning restore 612, 618
         }

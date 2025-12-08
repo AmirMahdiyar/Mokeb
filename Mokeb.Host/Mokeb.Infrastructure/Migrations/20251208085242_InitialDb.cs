@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mokeb.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbContext : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +27,8 @@ namespace Mokeb.Infrastructure.Migrations
                     ContactInformation_EmergencyPhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     IdentityInformation_Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IdentityInformation_Password = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    IdentityInformation_Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IdentityInformation_Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdentityInformation_BloodType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,7 +78,8 @@ namespace Mokeb.Infrastructure.Migrations
                     ContactInformation_EmergencyPhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     IdentityInformation_Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IdentityInformation_Password = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    IdentityInformation_Role = table.Column<int>(type: "int", nullable: false)
+                    IdentityInformation_Role = table.Column<int>(type: "int", nullable: false),
+                    IdentityInformation_BloodType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,9 +212,8 @@ namespace Mokeb.Infrastructure.Migrations
                 name: "RoomAvailability",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     AvailableDay = table.Column<DateOnly>(type: "date", nullable: false),
                     AvailableCapacity = table.Column<long>(type: "bigint", nullable: false)
                 },
