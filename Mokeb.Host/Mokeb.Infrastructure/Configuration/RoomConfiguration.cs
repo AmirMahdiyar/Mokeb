@@ -22,15 +22,9 @@ namespace Mokeb.Infrastructure.Configuration
             builder.Property(x => x.Capacity)
                    .IsRequired();
 
-            builder.OwnsMany(x => x.RoomAvailabilities, rb =>
-            {
-
-                rb.Property(x => x.AvailableDay)
-                  .IsRequired();
-
-                rb.Property(x => x.AvailableCapacity)
-                  .IsRequired();
-            });
+            builder.HasMany(x => x.RoomAvailabilities)
+                .WithOne()
+                .HasForeignKey(x => x.RoomId);
         }
     }
 }
