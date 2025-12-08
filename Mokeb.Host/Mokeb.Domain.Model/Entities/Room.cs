@@ -1,6 +1,5 @@
 ﻿using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Enums;
-using Mokeb.Domain.Model.Exceptions;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
 using Mokeb.Domain.Model.Exceptions.RoomExceptions;
 
@@ -32,18 +31,6 @@ namespace Mokeb.Domain.Model.Entities
         {
             if (string.IsNullOrEmpty(name))
                 throw new NameIsInvalidException();
-        }
-        public void AddRoomAvailability(RoomAvailability roomAvailability)
-        {
-            if (_availability.Contains(roomAvailability))
-                throw new RoomIsAvailableAtThatDayException();
-            _availability.Add(roomAvailability);
-        }
-        public void RemoveRoomAvailability(RoomAvailability roomAvailability)
-        {
-            if (!_availability.Contains(roomAvailability))
-                throw new RoomNotFoundException();
-            _availability.Remove(roomAvailability);
         }
         #endregion
         #region Behaviors
