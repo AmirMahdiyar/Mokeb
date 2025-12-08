@@ -32,6 +32,8 @@ namespace Mokeb.Domain.Model.Entities
             if (string.IsNullOrEmpty(name))
                 throw new NameIsInvalidException();
         }
+        #endregion
+        #region Behaviors
         public void AddRoomAvailability(RoomAvailability roomAvailability)
         {
             if (_availability.Contains(roomAvailability))
