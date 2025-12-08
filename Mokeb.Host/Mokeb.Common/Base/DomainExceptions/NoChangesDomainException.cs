@@ -4,9 +4,7 @@ namespace Mokeb.Common.Base.DomainExceptions
 {
     public class NoChangesDomainException : DomainException
     {
-        public NoChangesDomainException()
-        {
-        }
+        public NoChangesDomainException() { }
 
         public NoChangesDomainException(string? message) : base(message)
         {

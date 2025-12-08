@@ -1,4 +1,5 @@
-﻿using Mokeb.Common.Base.DomainExceptions;
+﻿
+using Mokeb.Common.Base.DomainExceptions;
 
 namespace Mokeb.Domain.Model.Exceptions.RoomExceptions
 {

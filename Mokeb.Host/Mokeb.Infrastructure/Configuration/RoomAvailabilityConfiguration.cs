@@ -21,3 +21,4 @@ namespace Mokeb.Infrastructure.Configuration
         }
     }
 }
+
