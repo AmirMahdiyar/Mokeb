@@ -6,6 +6,8 @@
         Rejected,
         Requested,
         DelayInEntrance,
-        DelayInExit
+        DelayInExit,
+        Entered,
+        Exited
     }
 }
