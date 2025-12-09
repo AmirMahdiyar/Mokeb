@@ -6,7 +6,8 @@ namespace Mokeb.Application.Contracts
     {
         void AddCaravan(CaravanPrincipal caravanPrincipal);
         Task<bool> IsCaravanByIdenticalInformationExistsAsync(string username, string nationalCode, string passportNumber, CancellationToken ct);
-        Task<CaravanPrincipal> GetCaravanAsync(string username, string password, CancellationToken ct);
+        Task<CaravanPrincipal> GetCaravanByUsernameAsync(string username, string password, CancellationToken ct);
+        Task<CaravanPrincipal> GetCaravanByIdAsync(Guid Id, CancellationToken ct);
         Task<List<Request>> GettingRequestsByDateAsync(DateOnly date, CancellationToken ct);
 
     }

@@ -26,7 +26,7 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipa
         #region Private Methods
         private async Task<IndividualPrincipal> GetIndividualPrincipal(string username, string password, CancellationToken ct)
         {
-            var result = await _individualRepository.GetIndividualAsync(username, Hasher.HashData(password), ct);
+            var result = await _individualRepository.GetIndividualByUsernameAsync(username, Hasher.HashData(password), ct);
             if (result is null)
                 throw new UsernameOrPasswordIsWrongException();
             return result;

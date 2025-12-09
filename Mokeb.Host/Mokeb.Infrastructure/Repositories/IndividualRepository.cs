@@ -20,7 +20,7 @@ namespace Mokeb.Infrastructure.Repositories
             _individual.Add(individualPrincipal);
         }
 
-        public async Task<IndividualPrincipal> GetIndividualAsync(string username, string password, CancellationToken ct)
+        public async Task<IndividualPrincipal> GetIndividualByUsernameAsync(string username, string password, CancellationToken ct)
         {
             return await _individual.SingleOrDefaultAsync(x => x.IdentityInformation.Username == username && x.IdentityInformation.Password == password, ct);
         }
@@ -38,6 +38,11 @@ namespace Mokeb.Infrastructure.Repositories
                 .SelectMany(x => x.Requests)
                 .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && (x.State == State.Accepted || x.State == State.DelayInEntrance || x.State == State.DelayInExit))
                 .ToListAsync(ct);
+        }
+
+        public async Task<IndividualPrincipal> GetIndividualByIdAsync(Guid Id, CancellationToken ct)
+        {
+            return await _individual.SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
     }
 }

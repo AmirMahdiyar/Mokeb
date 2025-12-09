@@ -4,6 +4,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation;
 
 namespace Mokeb.Host.Controllers
 {
@@ -54,6 +55,15 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Response);
+        }
+        [HttpGet("/GettingPrincipalInformation/{principalId}")]
+        public async Task<IActionResult> GettingCaravanRequests([FromRoute] Guid principalId, CancellationToken ct)
+        {
+            var query = new GettingPrincipalInformationQuery();
+            query.PrincipalId = principalId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Principal);
         }
     }
 }

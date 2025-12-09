@@ -1,4 +1,6 @@
 ﻿using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation;
+using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Entities;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries
@@ -14,6 +16,12 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
                    request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.ExitTime), request.Travelers));
             }
             return result;
+        }
+        public static PrincipalDto ToPrincipalDto(this Principal principal)
+        {
+            return new PrincipalDto(principal.Name, principal.FamilyName, principal.NationalCode, principal.PassportNumber
+                                    , principal.DateOfBirth, principal.Gender, principal.ContactInformation.Gmail
+                                    , principal.ContactInformation.PhoneNumber, principal.ContactInformation.EmergencyPhoneNumber);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn
         #region Private Methods
         private async Task<CaravanPrincipal> GetCaravan(string username, string password, CancellationToken ct)
         {
-            var result = await _caravanRepository.GetCaravanAsync(username, Hasher.HashData(password), ct);
+            var result = await _caravanRepository.GetCaravanByUsernameAsync(username, Hasher.HashData(password), ct);
             if (result is null)
                 throw new UsernameOrPasswordIsWrongException();
             return result;

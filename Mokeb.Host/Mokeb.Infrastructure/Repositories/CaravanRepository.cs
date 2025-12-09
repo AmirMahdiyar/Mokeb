@@ -20,7 +20,7 @@ namespace Mokeb.Infrastructure.Repositories
             _principal.Add(caravanPrincipal);
         }
 
-        public async Task<CaravanPrincipal> GetCaravanAsync(string username, string password, CancellationToken ct)
+        public async Task<CaravanPrincipal> GetCaravanByUsernameAsync(string username, string password, CancellationToken ct)
         {
             return await _principal.SingleOrDefaultAsync(x => x.IdentityInformation.Username == username && x.IdentityInformation.Password == password, ct);
         }
@@ -39,6 +39,11 @@ namespace Mokeb.Infrastructure.Repositories
                 .SelectMany(x => x.Requests)
                 .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && (x.State == State.Accepted || x.State == State.DelayInEntrance || x.State == State.DelayInExit))
                 .ToListAsync(ct);
+        }
+
+        public async Task<CaravanPrincipal> GetCaravanByIdAsync(Guid Id, CancellationToken ct)
+        {
+            return await _principal.SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
     }
 }
