@@ -2,9 +2,9 @@
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate
 {
-    public class GettingAcceptedCaravansRequestsByDateQueryValidator : AbstractValidator<GettingAcceptedCaravansRequestsByDateQuery>
+    public class GettingIncomingOrAcceptedCaravansRequestsByDateQueryValidator : AbstractValidator<GettingIncomingOrAcceptedCaravansRequestsByDateQuery>
     {
-        public GettingAcceptedCaravansRequestsByDateQueryValidator()
+        public GettingIncomingOrAcceptedCaravansRequestsByDateQueryValidator()
         {
             RuleFor(x => x.Date)
                 .NotEmpty()

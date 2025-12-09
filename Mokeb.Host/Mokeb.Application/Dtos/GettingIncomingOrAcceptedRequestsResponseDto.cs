@@ -2,9 +2,9 @@
 
 namespace Mokeb.Application.Dtos
 {
-    public class GettingAcceptedRequestsResponseDto
+    public class GettingIncomingOrAcceptedRequestsResponseDto
     {
-        public GettingAcceptedRequestsResponseDto(string fullName, uint maleCount, uint femaleCount, DateOnly exitDate, IEnumerable<Travelers> travelers)
+        public GettingIncomingOrAcceptedRequestsResponseDto(string fullName, uint maleCount, uint femaleCount, DateOnly exitDate, IEnumerable<Travelers> travelers)
         {
             FullName = fullName;
             MaleCount = maleCount;

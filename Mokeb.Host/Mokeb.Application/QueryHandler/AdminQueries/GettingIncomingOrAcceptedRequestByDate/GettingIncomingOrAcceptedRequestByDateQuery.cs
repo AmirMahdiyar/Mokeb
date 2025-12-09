@@ -4,12 +4,12 @@ using Mokeb.Application.QueryHandler.Base;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate
 {
-    public class GettingAcceptedRequestsByDateQuery : QueryBase, IRequest<GettingAcceptedRequestsByDateQueryResponse>
+    public class GettingIncomingOrAcceptedRequestByDateQuery : QueryBase, IRequest<GettingIncomingOrAcceptedRequestByDateQueryResponse>
     {
         public DateOnly Date { get; set; }
         public override void Validate()
         {
-            new GettingAcceptedRequestsByDateQueryValidator().Validate(this).ThrowIfNeeded();
+            new GettingIncomingOrAcceptedRequestByDateQueryValidator().Validate(this).ThrowIfNeeded();
         }
     }
 }

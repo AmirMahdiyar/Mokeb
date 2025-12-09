@@ -44,7 +44,7 @@ namespace Mokeb.Host.Controllers
         [HttpGet("/GettingRequestsAtADay/{date}")]
         public async Task<IActionResult> GettingRequests([FromRoute] DateOnly date, CancellationToken ct)
         {
-            var query = new GettingAcceptedRequestsByDateQuery();
+            var query = new GettingIncomingOrAcceptedRequestByDateQuery();
             query.Date = date;
             query.Validate();
             var result = await _mediator.Send(query, ct);
@@ -54,7 +54,7 @@ namespace Mokeb.Host.Controllers
         [HttpGet("/GettingCaravanRequestsAtADay/{date}")]
         public async Task<IActionResult> GettingCaravanRequests([FromRoute] DateOnly date, CancellationToken ct)
         {
-            var query = new GettingAcceptedCaravansRequestsByDateQuery();
+            var query = new GettingIncomingOrAcceptedCaravansRequestsByDateQuery();
             query.Date = date;
             query.Validate();
             var result = await _mediator.Send(query, ct);

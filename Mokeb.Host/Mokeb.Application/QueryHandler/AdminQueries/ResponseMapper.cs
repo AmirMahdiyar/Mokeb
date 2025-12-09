@@ -6,12 +6,12 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
 {
     public static class ResponseMapper
     {
-        public static List<GettingAcceptedRequestsResponseDto> ToGettingAcceptedRequestResponseDto(this List<Request> requests)
+        public static List<GettingIncomingOrAcceptedRequestsResponseDto> ToGettingAcceptedRequestResponseDto(this List<Request> requests)
         {
-            var result = new List<GettingAcceptedRequestsResponseDto>();
+            var result = new List<GettingIncomingOrAcceptedRequestsResponseDto>();
             foreach (var request in requests)
             {
-                result.Add(new GettingAcceptedRequestsResponseDto(request.Travelers.First().Name + " " + request.Travelers.First().FamilyName,
+                result.Add(new GettingIncomingOrAcceptedRequestsResponseDto(request.Travelers.First().Name + " " + request.Travelers.First().FamilyName,
                    request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.ExitTime), request.Travelers));
             }
             return result;
