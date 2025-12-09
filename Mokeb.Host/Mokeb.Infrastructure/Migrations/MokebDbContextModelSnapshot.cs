@@ -36,15 +36,16 @@ namespace Mokeb.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("NationalNumber")
+                    b.Property<string>("NationalCode")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -73,15 +74,16 @@ namespace Mokeb.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("NationalNumber")
+                    b.Property<string>("NationalCode")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -132,6 +134,10 @@ namespace Mokeb.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AdminUsername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Detail")
                         .IsRequired()
                         .HasMaxLength(2000)
@@ -166,15 +172,16 @@ namespace Mokeb.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("NationalNumber")
+                    b.Property<string>("NationalCode")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -189,22 +196,6 @@ namespace Mokeb.Infrastructure.Migrations
                     b.ToTable("IndividualPrincipals", (string)null);
                 });
 
-            modelBuilder.Entity("Mokeb.Domain.Model.Entities.PublicCommunication", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PublicCommunications", (string)null);
-                });
-
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Request", b =>
                 {
                     b.Property<Guid>("Id")
@@ -215,6 +206,12 @@ namespace Mokeb.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DateOfAcceptingRequest")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EnterTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExitTime")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("FemaleCount")
@@ -228,12 +225,6 @@ namespace Mokeb.Infrastructure.Migrations
 
                     b.Property<int>("State")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeOfEntrance")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("TimeOfExit")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -253,8 +244,9 @@ namespace Mokeb.Infrastructure.Migrations
                     b.Property<long>("Capacity")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -264,6 +256,27 @@ namespace Mokeb.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms", (string)null);
+                });
+
+            modelBuilder.Entity("Mokeb.Domain.Model.Entities.RoomAvailability", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("AvailableCapacity")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateOnly>("AvailableDay")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomAvailability");
                 });
 
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Travelers", b =>
@@ -280,15 +293,16 @@ namespace Mokeb.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("NationalNumber")
+                    b.Property<string>("NationalCode")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -392,15 +406,16 @@ namespace Mokeb.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.Property<int>("Gender")
-                                .HasColumnType("int");
+                            b1.Property<string>("Gender")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Name")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.Property<string>("NationalNumber")
+                            b1.Property<string>("NationalCode")
                                 .IsRequired()
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)");
@@ -507,125 +522,6 @@ namespace Mokeb.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Mokeb.Domain.Model.Entities.PublicCommunication", b =>
-                {
-                    b.OwnsOne("Mokeb.Domain.Model.ValueObjects.Address", "IranAddress", b1 =>
-                        {
-                            b1.Property<Guid>("PublicCommunicationId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Alley")
-                                .IsRequired()
-                                .HasMaxLength(150)
-                                .HasColumnType("nvarchar(150)")
-                                .HasColumnName("Iran_Alley");
-
-                            b1.Property<string>("Area")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Iran_Area");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Iran_City");
-
-                            b1.Property<long>("Floor")
-                                .HasColumnType("bigint")
-                                .HasColumnName("Iran_Floor");
-
-                            b1.Property<long>("LicensePlate")
-                                .HasColumnType("bigint")
-                                .HasColumnName("Iran_LicensePlate");
-
-                            b1.Property<string>("PostalCode")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("Iran_PostalCode");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasMaxLength(150)
-                                .HasColumnType("nvarchar(150)")
-                                .HasColumnName("Iran_Street");
-
-                            b1.Property<long>("Unit")
-                                .HasColumnType("bigint")
-                                .HasColumnName("Iran_Unit");
-
-                            b1.HasKey("PublicCommunicationId");
-
-                            b1.ToTable("PublicCommunications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PublicCommunicationId");
-                        });
-
-                    b.OwnsOne("Mokeb.Domain.Model.ValueObjects.Address", "MokebAddress", b1 =>
-                        {
-                            b1.Property<Guid>("PublicCommunicationId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Alley")
-                                .IsRequired()
-                                .HasMaxLength(150)
-                                .HasColumnType("nvarchar(150)")
-                                .HasColumnName("Mokeb_Alley");
-
-                            b1.Property<string>("Area")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Mokeb_Area");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Mokeb_City");
-
-                            b1.Property<long>("Floor")
-                                .HasColumnType("bigint")
-                                .HasColumnName("Mokeb_Floor");
-
-                            b1.Property<long>("LicensePlate")
-                                .HasColumnType("bigint")
-                                .HasColumnName("Mokeb_LicensePlate");
-
-                            b1.Property<string>("PostalCode")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("Mokeb_PostalCode");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasMaxLength(150)
-                                .HasColumnType("nvarchar(150)")
-                                .HasColumnName("Mokeb_Street");
-
-                            b1.Property<long>("Unit")
-                                .HasColumnType("bigint")
-                                .HasColumnName("Mokeb_Unit");
-
-                            b1.HasKey("PublicCommunicationId");
-
-                            b1.ToTable("PublicCommunications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PublicCommunicationId");
-                        });
-
-                    b.Navigation("IranAddress")
-                        .IsRequired();
-
-                    b.Navigation("MokebAddress")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Request", b =>
                 {
                     b.HasOne("Mokeb.Domain.Model.Entities.CaravanPrincipal", null)
@@ -662,34 +558,13 @@ namespace Mokeb.Infrastructure.Migrations
                     b.Navigation("Rooms");
                 });
 
-            modelBuilder.Entity("Mokeb.Domain.Model.Entities.Room", b =>
+            modelBuilder.Entity("Mokeb.Domain.Model.Entities.RoomAvailability", b =>
                 {
-                    b.OwnsMany("Mokeb.Domain.Model.Entities.RoomAvailability", "RoomAvailabilities", b1 =>
-                        {
-                            b1.Property<Guid>("RoomId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<long>("AvailableCapacity")
-                                .HasColumnType("bigint");
-
-                            b1.Property<DateOnly>("AvailableDay")
-                                .HasColumnType("date");
-
-                            b1.HasKey("RoomId", "Id");
-
-                            b1.ToTable("RoomAvailability");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RoomId");
-                        });
-
-                    b.Navigation("RoomAvailabilities");
+                    b.HasOne("Mokeb.Domain.Model.Entities.Room", null)
+                        .WithMany("RoomAvailabilities")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Travelers", b =>
@@ -715,6 +590,11 @@ namespace Mokeb.Infrastructure.Migrations
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Request", b =>
                 {
                     b.Navigation("Travelers");
+                });
+
+            modelBuilder.Entity("Mokeb.Domain.Model.Entities.Room", b =>
+                {
+                    b.Navigation("RoomAvailabilities");
                 });
 #pragma warning restore 612, 618
         }

@@ -24,9 +24,9 @@ namespace Mokeb.Infrastructure.Repositories
             return await _principal.SingleOrDefaultAsync(x => x.IdentityInformation.Username == username && x.IdentityInformation.Password == password, ct);
         }
 
-        public async Task<bool> IsCaravanByIdenticalInformationExistsAsync(string username, string nationalNumber, string passportNumber, CancellationToken ct)
+        public async Task<bool> IsCaravanByIdenticalInformationExistsAsync(string username, string nationalCode, string passportNumber, CancellationToken ct)
         {
-            return await _principal.AnyAsync(x => x.IdentityInformation.Username == username || x.NationalNumber == nationalNumber || x.PassportNumber == passportNumber, ct);
+            return await _principal.AnyAsync(x => x.IdentityInformation.Username == username || x.NationalCode == nationalCode || x.PassportNumber == passportNumber, ct);
         }
     }
 }

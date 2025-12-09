@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mokeb.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDbContext : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,16 +18,17 @@ namespace Mokeb.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FamilyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NationalNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    NationalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     PassportNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactInformation_Gmail = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     ContactInformation_PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     ContactInformation_EmergencyPhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     IdentityInformation_Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IdentityInformation_Password = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    IdentityInformation_Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IdentityInformation_Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdentityInformation_BloodType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,7 +55,8 @@ namespace Mokeb.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FilePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Detail = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false)
+                    Detail = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    AdminUsername = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,48 +70,21 @@ namespace Mokeb.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FamilyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NationalNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    NationalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     PassportNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactInformation_Gmail = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     ContactInformation_PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     ContactInformation_EmergencyPhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     IdentityInformation_Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IdentityInformation_Password = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    IdentityInformation_Role = table.Column<int>(type: "int", nullable: false)
+                    IdentityInformation_Role = table.Column<int>(type: "int", nullable: false),
+                    IdentityInformation_BloodType = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IndividualPrincipals", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PublicCommunications",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Iran_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Iran_Area = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Iran_Street = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Iran_Alley = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Iran_LicensePlate = table.Column<long>(type: "bigint", nullable: false),
-                    Iran_Floor = table.Column<long>(type: "bigint", nullable: false),
-                    Iran_Unit = table.Column<long>(type: "bigint", nullable: false),
-                    Iran_PostalCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Mokeb_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Mokeb_Area = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Mokeb_Street = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Mokeb_Alley = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Mokeb_LicensePlate = table.Column<long>(type: "bigint", nullable: false),
-                    Mokeb_Floor = table.Column<long>(type: "bigint", nullable: false),
-                    Mokeb_Unit = table.Column<long>(type: "bigint", nullable: false),
-                    Mokeb_PostalCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PublicCommunications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,7 +93,7 @@ namespace Mokeb.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -135,11 +110,11 @@ namespace Mokeb.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FamilyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NationalNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    NationalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     PassportNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false)
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -159,11 +134,11 @@ namespace Mokeb.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FamilyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NationalNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    NationalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     PassportNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PrincipalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -184,8 +159,8 @@ namespace Mokeb.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MaleCount = table.Column<long>(type: "bigint", nullable: false),
                     FemaleCount = table.Column<long>(type: "bigint", nullable: false),
-                    TimeOfEntrance = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeOfExit = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EnterTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExitTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
                     DateOfAcceptingRequest = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CaravanPrincipalId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -210,15 +185,14 @@ namespace Mokeb.Infrastructure.Migrations
                 name: "RoomAvailability",
                 columns: table => new
                 {
-                    RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AvailableDay = table.Column<DateOnly>(type: "date", nullable: false),
-                    AvailableCapacity = table.Column<long>(type: "bigint", nullable: false)
+                    AvailableCapacity = table.Column<long>(type: "bigint", nullable: false),
+                    RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomAvailability", x => new { x.RoomId, x.Id });
+                    table.PrimaryKey("PK_RoomAvailability", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RoomAvailability_Rooms_RoomId",
                         column: x => x.RoomId,
@@ -254,11 +228,11 @@ namespace Mokeb.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FamilyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NationalNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    NationalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     PassportNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -288,6 +262,11 @@ namespace Mokeb.Infrastructure.Migrations
                 column: "IndividualPrincipalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RoomAvailability_RoomId",
+                table: "RoomAvailability",
+                column: "RoomId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Travelers_RequestId",
                 table: "Travelers",
                 column: "RequestId");
@@ -307,9 +286,6 @@ namespace Mokeb.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Pilgrims");
-
-            migrationBuilder.DropTable(
-                name: "PublicCommunications");
 
             migrationBuilder.DropTable(
                 name: "RequestRoom");
