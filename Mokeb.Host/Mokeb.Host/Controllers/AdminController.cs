@@ -29,6 +29,7 @@ namespace Mokeb.Host.Controllers
                 return Ok(result.JwsCode);
             return BadRequest("You are Not LoggedIn");
         }
+
         [HttpPost("{adminId}/LogOut")]
         public async Task<IActionResult> Logout([FromRoute] Guid adminId, [FromBody] PrincipalsLogOutCommand command, CancellationToken ct)
         {
@@ -39,6 +40,7 @@ namespace Mokeb.Host.Controllers
                 return Ok("You are logged out successfully");
             return BadRequest("You are not logged out");
         }
+
         [HttpGet("/GettingRequestsAtADay/{date}")]
         public async Task<IActionResult> GettingRequests([FromRoute] DateOnly date, CancellationToken ct)
         {
@@ -48,6 +50,7 @@ namespace Mokeb.Host.Controllers
             var result = await _mediator.Send(query, ct);
             return Ok(result.Response);
         }
+
         [HttpGet("/GettingCaravanRequestsAtADay/{date}")]
         public async Task<IActionResult> GettingCaravanRequests([FromRoute] DateOnly date, CancellationToken ct)
         {
@@ -57,6 +60,7 @@ namespace Mokeb.Host.Controllers
             var result = await _mediator.Send(query, ct);
             return Ok(result.Response);
         }
+
         [HttpGet("/GettingOutGoingOrAcceptedRequestsAtADay/{date}")]
         public async Task<IActionResult> GettingOutGoingOrAcceptedRequests([FromRoute] DateOnly date, CancellationToken ct)
         {
@@ -66,6 +70,17 @@ namespace Mokeb.Host.Controllers
             var result = await _mediator.Send(query, ct);
             return Ok(result.Response);
         }
+
+        [HttpGet("/GettingOutGoingOrAcceptedCaravansRequestsAtADay/{date}")]
+        public async Task<IActionResult> GettingOutGoingOrAcceptedCaravansRequests([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new GettingOutGoingOrAcceptedRequestsByDateQuery();
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Response);
+        }
+
         [HttpGet("/GettingPrincipalInformation/{principalId}")]
         public async Task<IActionResult> GettingCaravanRequests([FromRoute] Guid principalId, CancellationToken ct)
         {
