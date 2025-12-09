@@ -37,7 +37,7 @@ namespace Mokeb.Infrastructure.Repositories
                 .Include(x => x.Requests)
                 .ThenInclude(x => x.Travelers)
                 .SelectMany(x => x.Requests)
-                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && (x.State == State.Accepted || x.State == State.DelayInEntrance))
+                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && (x.State == State.Accepted || x.State == State.DelayInEntrance || x.State == State.Entered))
                 .ToListAsync(ct);
         }
 
@@ -53,7 +53,7 @@ namespace Mokeb.Infrastructure.Repositories
                 .Include(x => x.Requests)
                 .ThenInclude(x => x.Travelers)
                 .SelectMany(x => x.Requests)
-                .Where(x => DateOnly.FromDateTime(x.ExitTime) == date && (x.State == State.Accepted || x.State == State.DelayInExit))
+                .Where(x => DateOnly.FromDateTime(x.ExitTime) == date && (x.State == State.Accepted || x.State == State.DelayInExit || x.State == State.Exited))
                 .ToListAsync(ct);
         }
     }
