@@ -17,7 +17,7 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipa
 
         public async Task<IndividualPrincipalSignInCommandResponse> Handle(IndividualPrincipalSignInCommand request, CancellationToken cancellationToken)
         {
-            await CheckIndividualExistance(request.Username, request.NationalNumber, request.PassportNumber, cancellationToken);
+            await CheckIndividualExistance(request.Username, request.NationalCode, request.PassportNumber, cancellationToken);
             _individualRepository.AddIndividualPrincipal(request.ToIndividualPrincipal());
 
             var savingResult = await _unitOfWork.Commit(cancellationToken);
@@ -26,9 +26,9 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipa
             return IndividualPrincipalSignInCommandResponse.Succeeded;
         }
         #region Private Methods
-        private async Task CheckIndividualExistance(string username, string nationalNumber, string passportNumber, CancellationToken ct)
+        private async Task CheckIndividualExistance(string username, string nationalCode, string passportNumber, CancellationToken ct)
         {
-            var result = await _individualRepository.IsIndividualByIdenticalInformationExists(username, nationalNumber, passportNumber, ct);
+            var result = await _individualRepository.IsIndividualByIdenticalInformationExists(username, nationalCode, passportNumber, ct);
             if (result)
                 throw new IndividualExistException();
         }

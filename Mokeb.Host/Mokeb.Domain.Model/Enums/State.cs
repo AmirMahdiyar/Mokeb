@@ -4,7 +4,8 @@
     {
         Accepted,
         Rejected,
-        InView,
-        Done
+        Requested,
+        DelayInEntrance,
+        DelayInExit
     }
 }

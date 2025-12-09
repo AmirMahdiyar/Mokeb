@@ -9,7 +9,7 @@ namespace Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignI
     {
         public static CaravanPrincipal ToIndividualPrincipal(this CaravanPrincipalSignInCommand command)
         {
-            return new CaravanPrincipal(command.Name, command.FamilyName, command.NationalNumber, command.DateOfBirth, command.Gender, command.PassportNumber
+            return new CaravanPrincipal(command.Name, command.FamilyName, command.NationalCode, command.DateOfBirth, command.Gender, command.PassportNumber
                 , new ContactInformation(command.Gmail, command.PhoneNumber, command.EmergencyPhoneNumber), new IdentityInformation(command.Username, Hasher.HashData(command.Password), Role.CaravanAccount, command.BloodType));
         }
     }

@@ -6,7 +6,7 @@ namespace Mokeb.Domain.Model.Entities
     public class Gallery : BaseEntity<Guid>
     {
         private Gallery() { }
-        public Gallery(string filePath, string title, string detail)
+        public Gallery(string filePath, string title, string detail, string adminUsername)
         {
             CheckFilePath(filePath);
             CheckTitle(title);
@@ -15,11 +15,14 @@ namespace Mokeb.Domain.Model.Entities
             FilePath = filePath;
             Title = title;
             Detail = detail;
+            AdminUsername = adminUsername;
         }
 
         public string FilePath { get; private set; }
         public string Title { get; private set; }
         public string Detail { get; private set; }
+
+        public string AdminUsername { get; private set; }
 
         #region Behaviors
         public void ChangeTitle(string title)
