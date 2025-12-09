@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mokeb.Application.Contracts;
 using Mokeb.Domain.Model.Entities;
+using Mokeb.Domain.Model.Enums;
 using Mokeb.Infrastructure.Context;
 
 namespace Mokeb.Infrastructure.Repositories
@@ -27,6 +28,17 @@ namespace Mokeb.Infrastructure.Repositories
         public async Task<bool> IsCaravanByIdenticalInformationExistsAsync(string username, string nationalCode, string passportNumber, CancellationToken ct)
         {
             return await _principal.AnyAsync(x => x.IdentityInformation.Username == username || x.NationalCode == nationalCode || x.PassportNumber == passportNumber, ct);
+        }
+
+        public async Task<List<Request>> GettingRequestsByDateAsync(DateOnly date, CancellationToken ct)
+        {
+            return await _principal
+                .Include(x => x.IdentityInformation)
+                .Include(x => x.Requests)
+                .ThenInclude(x => x.Travelers)
+                .SelectMany(x => x.Requests)
+                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && (x.State == State.Accepted || x.State == State.DelayInEntrance || x.State == State.DelayInExit))
+                .ToListAsync(ct);
         }
     }
 }

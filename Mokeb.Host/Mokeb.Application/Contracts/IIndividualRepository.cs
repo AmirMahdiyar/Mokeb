@@ -7,5 +7,6 @@ namespace Mokeb.Application.Contracts
         Task<bool> IsIndividualByIdenticalInformationExists(string username, string nationalCode, string passportNumber, CancellationToken ct);
         Task<IndividualPrincipal> GetIndividualAsync(string username, string password, CancellationToken ct);
         void AddIndividualPrincipal(IndividualPrincipal individualPrincipal);
+        Task<List<Request>> GettingRequestsByDateAsync(DateOnly date, CancellationToken ct);
     }
 }

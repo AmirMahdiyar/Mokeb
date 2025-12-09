@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
+using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
 
 namespace Mokeb.Host.Controllers
 {
@@ -34,6 +36,24 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("You are logged out successfully");
             return BadRequest("You are not logged out");
+        }
+        [HttpGet("/GettingRequestsAtADay/{date}")]
+        public async Task<IActionResult> GettingRequests([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new GettingAcceptedRequestsByDateQuery();
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Response);
+        }
+        [HttpGet("/GettingCaravanRequestsAtADay/{date}")]
+        public async Task<IActionResult> GettingCaravanRequests([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new GettingAcceptedCaravansRequestsByDateQuery();
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Response);
         }
     }
 }
