@@ -10,7 +10,7 @@ namespace Mokeb.Application.CommandHandler.IndividualPrincipalSignIn
 
         public static IndividualPrincipal ToIndividualPrincipal(this IndividualPrincipalSignInCommand command)
         {
-            return new IndividualPrincipal(command.Name, command.FamilyName, command.NationalNumber, command.DateOfBirth, command.Gender, command.PassportNumber
+            return new IndividualPrincipal(command.Name, command.FamilyName, command.NationalCode, command.DateOfBirth, command.Gender, command.PassportNumber
                 , new ContactInformation(command.Gmail, command.PhoneNumber, command.EmergencyPhoneNumber), new IdentityInformation(command.Username, Hasher.HashData(command.Password), Role.Individual, command.BloodType));
         }
 

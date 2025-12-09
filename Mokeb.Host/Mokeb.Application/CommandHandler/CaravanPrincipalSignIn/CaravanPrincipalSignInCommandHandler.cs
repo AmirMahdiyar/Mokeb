@@ -18,7 +18,7 @@ namespace Mokeb.Application.CommandHandler.CaravanPrincipalSignIn
 
         public async Task<CaravanPrincipalSignInCommandResponse> Handle(CaravanPrincipalSignInCommand request, CancellationToken cancellationToken)
         {
-            await CheckCaravanExistance(request.Username, request.NationalNumber, request.PassportNumber, cancellationToken);
+            await CheckCaravanExistance(request.Username, request.NationalCode, request.PassportNumber, cancellationToken);
             _caravanRepository.AddCaravan(request.ToIndividualPrincipal());
 
             var savingResult = await _unitOfWork.Commit(cancellationToken);
@@ -27,9 +27,9 @@ namespace Mokeb.Application.CommandHandler.CaravanPrincipalSignIn
             return CaravanPrincipalSignInCommandResponse.Succeeded;
         }
         #region Private Methods
-        private async Task CheckCaravanExistance(string username, string nationalNumber, string passportNumber, CancellationToken ct)
+        private async Task CheckCaravanExistance(string username, string nationalCode, string passportNumber, CancellationToken ct)
         {
-            var result = await _caravanRepository.IsCaravanByIdenticalInformationExistsAsync(username, nationalNumber, passportNumber, ct);
+            var result = await _caravanRepository.IsCaravanByIdenticalInformationExistsAsync(username, nationalCode, passportNumber, ct);
             if (result)
                 throw new CarvanExistException();
         }
