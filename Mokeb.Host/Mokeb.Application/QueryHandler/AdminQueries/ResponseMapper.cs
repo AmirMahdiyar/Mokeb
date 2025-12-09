@@ -1,5 +1,4 @@
-﻿using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
-using Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation;
+﻿using Mokeb.Application.Dtos;
 using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Entities;
 
@@ -14,6 +13,16 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
             {
                 result.Add(new GettingAcceptedRequestsResponseDto(request.Travelers.First().Name + " " + request.Travelers.First().FamilyName,
                    request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.ExitTime), request.Travelers));
+            }
+            return result;
+        }
+        public static List<GettingOutGoingOrAcceptedRequestsResponseDto> ToGettingOutGoingOrAcceptedRequestResponseDto(this List<Request> requests)
+        {
+            var result = new List<GettingOutGoingOrAcceptedRequestsResponseDto>();
+            foreach (var request in requests)
+            {
+                result.Add(new GettingOutGoingOrAcceptedRequestsResponseDto(request.Travelers.First().Name + " " + request.Travelers.First().FamilyName,
+                   request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.EnterTime), request.Travelers));
             }
             return result;
         }

@@ -8,6 +8,8 @@ namespace Mokeb.Application.Contracts
         Task<IndividualPrincipal> GetIndividualByUsernameAsync(string username, string password, CancellationToken ct);
         Task<IndividualPrincipal> GetIndividualByIdAsync(Guid Id, CancellationToken ct);
         void AddIndividualPrincipal(IndividualPrincipal individualPrincipal);
-        Task<List<Request>> GettingRequestsByDateAsync(DateOnly date, CancellationToken ct);
+        Task<List<Request>> GetAcceptedOrOutGoingRequestsByDateAsync(DateOnly date, CancellationToken ct);
+        Task<List<Request>> GetAcceptedOrOutGoingCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct);
+
     }
 }

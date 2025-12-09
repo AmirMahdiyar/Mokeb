@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Mokeb.Application.Contracts;
 using Mokeb.Application.Exceptions;
+using Mokeb.Application.QueryHandler.AdminQueries.GettingPrincipalInformation;
 using Mokeb.Domain.Model.Base;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation

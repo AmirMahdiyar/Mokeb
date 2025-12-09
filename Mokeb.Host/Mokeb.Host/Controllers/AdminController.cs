@@ -5,6 +5,7 @@ using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation;
+using Mokeb.Application.QueryHandler.AdminQueries.GettingOutGoingAcceptedCaravansRequestsByDate;
 
 namespace Mokeb.Host.Controllers
 {
@@ -51,6 +52,15 @@ namespace Mokeb.Host.Controllers
         public async Task<IActionResult> GettingCaravanRequests([FromRoute] DateOnly date, CancellationToken ct)
         {
             var query = new GettingAcceptedCaravansRequestsByDateQuery();
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Response);
+        }
+        [HttpGet("/GettingOutGoingOrAcceptedRequestsAtADay/{date}")]
+        public async Task<IActionResult> GettingOutGoingOrAcceptedRequests([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new GettingOutGoingOrAcceptedRequestsByDateQuery();
             query.Date = date;
             query.Validate();
             var result = await _mediator.Send(query, ct);

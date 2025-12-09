@@ -30,20 +30,31 @@ namespace Mokeb.Infrastructure.Repositories
             return await _principal.AnyAsync(x => x.IdentityInformation.Username == username || x.NationalCode == nationalCode || x.PassportNumber == passportNumber, ct);
         }
 
-        public async Task<List<Request>> GettingRequestsByDateAsync(DateOnly date, CancellationToken ct)
+        public async Task<List<Request>> GetAcceptedOrOnTheWayCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct)
         {
             return await _principal
                 .Include(x => x.IdentityInformation)
                 .Include(x => x.Requests)
                 .ThenInclude(x => x.Travelers)
                 .SelectMany(x => x.Requests)
-                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && (x.State == State.Accepted || x.State == State.DelayInEntrance || x.State == State.DelayInExit))
+                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && (x.State == State.Accepted || x.State == State.DelayInEntrance))
                 .ToListAsync(ct);
         }
 
         public async Task<CaravanPrincipal> GetCaravanByIdAsync(Guid Id, CancellationToken ct)
         {
             return await _principal.SingleOrDefaultAsync(x => x.Id == Id, ct);
+        }
+
+        public async Task<List<Request>> GetAcceptedOrOutGoingCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct)
+        {
+            return await _principal
+                .Include(x => x.IdentityInformation)
+                .Include(x => x.Requests)
+                .ThenInclude(x => x.Travelers)
+                .SelectMany(x => x.Requests)
+                .Where(x => DateOnly.FromDateTime(x.ExitTime) == date && (x.State == State.Accepted || x.State == State.DelayInExit))
+                .ToListAsync(ct);
         }
     }
 }

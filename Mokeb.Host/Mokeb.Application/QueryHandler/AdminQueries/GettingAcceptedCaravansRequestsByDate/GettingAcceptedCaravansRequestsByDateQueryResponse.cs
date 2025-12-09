@@ -1,4 +1,4 @@
-﻿using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
+﻿using Mokeb.Application.Dtos;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate
 {

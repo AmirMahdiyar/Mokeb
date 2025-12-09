@@ -14,7 +14,7 @@ namespace Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansReq
 
         public async Task<GettingAcceptedCaravansRequestsByDateQueryResponse> Handle(GettingAcceptedCaravansRequestsByDateQuery request, CancellationToken cancellationToken)
         {
-            var requests = await _caravanPrincipalRepository.GettingRequestsByDateAsync(request.Date, cancellationToken);
+            var requests = await _caravanPrincipalRepository.GetAcceptedOrOnTheWayCaravansRequestsByDateAsync(request.Date, cancellationToken);
             return GettingAcceptedCaravansRequestsByDateQueryResponse.SucceededResponse(requests.ToGettingAcceptedRequestResponseDto());
         }
     }
