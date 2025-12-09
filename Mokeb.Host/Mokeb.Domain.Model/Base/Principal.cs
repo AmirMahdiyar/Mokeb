@@ -12,7 +12,7 @@ namespace Mokeb.Domain.Model.Base
         private List<Request> _requests = new List<Request>();
         public string Name { get; protected set; }
         public string FamilyName { get; protected set; }
-        public string NationalNumber { get; protected set; }
+        public string NationalCode { get; protected set; }
         public string PassportNumber { get; protected set; }
         public DateOnly DateOfBirth { get; protected set; }
         public Gender Gender { get; protected set; }
@@ -33,10 +33,10 @@ namespace Mokeb.Domain.Model.Base
             CheckFamilyName(familyName);
             FamilyName = familyName;
         }
-        public void ChangeNationalNumber(string nationalNumber)
+        public void ChangeNationalCode(string nationalCode)
         {
-            CheckNationalNumber(nationalNumber);
-            NationalNumber = nationalNumber;
+            CheckNationalCode(nationalCode);
+            NationalCode = nationalCode;
         }
         public void ChangeDateOfBirth(DateOnly dateOfBirth)
         {
@@ -84,10 +84,10 @@ namespace Mokeb.Domain.Model.Base
             if (string.IsNullOrWhiteSpace(familyName))
                 throw new FamilyNameIsInvalidException();
         }
-        public void CheckNationalNumber(string nationalNumber)
+        public void CheckNationalCode(string nationalCode)
         {
             var pattern = @"^\d{10}$";
-            if (string.IsNullOrWhiteSpace(nationalNumber) || !Regex.IsMatch(nationalNumber, pattern))
+            if (string.IsNullOrWhiteSpace(nationalCode) || !Regex.IsMatch(nationalCode, pattern))
                 throw new NationalNumberIsInvalidException();
         }
         public void CheckPassportNumber(string passportNumber)

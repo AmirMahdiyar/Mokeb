@@ -8,19 +8,19 @@ namespace Mokeb.Domain.Model.Entities
     public class Request : BaseEntity<Guid>
     {
         private List<Travelers> _travelers = new List<Travelers>();
-        public Request(uint maleCount, uint femaleCount, DateTime timeOfEntrance, DateTime timeOfExit)
+        public Request(uint maleCount, uint femaleCount, DateTime enterTime, DateTime exitTime)
         {
             MaleCount = maleCount;
             FemaleCount = femaleCount;
-            TimeOfEntrance = timeOfEntrance;
-            TimeOfExit = timeOfExit;
+            EnterTime = enterTime;
+            ExitTime = exitTime;
         }
 
         public uint MaleCount { get; private set; }
         public uint FemaleCount { get; private set; }
-        public DateTime TimeOfEntrance { get; private set; }
-        public DateTime TimeOfExit { get; private set; }
-        public State State { get; private set; } = State.InView;
+        public DateTime EnterTime { get; private set; }
+        public DateTime ExitTime { get; private set; }
+        public State State { get; private set; } = State.Requested;
         public DateTime DateOfAcceptingRequest { get; private set; }
         public List<RequestRoom> Rooms { get; private set; } = new List<RequestRoom>();
 
@@ -37,17 +37,17 @@ namespace Mokeb.Domain.Model.Entities
         {
             State = State.Rejected;
         }
-        public void ChangeToInView()
+        public void ChangeToRequested()
         {
-            State = State.InView;
+            State = State.Requested;
         }
-        public void ChangeToDone()
+        public void ChangeToDelayInEntrance()
         {
-            State = State.Done;
+            State = State.DelayInEntrance;
         }
-        public void ChangeDateOfAcceptingRequest()
+        public void ChangeToDelayInExit()
         {
-            DateOfAcceptingRequest = DateTime.Now;
+            State = State.DelayInExit;
         }
         public void AddTravelers(Travelers travelers)
         {
