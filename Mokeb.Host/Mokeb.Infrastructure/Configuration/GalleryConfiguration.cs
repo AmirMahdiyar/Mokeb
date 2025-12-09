@@ -23,6 +23,9 @@ namespace Mokeb.Infrastructure.Configuration
             builder.Property(x => x.Detail)
                    .IsRequired()
                    .HasMaxLength(2000);
+
+            builder.Property(x => x.AdminUsername)
+                .IsRequired();
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Mokeb.Infrastructure.Context
         public DbSet<Room> Rooms { get; set; }
         public DbSet<FAQ> FAQs { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
-        public DbSet<PublicCommunication> PublicCommunications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

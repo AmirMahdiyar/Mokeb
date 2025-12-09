@@ -9,19 +9,19 @@ namespace Mokeb.Domain.Model.Entities
     {
         private List<Companion> _companion = new List<Companion>();
         private IndividualPrincipal() { } // For ef
-        public IndividualPrincipal(string name, string familyName, string nationalNumber,
+        public IndividualPrincipal(string name, string familyName, string nationalCode,
             DateOnly dateOfBirth, Gender gender, string passportNumber, ContactInformation contactInformation, IdentityInformation identityInformation)
         {
             CheckName(name);
             CheckFamilyName(familyName);
-            CheckNationalNumber(nationalNumber);
+            CheckNationalCode(nationalCode);
             CheckPassportNumber(passportNumber);
 
 
             Id = Guid.NewGuid();
             Name = name;
             FamilyName = familyName;
-            NationalNumber = nationalNumber;
+            NationalCode = nationalCode;
             DateOfBirth = dateOfBirth;
             Gender = gender;
             PassportNumber = passportNumber;
