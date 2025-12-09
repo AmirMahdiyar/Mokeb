@@ -7,18 +7,18 @@ namespace Mokeb.Domain.Model.Entities
 {
     public class Travelers : BaseEntity<Guid>
     {
-        public Travelers(string name, string familyName, string nationalNumber, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber)
+        public Travelers(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber)
         {
             CheckName(name);
             CheckFamilyName(familyName);
-            CheckNationalNumber(nationalNumber);
+            CheckNationalCode(nationalCode);
             CheckPassportNumber(passportNumber);
             CheckPhoneNumber(phoneNumber);
 
             Id = Guid.NewGuid();
             Name = name;
             FamilyName = familyName;
-            NationalNumber = nationalNumber;
+            NationalCode = nationalCode;
             DateOfBirth = dateOfBirth;
             PhoneNumber = phoneNumber;
             Gender = gender;
@@ -28,7 +28,7 @@ namespace Mokeb.Domain.Model.Entities
         private Travelers() { } // For ef
         public string Name { get; private set; }
         public string FamilyName { get; private set; }
-        public string NationalNumber { get; private set; }
+        public string NationalCode { get; private set; }
         public string PassportNumber { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
         public string PhoneNumber { get; private set; }
@@ -54,10 +54,10 @@ namespace Mokeb.Domain.Model.Entities
             if (string.IsNullOrWhiteSpace(familyName))
                 throw new FamilyNameIsInvalidException();
         }
-        public void CheckNationalNumber(string nationalNumber)
+        public void CheckNationalCode(string nationalCode)
         {
             var pattern = @"^\d{10}$";
-            if (string.IsNullOrWhiteSpace(nationalNumber) || !Regex.IsMatch(nationalNumber, pattern))
+            if (string.IsNullOrWhiteSpace(nationalCode) || !Regex.IsMatch(nationalCode, pattern))
                 throw new NationalNumberIsInvalidException();
         }
         public void CheckPassportNumber(string passportNumber)

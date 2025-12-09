@@ -17,7 +17,9 @@ namespace Mokeb.Infrastructure.Configuration
                    .HasMaxLength(100);
 
             builder.Property(x => x.Gender)
-                   .IsRequired();
+                .HasConversion<string>()
+                .IsRequired();
+
 
             builder.Property(x => x.Capacity)
                    .IsRequired();
