@@ -1,4 +1,5 @@
-﻿using Mokeb.Domain.Model.Entities;
+﻿using Mokeb.Application.Dtos;
+using Mokeb.Domain.Model.Entities;
 
 namespace Mokeb.Application.Contracts
 {
@@ -11,6 +12,8 @@ namespace Mokeb.Application.Contracts
         Task<List<Request>> GetAcceptedOrOnTheWayCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct);
         Task<List<Request>> GetAcceptedOrOutGoingCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct);
 
-
+        Task<GenderStatsDto> GetEntryStatsAsync(DateOnly date, CancellationToken ct);
+        Task<GenderStatsDto> GetExitStatsAsync(DateOnly date, CancellationToken ct);
+        Task<GenderStatsDto> GetPresentStatsAsync(DateOnly date, CancellationToken ct);
     }
 }

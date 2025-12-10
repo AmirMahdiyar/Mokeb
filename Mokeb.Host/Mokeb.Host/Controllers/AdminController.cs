@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
+using Mokeb.Application.QueryHandler.AdminQueries.CapacityReportByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation;
@@ -82,13 +83,23 @@ namespace Mokeb.Host.Controllers
         }
 
         [HttpGet("/GettingPrincipalInformation/{principalId}")]
-        public async Task<IActionResult> GettingCaravanRequests([FromRoute] Guid principalId, CancellationToken ct)
+        public async Task<IActionResult> GettingCaravanInformation([FromRoute] Guid principalId, CancellationToken ct)
         {
             var query = new GettingPrincipalInformationQuery();
             query.PrincipalId = principalId;
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Principal);
+        }
+
+        [HttpGet("GettingStatsOfADay/{date}")]
+        public async Task<IActionResult> GettingStats([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new CapacityReportByDateQuery();
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
         }
     }
 }

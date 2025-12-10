@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mokeb.Application.Contracts;
 using Mokeb.Domain.Model.Entities;
+using Mokeb.Domain.Model.Enums;
 using Mokeb.Infrastructure.Context;
 
 namespace Mokeb.Infrastructure.Repositories
@@ -42,6 +43,31 @@ namespace Mokeb.Infrastructure.Repositories
         public async Task<Room> GetRoomByIdAsync(Guid roomId, CancellationToken ct)
         {
             return await _rooms.SingleOrDefaultAsync(x => x.Id == roomId, ct);
+        }
+
+        public async Task<int> GetSumOfAllFemaleRoomsCapacities(CancellationToken ct)
+        {
+            return await _rooms.Where(x => x.Gender == Gender.Female).SumAsync(x => (int)x.Capacity, ct);
+        }
+
+        public async Task<int> GetSumOfAllMaleRoomsCapacities(CancellationToken ct)
+        {
+            return await _rooms.Where(x => x.Gender == Gender.Male).SumAsync(x => (int)x.Capacity, ct);
+        }
+
+        public async Task<int> GetSumOfAllRoomsCapacities(CancellationToken ct)
+        {
+            return await _rooms
+                .SumAsync(x => (int)x.Capacity, ct);
+        }
+
+        public async Task<int> GetSumOfAvailableCapacityAtADay(DateOnly date, CancellationToken ct)
+        {
+            return await _rooms
+                .Include(x => x.RoomAvailabilities)
+                .SelectMany(x => x.RoomAvailabilities)
+                .Where(x => x.AvailableDay == date)
+                .SumAsync(x => (int)x.AvailableCapacity, ct);
         }
 
         public void RemoveRoomById(Room room)
