@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mokeb.Application.Contracts;
+using Mokeb.Application.Dtos;
 using Mokeb.Domain.Model.Entities;
 using Mokeb.Domain.Model.Enums;
 using Mokeb.Infrastructure.Context;
@@ -81,6 +82,21 @@ namespace Mokeb.Infrastructure.Repositories
         public void RemoveRoomById(Room room)
         {
             _rooms.Remove(room);
+        }
+        public async Task<List<RoomAvailabilityDto>> GetDistinctRoomAvailabilitesFromEnteredRoomIdList(List<Guid> roomIds, List<DateOnly> dateRange, CancellationToken ct)
+        {
+            return await _rooms
+                    .Where(r => !roomIds.Contains(r.Id))
+                    .SelectMany(r => r.RoomAvailabilities, (room, availability) => new { room, availability })
+                    .Where(x => dateRange.Contains(x.availability.AvailableDay))
+                    .Select(x => new RoomAvailabilityDto(
+                        x.availability.AvailableDay,
+                        x.availability.AvailableCapacity,
+                        x.room.Gender,
+                        x.room.Capacity,
+                        x.room.Capacity - x.availability.AvailableCapacity
+                    ))
+                    .ToListAsync(ct);
         }
     }
 }

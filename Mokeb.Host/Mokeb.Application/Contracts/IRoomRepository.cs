@@ -1,4 +1,5 @@
-﻿using Mokeb.Domain.Model.Entities;
+﻿using Mokeb.Application.Dtos;
+using Mokeb.Domain.Model.Entities;
 
 namespace Mokeb.Application.Contracts
 {
@@ -16,5 +17,7 @@ namespace Mokeb.Application.Contracts
         Task<int> GetSumOfAllMaleRoomsCapacities(CancellationToken ct);
         Task<int> GetSumOfAllFemaleRoomsCapacities(CancellationToken ct);
         Task<List<RoomAvailability>> GetAvailabilitiesByRoomIdAndDatesAsync(Guid roomId, List<DateOnly> dates, CancellationToken ct);
+        Task<List<RoomAvailabilityDto>> GetDistinctRoomAvailabilitesFromEnteredRoomIdList(List<Guid> roomIds, List<DateOnly> dateRange, CancellationToken ct);
+
     }
 }

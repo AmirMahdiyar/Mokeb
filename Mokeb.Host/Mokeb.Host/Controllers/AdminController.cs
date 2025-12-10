@@ -8,6 +8,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequest
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingOutGoingAcceptedCaravansRequestsByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.LookingOnRoomAvailabilitiesOnARangeOfDates;
 
 namespace Mokeb.Host.Controllers
 {
@@ -114,6 +115,16 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("RoomAvailability Added Successfully");
             return BadRequest("RoomAvailability didn't Add Successfully");
+        }
+
+        [HttpPut("/requests/{requestId}/AddRoomAvailability/RoomAvailabilities")]
+        public async Task<IActionResult> LookingOnRoomAvailabilitiesToAddInRequest([FromRoute] Guid requestId,
+             [FromBody] LookingOnRoomAvailabilitiesOnARangeOfDatesQuery query, CancellationToken ct)
+        {
+            query.RequestId = requestId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
         }
     }
 }
