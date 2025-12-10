@@ -49,7 +49,6 @@ namespace Mokeb.Host.Controllers
         [HttpPut("{roomId}/{roomAvailabilityId}/ChangeDate")]
         public async Task<IActionResult> ChangeDateOfAvailableRoom([FromRoute] Guid roomId, [FromRoute] Guid roomAvailabilityId, [FromBody] UpdatingRoomAvailabilityDateCommand command, CancellationToken ct)
         {
-            command.RoomId = roomId;
             command.AvailabilityId = roomAvailabilityId;
             command.Validate();
             var result = await _mediator.Send(command, ct);

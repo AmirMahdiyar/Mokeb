@@ -10,10 +10,11 @@ namespace Mokeb.Application.Contracts
         Task<bool> CheckRoomExistanceByIdAsync(Guid roomId, CancellationToken ct);
         Task<bool> CheckAvailabilityDayOfARoomAsync(Guid roomId, DateOnly date, CancellationToken ct);
         Task<Room> GetRoomByIdAsync(Guid roomId, CancellationToken ct);
-        Task<RoomAvailability> GetRoomAvailabilityByIdAsync(Guid roomId, Guid availableRoomId, CancellationToken ct);
+        Task<RoomAvailability> GetRoomAvailabilityByIdAsync(Guid availableRoomId, CancellationToken ct);
         Task<int> GetSumOfAllRoomsCapacities(CancellationToken ct);
         Task<int> GetSumOfAvailableCapacityAtADay(DateOnly date, CancellationToken ct);
         Task<int> GetSumOfAllMaleRoomsCapacities(CancellationToken ct);
         Task<int> GetSumOfAllFemaleRoomsCapacities(CancellationToken ct);
+        Task<List<RoomAvailability>> GetAvailabilitiesByRoomIdAndDatesAsync(Guid roomId, List<DateOnly> dates, CancellationToken ct);
     }
 }

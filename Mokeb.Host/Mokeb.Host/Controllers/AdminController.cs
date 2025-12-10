@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
+using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.CapacityReportByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate;
@@ -100,6 +101,19 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result);
+        }
+
+        [HttpPut("/requests/{requestId}/AddRoomAvailability/RoomAvailabilities/{roomAvailabilityId}")]
+        public async Task<IActionResult> AddRoomAvailabilityToAnAcceptedOrEnteredRequest([FromRoute] Guid requestId, [FromRoute] Guid roomAvailabilityId,
+            [FromBody] AddingRoomAvailabilityToAnAcceptedRequestCommand command, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.RoomAvailabilityId = roomAvailabilityId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("RoomAvailability Added Successfully");
+            return BadRequest("RoomAvailability didn't Add Successfully");
         }
     }
 }

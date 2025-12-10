@@ -19,7 +19,7 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.RemovingRoomAvailabilit
 
         public async Task<UpdatingRoomAvailabilityDateCommandResponse> Handle(UpdatingRoomAvailabilityDateCommand request, CancellationToken cancellationToken)
         {
-            var availableRoom = await GetAvailableRoom(request.RoomId, request.AvailabilityId, cancellationToken);
+            var availableRoom = await GetAvailableRoom(request.AvailabilityId, cancellationToken);
             availableRoom.ChangeAvailableDate(request.NewDate);
 
             var result = await _unitOfWork.Commit(cancellationToken);
@@ -28,9 +28,9 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.RemovingRoomAvailabilit
             return UpdatingRoomAvailabilityDateCommandResponse.Succeeded;
         }
         #region Private Methods
-        private async Task<RoomAvailability> GetAvailableRoom(Guid roomId, Guid availableRoomId, CancellationToken ct)
+        private async Task<RoomAvailability> GetAvailableRoom(Guid availableRoomId, CancellationToken ct)
         {
-            var roomAvailability = await _roomRepository.GetRoomAvailabilityByIdAsync(roomId, availableRoomId, ct);
+            var roomAvailability = await _roomRepository.GetRoomAvailabilityByIdAsync(availableRoomId, ct);
             if (roomAvailability == null)
                 throw new RoomAvailabilityNotFoundException();
             return roomAvailability;

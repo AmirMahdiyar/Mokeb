@@ -6,7 +6,6 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.RemovingRoomAvailabilit
 {
     public class UpdatingRoomAvailabilityDateCommand : CommandBase, IRequest<UpdatingRoomAvailabilityDateCommandResponse>
     {
-        public Guid RoomId { get; set; }
         public Guid AvailabilityId { get; set; }
         public DateOnly NewDate { get; set; }
         public override void Validate()

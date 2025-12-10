@@ -61,6 +61,22 @@ namespace Mokeb.Domain.Model.Entities
                 throw new TravelersNotExistsException();
             _travelers.Remove(travelers);
         }
+        public void AddRequestRoom(RequestRoom room)
+        {
+            if (Rooms.Any(x => x == room))
+                throw new RequestRoomAlreadyExistException();
+            Rooms.Add(room);
+        }
+        public void RemoveRequestRoom(RequestRoom room)
+        {
+            if (!Rooms.Any(x => x == room))
+                throw new RequestRoomNotFoundException();
+            Rooms.Remove(room);
+        }
+        public void IncreaseMaleCount(uint amount) => MaleCount += amount;
+        public void IncreaseFemaleCount(uint amount) => FemaleCount += amount;
+        public void DecreaseMaleCount(uint amount) => MaleCount -= amount;
+        public void DecreaseFemaleCount(uint amount) => FemaleCount -= amount;
         #endregion
     }
 }

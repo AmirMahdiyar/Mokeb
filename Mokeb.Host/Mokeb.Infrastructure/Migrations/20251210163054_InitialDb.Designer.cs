@@ -12,7 +12,7 @@ using Mokeb.Infrastructure.Context;
 namespace Mokeb.Infrastructure.Migrations
 {
     [DbContext(typeof(MokebDbContext))]
-    [Migration("20251209102102_InitialDb")]
+    [Migration("20251210163054_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -540,11 +540,9 @@ namespace Mokeb.Infrastructure.Migrations
                             b1.Property<Guid>("RequestId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<long>("Id")
+                            b1.Property<Guid>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"));
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Name")
                                 .IsRequired()

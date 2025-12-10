@@ -537,11 +537,9 @@ namespace Mokeb.Infrastructure.Migrations
                             b1.Property<Guid>("RequestId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<long>("Id")
+                            b1.Property<Guid>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"));
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Name")
                                 .IsRequired()

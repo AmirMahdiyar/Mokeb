@@ -11,6 +11,7 @@ namespace Mokeb.Application.Contracts
         Task<CaravanPrincipal> GetCaravanByIdAsync(Guid Id, CancellationToken ct);
         Task<List<Request>> GetAcceptedOrOnTheWayCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct);
         Task<List<Request>> GetAcceptedOrOutGoingCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct);
+        Task<Request> GetRequestByIdAsync(Guid Id, CancellationToken ct);
 
         Task<GenderStatsDto> GetEntryStatsAsync(DateOnly date, CancellationToken ct);
         Task<GenderStatsDto> GetExitStatsAsync(DateOnly date, CancellationToken ct);
