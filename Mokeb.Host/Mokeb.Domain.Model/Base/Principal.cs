@@ -10,6 +10,27 @@ namespace Mokeb.Domain.Model.Base
     public abstract class Principal : BaseEntity<Guid>
     {
         private List<Request> _requests = new List<Request>();
+        protected Principal() { }
+
+        protected Principal(string name, string familyName, string nationalCode, string passportNumber
+            , DateOnly dateOfBirth, Gender gender, ContactInformation contactInformation, IdentityInformation identityInformation)
+        {
+            CheckName(name);
+            CheckFamilyName(familyName);
+            CheckNationalCode(nationalCode);
+            CheckPassportNumber(passportNumber);
+
+            Id = Guid.NewGuid();
+            Name = name;
+            FamilyName = familyName;
+            NationalCode = nationalCode;
+            PassportNumber = passportNumber;
+            DateOfBirth = dateOfBirth;
+            Gender = gender;
+            ContactInformation = contactInformation;
+            IdentityInformation = identityInformation;
+        }
+
         public string Name { get; protected set; }
         public string FamilyName { get; protected set; }
         public string NationalCode { get; protected set; }
