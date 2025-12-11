@@ -1,4 +1,5 @@
-﻿using Mokeb.Domain.Model.Base;
+﻿using Mokeb.Common.Base.Helper;
+using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
 using System.Text.RegularExpressions;
@@ -15,7 +16,7 @@ namespace Mokeb.Domain.Model.Entities
 
             Id = Guid.NewGuid();
             Username = username;
-            Password = password;
+            Password = Hasher.HashData(password);
         }
         public string Username { get; private set; }
         public string Password { get; private set; }
