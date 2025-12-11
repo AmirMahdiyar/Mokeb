@@ -10,23 +10,9 @@ namespace Mokeb.Domain.Model.Entities
         private List<Companion> _companion = new List<Companion>();
         private IndividualPrincipal() { } // For ef
         public IndividualPrincipal(string name, string familyName, string nationalCode,
-            DateOnly dateOfBirth, Gender gender, string passportNumber, ContactInformation contactInformation, IdentityInformation identityInformation)
+            DateOnly dateOfBirth, Gender gender, string passportNumber, ContactInformation contactInformation, IdentityInformation identityInformation) :
+            base(name, familyName, nationalCode, passportNumber, dateOfBirth, gender, contactInformation, identityInformation)
         {
-            CheckName(name);
-            CheckFamilyName(familyName);
-            CheckNationalCode(nationalCode);
-            CheckPassportNumber(passportNumber);
-
-
-            Id = Guid.NewGuid();
-            Name = name;
-            FamilyName = familyName;
-            NationalCode = nationalCode;
-            DateOfBirth = dateOfBirth;
-            Gender = gender;
-            PassportNumber = passportNumber;
-            ContactInformation = contactInformation;
-            IdentityInformation = identityInformation;
         }
 
         public IEnumerable<Companion> Companion => _companion.AsReadOnly();
