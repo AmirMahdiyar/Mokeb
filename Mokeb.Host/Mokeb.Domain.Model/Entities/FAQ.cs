@@ -10,6 +10,7 @@ namespace Mokeb.Domain.Model.Entities
             CheckAnswer(answer);
             CheckQuestion(question);
 
+            Id = Guid.NewGuid();
             Question = question;
             Answer = answer;
         }
