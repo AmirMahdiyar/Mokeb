@@ -1,6 +1,7 @@
 ﻿using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
+using System.Text.RegularExpressions;
 
 namespace Mokeb.Domain.Model.Entities
 {
@@ -28,7 +29,8 @@ namespace Mokeb.Domain.Model.Entities
 
         public void CheckPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(password))
+            var pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^()_\-+=<>]).{8,}$";
+            if (string.IsNullOrWhiteSpace(password) || !Regex.IsMatch(password, pattern))
                 throw new PasswordInvalidException();
         }
         #endregion
