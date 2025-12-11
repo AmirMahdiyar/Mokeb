@@ -4,14 +4,21 @@ namespace Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansReq
 {
     public class GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse
     {
-        public static GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse SucceededResponse(List<GettingIncomingOrAcceptedRequestsResponseDto> response)
+        public static GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse Succeed()
         {
-            return new GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse()
+            return new GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse
             {
-                Response = response,
+
             };
         }
 
-        public List<GettingIncomingOrAcceptedRequestsResponseDto> Response { get; set; }
+        public GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse WithRequests(List<GettingIncomingOrAcceptedRequestsResponseDto> requests)
+        {
+            this.Requests = requests;
+
+            return this;
+        }
+
+        public List<GettingIncomingOrAcceptedRequestsResponseDto> Requests { get; set; }
     }
 }

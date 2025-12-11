@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Mokeb.Application.Contracts;
+using ResponseModel = Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate.GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate
 {
@@ -12,10 +13,12 @@ namespace Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansReq
             _caravanPrincipalRepository = caravanPrincipalRepository;
         }
 
-        public async Task<GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse> Handle(GettingIncomingOrAcceptedCaravansRequestsByDateQuery request, CancellationToken cancellationToken)
+        public async Task<ResponseModel> Handle(GettingIncomingOrAcceptedCaravansRequestsByDateQuery request, CancellationToken cancellationToken)
         {
             var requests = await _caravanPrincipalRepository.GetAcceptedOrOnTheWayCaravansRequestsByDateAsync(request.Date, cancellationToken);
-            return GettingIncomingOrAcceptedCaravansRequestsByDateQueryResponse.SucceededResponse(requests.ToGettingAcceptedRequestResponseDto());
+
+            return ResponseModel.Succeed()
+                                .WithRequests(requests.ToGettingAcceptedRequestResponseDto());
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Mokeb.Host.Controllers
             query.Date = date;
             query.Validate();
             var result = await _mediator.Send(query, ct);
-            return Ok(result.Response);
+            return Ok(result.Requests);
         }
 
         [HttpGet("/GettingOutGoingOrAcceptedRequestsAtADay/{date}")]
