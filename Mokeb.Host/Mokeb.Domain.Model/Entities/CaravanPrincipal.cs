@@ -10,23 +10,9 @@ namespace Mokeb.Domain.Model.Entities
         protected internal List<Pilgrim> _pilgrims = new List<Pilgrim>();
         private CaravanPrincipal() { } // For ef
         public CaravanPrincipal(string name, string familyName, string nationalCode,
-            DateOnly dateOfBirth, Gender gender, string passportNumber, ContactInformation contactInformation, IdentityInformation identityInformation)
+            DateOnly dateOfBirth, Gender gender, string passportNumber, ContactInformation contactInformation, IdentityInformation identityInformation) :
+            base(name, familyName, nationalCode, passportNumber, dateOfBirth, gender, contactInformation, identityInformation)
         {
-            CheckName(name);
-            CheckFamilyName(familyName);
-            CheckNationalCode(nationalCode);
-            CheckPassportNumber(passportNumber);
-
-
-            Id = Guid.NewGuid();
-            Name = name;
-            FamilyName = familyName;
-            NationalCode = nationalCode;
-            DateOfBirth = dateOfBirth;
-            Gender = gender;
-            PassportNumber = passportNumber;
-            ContactInformation = contactInformation;
-            IdentityInformation = identityInformation;
         }
         public IEnumerable<Pilgrim> Pilgrims => _pilgrims.AsReadOnly();
 
