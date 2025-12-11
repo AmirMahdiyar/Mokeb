@@ -1,5 +1,7 @@
-﻿using Mokeb.Domain.Model.Enums;
+﻿using Mokeb.Common.Base.Helper;
+using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
+using System.Text.RegularExpressions;
 
 namespace Mokeb.Domain.Model.ValueObjects
 {
@@ -11,7 +13,7 @@ namespace Mokeb.Domain.Model.ValueObjects
             CheckPassword(password);
 
             Username = username;
-            Password = password;
+            Password = Hasher.HashData(password);
             Role = role;
             BloodType = bloodType;
         }
@@ -42,7 +44,8 @@ namespace Mokeb.Domain.Model.ValueObjects
 
         public void CheckPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(password))
+            var pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^()_\-+=<>]).{8,}$";
+            if (string.IsNullOrWhiteSpace(password) || !Regex.IsMatch(password, pattern))
                 throw new PasswordInvalidException();
         }
         #endregion
