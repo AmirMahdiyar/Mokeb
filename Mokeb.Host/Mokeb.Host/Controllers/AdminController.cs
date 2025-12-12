@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
-using Mokeb.Application.QueryHandler.AdminQueries.CapacityReportByDate;
-using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedCaravansRequestsByDate;
-using Mokeb.Application.QueryHandler.AdminQueries.GettingAcceptedRequestByDate;
-using Mokeb.Application.QueryHandler.AdminQueries.GettingCaravanInformation;
-using Mokeb.Application.QueryHandler.AdminQueries.GettingOutGoingAcceptedCaravansRequestsByDate;
-using Mokeb.Application.QueryHandler.AdminQueries.LookingOnRoomAvailabilitiesOnARangeOfDates;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.CapacityReportByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedCaravansRequestsByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.LookingOnRoomAvailabilitiesOnARangeOfDates;
 
 namespace Mokeb.Host.Controllers
 {
