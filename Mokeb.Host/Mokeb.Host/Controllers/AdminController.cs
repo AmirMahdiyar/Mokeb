@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
+using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.CapacityReportByDate;
@@ -137,6 +138,17 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("DateOfEntrance Changed Successfully");
             return BadRequest("DateOfEntrance Didn't change");
+        }
+        [HttpPut("/requests/{requestId}/ChangingExitDate")]
+        public async Task<IActionResult> ChangingExitDate([FromRoute] Guid requestId,
+            [FromBody] ChangingExitDateOfAPrincipalCommand command, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("ExitDate Changed Successfully");
+            return BadRequest("ExitDate Didn't change");
         }
     }
 }
