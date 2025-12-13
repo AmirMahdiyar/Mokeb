@@ -18,6 +18,7 @@ namespace Mokeb.Application.Contracts
         Task<int> GetSumOfAllFemaleRoomsCapacities(CancellationToken ct);
         Task<List<RoomAvailability>> GetAvailabilitiesByRoomIdAndDatesAsync(Guid roomId, List<DateOnly> dates, CancellationToken ct);
         Task<List<RoomAvailabilityDto>> GetDistinctRoomAvailabilitesFromEnteredRoomIdList(List<Guid> roomIds, List<DateOnly> dateRange, CancellationToken ct);
+        Task<List<RoomAvailability>> GetAvailabilitiesByRoomIdsAndDatesAsync(List<Guid> roomIds, List<DateOnly> dateRange, CancellationToken ct);
 
     }
 }

@@ -121,5 +121,12 @@ namespace Mokeb.Infrastructure.Repositories
 
             return result ?? new GenderStatsDto();
         }
+        public async Task<Request> GetRequestByIdAsync(Guid Id, CancellationToken ct)
+        {
+            return await _individual
+                .Include(x => x.Requests)
+                .SelectMany(x => x.Requests)
+                .SingleOrDefaultAsync(x => x.Id == Id, ct);
+        }
     }
 }

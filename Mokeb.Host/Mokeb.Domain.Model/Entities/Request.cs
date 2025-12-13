@@ -77,6 +77,8 @@ namespace Mokeb.Domain.Model.Entities
         public void IncreaseFemaleCount(uint amount) => FemaleCount += amount;
         public void DecreaseMaleCount(uint amount) => MaleCount -= amount;
         public void DecreaseFemaleCount(uint amount) => FemaleCount -= amount;
+        public void ChangeEnterTime(DateTime enterTime) => EnterTime = enterTime;
+        public void ChangeExitTime(DateTime exitTime) => ExitTime = exitTime;
         #endregion
     }
 }

@@ -98,5 +98,16 @@ namespace Mokeb.Infrastructure.Repositories
                     ))
                     .ToListAsync(ct);
         }
+
+        public async Task<List<RoomAvailability>> GetAvailabilitiesByRoomIdsAndDatesAsync(List<Guid> roomIds, List<DateOnly> dates, CancellationToken ct)
+        {
+            return await _rooms
+                .Include(x => x.RoomAvailabilities)
+                .Where(x => roomIds.Contains(x.Id))
+                .SelectMany(x => x.RoomAvailabilities)
+                .Include(x => x.Room)
+                .Where(x => dates.Contains(x.AvailableDay))
+                .ToListAsync(ct);
+        }
     }
 }

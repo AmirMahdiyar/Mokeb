@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
+using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.CapacityReportByDate;
@@ -125,6 +126,17 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result);
+        }
+        [HttpPut("/requests/{requestId}/ChangingDateOfEntrance")]
+        public async Task<IActionResult> ChangingDateOfEntrance([FromRoute] Guid requestId,
+            [FromBody] ChangingEntranceDateOfAPrincipalCommand command, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("DateOfEntrance Changed Successfully");
+            return BadRequest("DateOfEntrance Didn't change");
         }
     }
 }
