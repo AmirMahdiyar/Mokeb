@@ -131,5 +131,15 @@ namespace Mokeb.Infrastructure.Repositories
                 .SelectMany(x => x.Requests)
                 .SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
+
+        public async Task<List<Request>> GetRequestedRequestsByDateAsync(DateOnly date, CancellationToken ct)
+        {
+            return await _principal
+                .Include(x => x.Requests)
+                .SelectMany(x => x.Requests)
+                .Include(x => x.Travelers)
+                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && x.State == State.Requested)
+                .ToListAsync(ct);
+        }
     }
 }

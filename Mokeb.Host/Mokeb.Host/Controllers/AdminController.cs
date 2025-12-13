@@ -11,6 +11,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.Getti
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.LookingOnRoomAvailabilitiesOnARangeOfDates;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.LookingOnRequestedRequests;
 
 namespace Mokeb.Host.Controllers
 {
@@ -149,6 +150,15 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("ExitDate Changed Successfully");
             return BadRequest("ExitDate Didn't change");
+        }
+        [HttpGet("ManagingRequests/{date}")]
+        public async Task<IActionResult> GetRequestedRequests([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new LookingOnRequestedRequestsQuery();
+            query.EntranceDate = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Requests);
         }
     }
 }

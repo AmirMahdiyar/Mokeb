@@ -32,5 +32,25 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
                                     , principal.DateOfBirth, principal.Gender, principal.ContactInformation.Gmail
                                     , principal.ContactInformation.PhoneNumber, principal.ContactInformation.EmergencyPhoneNumber);
         }
+        public static List<RequestedRequestsDto> ToRequestedRequestsDto(this List<Request> requests)
+        {
+            var result = new List<RequestedRequestsDto>();
+            foreach (var request in requests)
+            {
+                result.Add(new RequestedRequestsDto
+                    (
+                        request.Travelers.First().Name,
+                        request.Travelers.First().FamilyName,
+                        request.Travelers.First().PhoneNumber,
+                        request.MaleCount,
+                        request.FemaleCount,
+                        DateOnly.FromDateTime(request.EnterTime),
+                        DateOnly.FromDateTime(request.ExitTime),
+                        request.Id,
+                        request.State
+                    ));
+            }
+            return result;
+        }
     }
 }
