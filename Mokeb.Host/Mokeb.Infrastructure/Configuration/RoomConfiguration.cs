@@ -25,7 +25,7 @@ namespace Mokeb.Infrastructure.Configuration
                    .IsRequired();
 
             builder.HasMany(x => x.RoomAvailabilities)
-                .WithOne()
+                .WithOne(x => x.Room)
                 .HasForeignKey(x => x.RoomId);
         }
     }
