@@ -1,5 +1,6 @@
 ﻿using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Exceptions.RoomExceptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mokeb.Domain.Model.Entities
 {
@@ -16,6 +17,10 @@ namespace Mokeb.Domain.Model.Entities
         public uint AvailableCapacity { get; private set; }
 
         public Guid RoomId { get; private set; }
+        public Room Room { get; private set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
         #region Behaviors
         public void RemoveFromCapacity(uint amount) => AvailableCapacity -= amount;
 
