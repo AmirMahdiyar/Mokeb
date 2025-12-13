@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Mokeb.Domain.Model.Entities
 {
-    public class Travelers : BaseEntity<Guid>
+    public class Travelers : BaseEntity<Guid>, IEquatable<Travelers>
     {
         public Travelers(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber)
         {
@@ -64,6 +64,24 @@ namespace Mokeb.Domain.Model.Entities
         {
             if (string.IsNullOrWhiteSpace(passportNumber))
                 throw new PassportNumberIsInvalidException();
+        }
+        #endregion
+        #region Equations
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as Travelers);
+        }
+        public bool Equals(Travelers? other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            if (this.GetType() != other.GetType()) return false;
+            return (this.NationalCode == other.NationalCode);
+        }
+
+        public override int GetHashCode()
+        {
+            return (NationalCode != null ? NationalCode.GetHashCode() : 0);
         }
         #endregion
     }
