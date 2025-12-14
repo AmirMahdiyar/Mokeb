@@ -282,7 +282,7 @@ namespace Mokeb.Infrastructure.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomAvailability");
+                    b.ToTable("RoomAvailability", (string)null);
                 });
 
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Travelers", b =>
@@ -356,7 +356,7 @@ namespace Mokeb.Infrastructure.Migrations
 
                             b1.HasKey("CaravanPrincipalId");
 
-                            b1.ToTable("CaravanPrincipals");
+                            b1.ToTable("CaravanPrincipals", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CaravanPrincipalId");
@@ -387,7 +387,7 @@ namespace Mokeb.Infrastructure.Migrations
 
                             b1.HasKey("CaravanPrincipalId");
 
-                            b1.ToTable("CaravanPrincipals");
+                            b1.ToTable("CaravanPrincipals", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CaravanPrincipalId");
@@ -485,7 +485,7 @@ namespace Mokeb.Infrastructure.Migrations
 
                             b1.HasKey("IndividualPrincipalId");
 
-                            b1.ToTable("IndividualPrincipals");
+                            b1.ToTable("IndividualPrincipals", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("IndividualPrincipalId");
@@ -515,7 +515,7 @@ namespace Mokeb.Infrastructure.Migrations
 
                             b1.HasKey("IndividualPrincipalId");
 
-                            b1.ToTable("IndividualPrincipals");
+                            b1.ToTable("IndividualPrincipals", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("IndividualPrincipalId");
@@ -553,7 +553,7 @@ namespace Mokeb.Infrastructure.Migrations
 
                             b1.HasKey("RequestId", "Id");
 
-                            b1.ToTable("RequestRoom");
+                            b1.ToTable("RequestRoom", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("RequestId");

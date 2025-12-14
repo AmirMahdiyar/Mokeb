@@ -10,10 +10,12 @@ namespace Mokeb.Infrastructure.Repositories
     public class RoomRepository : IRoomRepository
     {
         private readonly DbSet<Room> _rooms;
+        private readonly DbSet<RoomAvailability> _roomAvailabilities;
 
         public RoomRepository(MokebDbContext rooms)
         {
             _rooms = rooms.Set<Room>();
+            _roomAvailabilities = rooms.Set<RoomAvailability>();
         }
 
         public void AddRoom(Room room)
@@ -123,6 +125,16 @@ namespace Mokeb.Infrastructure.Repositories
                     x.room.Capacity,
                     x.room.Capacity - x.availability.AvailableCapacity
                     ))
+                .ToListAsync(ct);
+        }
+
+        public async Task<List<RoomAvailability>> GetRoomAvailabilitiesByRoomAvailabilityIdsAsync(List<Guid> roomAvailabilityIds, CancellationToken ct)
+        {
+            return await _rooms
+                .Include(x => x.RoomAvailabilities)
+                .SelectMany(x => x.RoomAvailabilities)
+                .Include(x => x.Room)
+                .Where(x => roomAvailabilityIds.Contains(x.Id))
                 .ToListAsync(ct);
         }
     }

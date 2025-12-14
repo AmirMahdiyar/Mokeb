@@ -27,6 +27,10 @@ namespace Mokeb.Infrastructure.Configuration
             builder.HasMany(x => x.RoomAvailabilities)
                 .WithOne(x => x.Room)
                 .HasForeignKey(x => x.RoomId);
+
+            //builder.Metadata
+            //       .FindNavigation(nameof(Room.RoomAvailabilities))!
+            //       .SetPropertyAccessMode(PropertyAccessMode.);
         }
     }
 }

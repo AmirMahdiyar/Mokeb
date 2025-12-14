@@ -7,7 +7,7 @@ namespace Mokeb.Domain.Model.Entities
 {
     public class Room : BaseEntity<Guid>
     {
-        private List<RoomAvailability> _availability = new List<RoomAvailability>();
+        private List<RoomAvailability> _roomAvailabilities = new List<RoomAvailability>();
         public Room(string name, Gender gender, uint capacity)
         {
             CheckName(name);
@@ -24,7 +24,7 @@ namespace Mokeb.Domain.Model.Entities
         public Gender Gender { get; private set; }
         public uint Capacity { get; private set; }
 
-        public IEnumerable<RoomAvailability> RoomAvailabilities => _availability.AsReadOnly();
+        public IEnumerable<RoomAvailability> RoomAvailabilities => _roomAvailabilities.AsReadOnly();
 
         #region Validations
         public void CheckName(string name)
@@ -36,15 +36,15 @@ namespace Mokeb.Domain.Model.Entities
         #region Behaviors
         public void AddRoomAvailability(RoomAvailability roomAvailability)
         {
-            if (_availability.Contains(roomAvailability))
+            if (_roomAvailabilities.Contains(roomAvailability))
                 throw new RoomIsAvailableAtThatDayException();
-            _availability.Add(roomAvailability);
+            _roomAvailabilities.Add(roomAvailability);
         }
         public void RemoveRoomAvailability(RoomAvailability roomAvailability)
         {
-            if (!_availability.Contains(roomAvailability))
+            if (!_roomAvailabilities.Contains(roomAvailability))
                 throw new RoomNotFoundException();
-            _availability.Remove(roomAvailability);
+            _roomAvailabilities.Remove(roomAvailability);
         }
         #endregion
     }

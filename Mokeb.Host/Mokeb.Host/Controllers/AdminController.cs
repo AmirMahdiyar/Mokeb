@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Mokeb.Application.CommandHandler.AdminCommands.AcceptingARequestedRequest;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
@@ -170,6 +171,16 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.MaleRoomAvailabilities.Concat(result.FemaleRoomAvailabilities));
+        }
+        [HttpPost("ManagingRequests/{enterDate}/Request/{requestId}/CheckingRoomAvailabilities/{exitDate}/AcceptRequest")]
+        public async Task<IActionResult> CheckRequest([FromBody] AcceptingARequestedRequestCommand command, [FromRoute] Guid requestId, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("درخواست قبول شد");
+            return BadRequest("درخواست قبول نشد");
         }
     }
 }

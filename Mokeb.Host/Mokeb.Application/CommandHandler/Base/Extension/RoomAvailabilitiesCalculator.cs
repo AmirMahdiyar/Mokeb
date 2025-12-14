@@ -1,53 +1,91 @@
 ﻿using Mokeb.Application.Exceptions;
 using Mokeb.Domain.Model.Entities;
+using Mokeb.Domain.Model.Enums;
 
 namespace Mokeb.Application.CommandHandler.Base.Extension
 {
     public static class RoomAvailabilitiesCalculator
     {
-        public static void DecreaseFromRoomAvailableCapacity(List<RoomAvailability> roomAvailabilities, uint maleAmount, uint femaleAmount)
+        public static void DecreaseFromRoomAvailableCapacity(List<RoomAvailability> roomAvailabilities, uint maleCount, uint femaleCount)
         {
-            var overallAmount = maleAmount + femaleAmount;
-            foreach (var roomAvailability in roomAvailabilities)
+            var groupedByDate = roomAvailabilities.GroupBy(x => x.AvailableDay);
+
+            foreach (var dayGroup in groupedByDate)
             {
-                if (overallAmount == 0)
-                    break;
-                else if (overallAmount > roomAvailability.AvailableCapacity)
+                var currentDayMaleNeeded = maleCount;
+                var currentDayFemaleNeeded = femaleCount;
+
+                var maleRoomsInThisDay = dayGroup.Where(x => x.Room.Gender == Gender.Male).ToList();
+
+                foreach (var room in maleRoomsInThisDay)
                 {
-                    overallAmount -= roomAvailability.AvailableCapacity;
-                    roomAvailability.RemoveFromCapacity(roomAvailability.AvailableCapacity);
+                    if (currentDayMaleNeeded == 0) break;
+
+                    var amountToDeduct = currentDayMaleNeeded > room.AvailableCapacity ? room.AvailableCapacity : currentDayMaleNeeded;
+
+                    room.RemoveFromCapacity(amountToDeduct);
+                    currentDayMaleNeeded -= amountToDeduct;
                 }
-                else
+
+                if (currentDayMaleNeeded > 0)
+                    throw new ThereIsNotEnoughSpaceException();
+
+
+                var femaleRoomsInThisDay = dayGroup.Where(x => x.Room.Gender == Gender.Female).ToList();
+
+                foreach (var room in femaleRoomsInThisDay)
                 {
-                    roomAvailability.RemoveFromCapacity(overallAmount);
-                    overallAmount = 0;
+                    if (currentDayFemaleNeeded == 0) break;
+
+                    var amountToDeduct = currentDayFemaleNeeded > room.AvailableCapacity ? room.AvailableCapacity : currentDayFemaleNeeded;
+
+                    room.RemoveFromCapacity(amountToDeduct);
+                    currentDayFemaleNeeded -= amountToDeduct;
                 }
+
+                if (currentDayFemaleNeeded > 0)
+                    throw new ThereIsNotEnoughSpaceException();
             }
-            if (overallAmount != 0)
-                throw new ThereIsNotEnoughSpaceException();
         }
-        public static void IncreaseRoomAvailableCapacity(List<RoomAvailability> roomAvailabilities, uint maleAmount, uint femaleAmount)
+        public static void IncreaseRoomAvailableCapacity(List<RoomAvailability> roomAvailabilities, uint maleCount, uint femaleCount)
         {
-            var amountToFree = maleAmount + femaleAmount;
+            var groupedByDate = roomAvailabilities.GroupBy(x => x.AvailableDay);
 
-            foreach (var room in roomAvailabilities)
+            foreach (var dayGroup in groupedByDate)
             {
-                if (amountToFree == 0)
-                    break;
-                var occupiedSpace = room.Room.Capacity - room.AvailableCapacity;
+                var currentDayMaleToFree = maleCount;
+                var currentDayFemaleToFree = femaleCount;
 
-                if (occupiedSpace == 0) continue;
+                var maleRoomsInThisDay = dayGroup.Where(x => x.Room.Gender == Gender.Male).ToList();
 
-                if (amountToFree >= occupiedSpace)
+                foreach (var room in maleRoomsInThisDay)
                 {
-                    room.AddFromCapacity((uint)occupiedSpace);
+                    if (currentDayMaleToFree == 0) break;
 
-                    amountToFree -= (uint)occupiedSpace;
+                    var occupiedSpace = room.Room.Capacity - room.AvailableCapacity;
+
+                    if (occupiedSpace == 0) continue;
+
+                    var amountToAdd = (uint)Math.Min(currentDayMaleToFree, occupiedSpace);
+
+                    room.AddFromCapacity(amountToAdd);
+                    currentDayMaleToFree -= amountToAdd;
                 }
-                else
+
+                var femaleRoomsInThisDay = dayGroup.Where(x => x.Room.Gender == Gender.Female).ToList();
+
+                foreach (var room in femaleRoomsInThisDay)
                 {
-                    room.AddFromCapacity(amountToFree);
-                    amountToFree = 0;
+                    if (currentDayFemaleToFree == 0) break;
+
+                    var occupiedSpace = room.Room.Capacity - room.AvailableCapacity;
+
+                    if (occupiedSpace == 0) continue;
+
+                    var amountToAdd = (uint)Math.Min(currentDayFemaleToFree, occupiedSpace);
+
+                    room.AddFromCapacity(amountToAdd);
+                    currentDayFemaleToFree -= amountToAdd;
                 }
             }
         }
