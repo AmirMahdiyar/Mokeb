@@ -5,6 +5,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
+using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.CapacityReportByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedCaravansRequestsByDate;
@@ -179,6 +180,16 @@ namespace Mokeb.Host.Controllers
             command.Validate();
             var result = await _mediator.Send(command, ct);
             if (result.Success)
+                return Ok("درخواست قبول شد");
+            return BadRequest("درخواست قبول نشد");
+        }
+        [HttpPost("ManagingRequests/{enterDate}/Request/{requestId}/CheckingRoomAvailabilities/{exitDate}/RejectingRequest")]
+        public async Task<IActionResult> CheckRequest([FromBody] RejectingARequestedRequestCommand command, [FromRoute] Guid requestId, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
                 return Ok("درخواست قبول شد");
             return BadRequest("درخواست قبول نشد");
         }
