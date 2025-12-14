@@ -18,5 +18,6 @@ namespace Mokeb.Application.Contracts
         Task<GenderStatsDto> GetPresentStatsAsync(DateOnly date, CancellationToken ct);
 
         Task<List<Request>> GetRequestedRequestsByDateAsync(DateOnly date, CancellationToken ct);
+        Task<List<CaravanPrincipalDto>> GetAllCaravansWithTheirTravelers(CancellationToken ct);
     }
 }

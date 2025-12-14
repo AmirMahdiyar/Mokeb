@@ -141,5 +141,23 @@ namespace Mokeb.Infrastructure.Repositories
                 .Where(x => DateOnly.FromDateTime(x.EnterTime) == date && x.State == State.Requested)
                 .ToListAsync(ct);
         }
+
+        public async Task<List<CaravanPrincipalDto>> GetAllCaravansWithTheirTravelers(CancellationToken ct)
+        {
+            return await _principal
+                .Select(x => new CaravanPrincipalDto(
+                    x.Name,
+                    x.FamilyName,
+                    x.ContactInformation.PhoneNumber,
+                    (uint)x.Pilgrims.Count(x => x.Gender == Gender.Male),
+                    (uint)x.Pilgrims.Count(x => x.Gender == Gender.Female),
+                    x.Pilgrims.Select(x => new PilgrimDto(
+                        x.Name,
+                        x.FamilyName,
+                        x.PhoneNumber,
+                        x.NationalCode)).ToList()
+                        ))
+                .ToListAsync(ct);
+        }
     }
 }

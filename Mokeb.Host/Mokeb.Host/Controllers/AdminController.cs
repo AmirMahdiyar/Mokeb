@@ -13,6 +13,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.Getti
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.LookingOnRoomAvailabilitiesOnARangeOfDates;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.GettingRoomAvailabilitiesOnADateRange;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.LookingOnRequestedRequests;
 
@@ -192,6 +193,13 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("درخواست قبول شد");
             return BadRequest("درخواست قبول نشد");
+        }
+        [HttpPost("ManagingCaravans")]
+        public async Task<IActionResult> ManagingCaravans(CancellationToken ct)
+        {
+            var query = new LookingOnCaravansQuery();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
         }
     }
 }
