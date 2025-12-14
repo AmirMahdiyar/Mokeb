@@ -11,6 +11,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.Getti
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.LookingOnRoomAvailabilitiesOnARangeOfDates;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.GettingRoomAvailabilitiesOnADateRange;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.LookingOnRequestedRequests;
 
 namespace Mokeb.Host.Controllers
@@ -151,14 +152,24 @@ namespace Mokeb.Host.Controllers
                 return Ok("ExitDate Changed Successfully");
             return BadRequest("ExitDate Didn't change");
         }
-        [HttpGet("ManagingRequests/{date}")]
-        public async Task<IActionResult> GetRequestedRequests([FromRoute] DateOnly date, CancellationToken ct)
+        [HttpGet("ManagingRequests/{enterDate}")]
+        public async Task<IActionResult> GetRequestedRequests([FromRoute] DateOnly enterDate, CancellationToken ct)
         {
             var query = new LookingOnRequestedRequestsQuery();
-            query.EntranceDate = date;
+            query.EntranceDate = enterDate;
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Requests);
+        }
+        [HttpGet("ManagingRequests/{enterDate}/Request/{requestId}/CheckingRoomAvailabilities/{exitDate}")]
+        public async Task<IActionResult> CheckRequest([FromRoute] DateOnly enterDate, DateOnly exitDate, CancellationToken ct)
+        {
+            var query = new GettingRoomAvailabilitiesOnADateRangeQuery();
+            query.EnterTime = enterDate;
+            query.ExitTime = exitDate;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.MaleRoomAvailabilities.Concat(result.FemaleRoomAvailabilities));
         }
     }
 }

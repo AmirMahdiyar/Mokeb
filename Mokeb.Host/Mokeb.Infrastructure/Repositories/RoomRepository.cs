@@ -109,5 +109,21 @@ namespace Mokeb.Infrastructure.Repositories
                 .Where(x => dates.Contains(x.AvailableDay))
                 .ToListAsync(ct);
         }
+
+        public async Task<List<RoomAvailabilityDto>> GetRoomAvailabilitiesAtDatesAsync(List<DateOnly> dateRange, CancellationToken ct)
+        {
+            return await _rooms
+                .Include(x => x.RoomAvailabilities)
+                .SelectMany(x => x.RoomAvailabilities, (room, availability) => new { room, availability })
+                .Where(x => dateRange.Contains(x.availability.AvailableDay))
+                .Select(x => new RoomAvailabilityDto(
+                    x.availability.AvailableDay,
+                    x.availability.AvailableCapacity,
+                    x.room.Gender,
+                    x.room.Capacity,
+                    x.room.Capacity - x.availability.AvailableCapacity
+                    ))
+                .ToListAsync(ct);
+        }
     }
 }
