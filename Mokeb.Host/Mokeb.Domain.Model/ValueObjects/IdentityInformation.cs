@@ -7,6 +7,7 @@ namespace Mokeb.Domain.Model.ValueObjects
 {
     public class IdentityInformation
     {
+        private IdentityInformation() { }
         public IdentityInformation(string username, string password, Role role, BloodType bloodType)
         {
             CheckUsername(username);

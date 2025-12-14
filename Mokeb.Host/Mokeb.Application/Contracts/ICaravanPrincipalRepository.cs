@@ -6,6 +6,7 @@ namespace Mokeb.Application.Contracts
     public interface ICaravanPrincipalRepository
     {
         void AddCaravan(CaravanPrincipal caravanPrincipal);
+        void RemoveCaravan(CaravanPrincipal caravanPrincipal);
         Task<bool> IsCaravanByIdenticalInformationExistsAsync(string username, string nationalCode, string passportNumber, CancellationToken ct);
         Task<CaravanPrincipal> GetCaravanByUsernameAsync(string username, string password, CancellationToken ct);
         Task<CaravanPrincipal> GetCaravanByIdAsync(Guid Id, CancellationToken ct);

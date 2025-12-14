@@ -159,5 +159,11 @@ namespace Mokeb.Infrastructure.Repositories
                         ))
                 .ToListAsync(ct);
         }
+
+        public void RemoveCaravan(CaravanPrincipal caravanPrincipal)
+        {
+            _principal
+                .Remove(caravanPrincipal);
+        }
     }
 }

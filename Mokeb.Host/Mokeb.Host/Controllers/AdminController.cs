@@ -4,6 +4,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.AcceptingARequestedRequest;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
+using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
@@ -194,12 +195,22 @@ namespace Mokeb.Host.Controllers
                 return Ok("درخواست قبول شد");
             return BadRequest("درخواست قبول نشد");
         }
-        [HttpPost("ManagingCaravans")]
+        [HttpGet("ManagingCaravans")]
         public async Task<IActionResult> ManagingCaravans(CancellationToken ct)
         {
             var query = new LookingOnCaravansQuery();
             var result = await _mediator.Send(query, ct);
             return Ok(result);
+        }
+        [HttpDelete("ManagingCaravans/{caravanId}")]
+        public async Task<IActionResult> DeletingCaravan([FromRoute] Guid caravanId, [FromBody] DeleteCaravanCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("کاروان با موفقیت حذف شد");
+            return BadRequest("کاروان حذف نشد");
         }
     }
 }
