@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AddFAQ;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingFAQs.GetAllFAQs;
 
 namespace Mokeb.Host.Controllers
 {
@@ -22,6 +23,14 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("سوال اضافه شد");
             return BadRequest("سوال اضافه نشد");
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetFAQs(CancellationToken ct)
+        {
+            var query = new GetAllFAQsQuery();
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Faqs);
         }
     }
 }

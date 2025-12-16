@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mokeb.Application.Contracts;
+using Mokeb.Application.Dtos;
 using Mokeb.Domain.Model.Entities;
 using Mokeb.Infrastructure.Context;
 
@@ -17,6 +18,13 @@ namespace Mokeb.Infrastructure.Repositories
         public void AddFaq(FAQ fAQ)
         {
             _faqs.Add(fAQ);
+        }
+
+        public async Task<List<FAQDto>> GetAllFAQsAsync(CancellationToken ct)
+        {
+            return await _faqs
+                .Select(x => new FAQDto(x.Id, x.Question, x.Answer))
+                .ToListAsync(ct);
         }
     }
 }

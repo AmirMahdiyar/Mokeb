@@ -1,9 +1,11 @@
-﻿using Mokeb.Domain.Model.Entities;
+﻿using Mokeb.Application.Dtos;
+using Mokeb.Domain.Model.Entities;
 
 namespace Mokeb.Application.Contracts
 {
     public interface IFAQRepository
     {
         void AddFaq(FAQ fAQ);
+        Task<List<FAQDto>> GetAllFAQsAsync(CancellationToken ct);
     }
 }
