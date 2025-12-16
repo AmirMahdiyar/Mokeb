@@ -6,6 +6,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
+using Mokeb.Application.CommandHandler.AdminCommands.ChangingIndividualPrincipalInformation;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
@@ -230,6 +231,16 @@ namespace Mokeb.Host.Controllers
             var query = new LookingOnIndividualsQuery();
             var result = await _mediator.Send(query, ct);
             return Ok(result);
+        }
+        [HttpPut("ManagingIndividuals/{individualId}")]
+        public async Task<IActionResult> ChangingIndividualPrincipal([FromRoute] Guid individualId, [FromBody] ChangingIndividualPrincipalInformationCommand command, CancellationToken ct)
+        {
+            command.IndividualId = individualId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("شخص حقیقی تغییر کرد");
+            return BadRequest("شخص حقیقی تغییر نکرد");
         }
     }
 }
