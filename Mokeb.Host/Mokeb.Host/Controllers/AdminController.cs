@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AcceptingARequestedRequest;
+using Mokeb.Application.CommandHandler.AdminCommands.ActivingPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
@@ -211,6 +212,16 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok(" مدیرکاروان با موفقیت تغییر کرد");
             return BadRequest("مدیر کاروان تغییر نکرد");
+        }
+        [HttpPut("ManagingCaravans/{principalId}/ActivateOrDeactivatePrincipal")]
+        public async Task<IActionResult> ActivateOrDeactivatePrincipal([FromRoute] Guid principalId, [FromBody] ActivingOrDeActivingPrincipalCommand command, CancellationToken ct)
+        {
+            command.PrincipalId = principalId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("درخواست با موفقیت انحام یافت");
+            return BadRequest("درخواست انجام نشد");
         }
     }
 }
