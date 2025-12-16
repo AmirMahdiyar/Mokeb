@@ -155,7 +155,8 @@ namespace Mokeb.Infrastructure.Repositories
                         x.Name,
                         x.FamilyName,
                         x.PhoneNumber,
-                        x.NationalCode)).ToList()
+                        x.NationalCode)).ToList(),
+                    x.Id
                         ))
                 .ToListAsync(ct);
         }

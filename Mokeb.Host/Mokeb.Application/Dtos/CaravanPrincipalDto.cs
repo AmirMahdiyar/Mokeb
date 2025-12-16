@@ -2,7 +2,7 @@
 {
     public class CaravanPrincipalDto
     {
-        public CaravanPrincipalDto(string name, string familyName, string phoneNumber, uint maleCapacity, uint femaleCapacity, IEnumerable<PilgrimDto> travelers)
+        public CaravanPrincipalDto(string name, string familyName, string phoneNumber, uint maleCapacity, uint femaleCapacity, IEnumerable<PilgrimDto> travelers, Guid principalId)
         {
             Name = name;
             FamilyName = familyName;
@@ -10,8 +10,9 @@
             MaleCapacity = maleCapacity;
             FemaleCapacity = femaleCapacity;
             Travelers = travelers;
+            PrincipalId = principalId;
         }
-
+        public Guid PrincipalId { get; set; }
         public string Name { get; protected set; }
         public string FamilyName { get; protected set; }
         public string FullName => Name + " " + FamilyName;
