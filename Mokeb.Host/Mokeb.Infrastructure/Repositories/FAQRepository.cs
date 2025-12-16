@@ -26,5 +26,11 @@ namespace Mokeb.Infrastructure.Repositories
                 .Select(x => new FAQDto(x.Id, x.Question, x.Answer))
                 .ToListAsync(ct);
         }
+
+        public async Task<FAQ> GetFAQAsync(Guid faqId, CancellationToken ct)
+        {
+            return await _faqs
+                .SingleOrDefaultAsync(x => x.Id == faqId, ct);
+        }
     }
 }

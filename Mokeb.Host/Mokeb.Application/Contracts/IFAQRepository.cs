@@ -7,5 +7,6 @@ namespace Mokeb.Application.Contracts
     {
         void AddFaq(FAQ fAQ);
         Task<List<FAQDto>> GetAllFAQsAsync(CancellationToken ct);
+        Task<FAQ> GetFAQAsync(Guid faqId, CancellationToken ct);
     }
 }

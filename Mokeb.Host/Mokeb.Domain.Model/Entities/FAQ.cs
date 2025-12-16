@@ -24,6 +24,11 @@ namespace Mokeb.Domain.Model.Entities
             CheckAnswer(answer);
             Answer = answer;
         }
+        public void ChangeQuestion(string question)
+        {
+            CheckQuestion(question);
+            Question = question;
+        }
         #endregion
         #region Behaviors
         public void CheckQuestion(string question)

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AddFAQ;
+using Mokeb.Application.CommandHandler.AdminCommands.EditFAQ;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingFAQs.GetAllFAQs;
 
 namespace Mokeb.Host.Controllers
@@ -31,6 +32,16 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Faqs);
+        }
+        [HttpPut("{faqId}")]
+        public async Task<IActionResult> UpdateFaq([FromRoute] Guid faqId, [FromBody] EditFAQCommand command, CancellationToken ct)
+        {
+            command.FaqId = faqId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("سوال تغییر کرد");
+            return BadRequest("سوال تغییر نکرد");
         }
     }
 }
