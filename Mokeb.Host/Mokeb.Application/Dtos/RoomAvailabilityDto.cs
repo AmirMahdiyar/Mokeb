@@ -12,7 +12,7 @@ namespace Mokeb.Application.Dtos
             OverallCapacity = overallCapacity;
             ReservedAmount = reservedAmount;
         }
-
+        public Guid RoomAvailabilityId { get; set; }
         public DateOnly Date { get; set; }
         public uint OverallCapacity { get; set; }
         public uint ReservedAmount { get; set; }
