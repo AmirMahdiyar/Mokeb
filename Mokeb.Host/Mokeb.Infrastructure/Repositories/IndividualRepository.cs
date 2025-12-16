@@ -128,5 +128,22 @@ namespace Mokeb.Infrastructure.Repositories
                 .SelectMany(x => x.Requests)
                 .SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
+
+        public async Task<List<IndividualPrincipalDto>> GetAllIndividualsWithTheirCompanions(CancellationToken ct)
+        {
+            return await _individual
+                .Select(x => new IndividualPrincipalDto(
+                    x.Id,
+                    x.Name,
+                    x.FamilyName,
+                    x.ContactInformation.PhoneNumber,
+                    x.Companion.Select(x => new CompanionDto(
+                        x.Name,
+                        x.FamilyName,
+                        x.PhoneNumber,
+                        x.NationalCode)).ToList(),
+                        x.IsActive))
+                .ToListAsync(ct);
+        }
     }
 }
