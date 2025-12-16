@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.AcceptingARequestedRequest;
 using Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn;
+using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
@@ -211,6 +212,16 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("کاروان با موفقیت حذف شد");
             return BadRequest("کاروان حذف نشد");
+        }
+        [HttpPut("ManagingCaravans/{caravanId}")]
+        public async Task<IActionResult> ChangingCaravansPrincipal([FromRoute] Guid caravanId, [FromBody] ChangingCaravansPrincipalCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok(" مدیرکاروان با موفقیت تغییر کرد");
+            return BadRequest("مدیر کاروان تغییر نکرد");
         }
     }
 }
