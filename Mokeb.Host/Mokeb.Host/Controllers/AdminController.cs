@@ -8,6 +8,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACara
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingIndividualPrincipalInformation;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
+using Mokeb.Application.CommandHandler.AdminCommands.DeleteIndividual;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
@@ -196,9 +197,9 @@ namespace Mokeb.Host.Controllers
             return Ok(result);
         }
         [HttpDelete("ManagingCaravans/{caravanId}")]
-        public async Task<IActionResult> DeletingCaravan([FromRoute] Guid caravanId, [FromBody] DeleteCaravanCommand command, CancellationToken ct)
+        public async Task<IActionResult> DeletingCaravan([FromRoute] Guid individualId, [FromBody] DeleteCaravanCommand command, CancellationToken ct)
         {
-            command.CaravanId = caravanId;
+            command.CaravanId = individualId;
             command.Validate();
             var result = await _mediator.Send(command, ct);
             if (result.Result)
@@ -215,10 +216,10 @@ namespace Mokeb.Host.Controllers
                 return Ok(" مدیرکاروان با موفقیت تغییر کرد");
             return BadRequest("مدیر کاروان تغییر نکرد");
         }
-        [HttpPut("ManagingCaravans/{principalId}/ActivateOrDeactivatePrincipal")]
-        public async Task<IActionResult> ActivateOrDeactivatePrincipal([FromRoute] Guid principalId, [FromBody] ActivingOrDeActivingPrincipalCommand command, CancellationToken ct)
+        [HttpPut("ManagingCaravans/{caravanId}/ActivateOrDeactivatePrincipal")]
+        public async Task<IActionResult> ActivateOrDeactivatePrincipal([FromRoute] Guid caravanId, [FromBody] ActivingOrDeActivingPrincipalCommand command, CancellationToken ct)
         {
-            command.PrincipalId = principalId;
+            command.PrincipalId = caravanId;
             command.Validate();
             var result = await _mediator.Send(command, ct);
             if (result.Result)
@@ -241,6 +242,26 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("شخص حقیقی تغییر کرد");
             return BadRequest("شخص حقیقی تغییر نکرد");
+        }
+        [HttpPut("ManagingIndividuals/{principalId}/ActivateOrDeactivatePrincipal")]
+        public async Task<IActionResult> ActivateOrDeactivateIndividualPrincipal([FromRoute] Guid principalId, [FromBody] ActivingOrDeActivingPrincipalCommand command, CancellationToken ct)
+        {
+            command.PrincipalId = principalId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("درخواست با موفقیت انحام یافت");
+            return BadRequest("درخواست انجام نشد");
+        }
+        [HttpDelete("ManagingIndividuals/{individualId}")]
+        public async Task<IActionResult> DeletingIndividual([FromRoute] Guid individualId, [FromBody] DeleteIndividualCommand command, CancellationToken ct)
+        {
+            command.IndividualId = individualId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("شخص با موفقیت حذف شد");
+            return BadRequest("شخص حذف نشد");
         }
     }
 }

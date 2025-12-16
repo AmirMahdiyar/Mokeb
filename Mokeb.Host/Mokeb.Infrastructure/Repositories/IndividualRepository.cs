@@ -145,5 +145,10 @@ namespace Mokeb.Infrastructure.Repositories
                         x.IsActive))
                 .ToListAsync(ct);
         }
+
+        public void RemoveIndividual(IndividualPrincipal individualPrincipal)
+        {
+            _individual.Remove(individualPrincipal);
+        }
     }
 }

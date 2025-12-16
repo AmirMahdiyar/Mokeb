@@ -10,6 +10,7 @@ namespace Mokeb.Application.Contracts
         Task<IndividualPrincipal> GetIndividualByIdAsync(Guid Id, CancellationToken ct);
         Task<List<IndividualPrincipalDto>> GetAllIndividualsWithTheirCompanions(CancellationToken ct);
         void AddIndividualPrincipal(IndividualPrincipal individualPrincipal);
+        void RemoveIndividual(IndividualPrincipal individualPrincipal);
         Task<Request> GetRequestByIdAsync(Guid Id, CancellationToken ct);
 
         Task<List<Request>> GetAcceptedOrOutGoingRequestsByDateAsync(DateOnly date, CancellationToken ct);
