@@ -8,7 +8,6 @@ using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfP
 using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.CapacityReportByDate;
-using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedCaravansRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
@@ -58,16 +57,6 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Response);
-        }
-
-        [HttpGet("/GettingCaravanRequestsAtADay/{date}")]
-        public async Task<IActionResult> GettingCaravanRequests([FromRoute] DateOnly date, CancellationToken ct)
-        {
-            var query = new GettingIncomingOrAcceptedCaravansRequestsByDateQuery();
-            query.Date = date;
-            query.Validate();
-            var result = await _mediator.Send(query, ct);
-            return Ok(result.Requests);
         }
 
         [HttpGet("/GettingOutGoingOrAcceptedRequestsAtADay/{date}")]
