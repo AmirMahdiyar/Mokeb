@@ -4,15 +4,16 @@ namespace Mokeb.Application.Dtos
 {
     public class GettingOutGoingOrAcceptedRequestsResponseDto
     {
-        public GettingOutGoingOrAcceptedRequestsResponseDto(string fullName, uint maleCount, uint femaleCount, DateOnly exitDate, IEnumerable<Travelers> travelers)
+        public GettingOutGoingOrAcceptedRequestsResponseDto(string fullName, uint maleCount, uint femaleCount, DateOnly exitDate, IEnumerable<Travelers> travelers, Guid requestId)
         {
             FullName = fullName;
             MaleCount = maleCount;
             FemaleCount = femaleCount;
             EnterDate = exitDate;
             Travelers = travelers;
+            RequestId = requestId;
         }
-
+        public Guid RequestId { get; set; }
         public string FullName { get; set; }
         public uint MaleCount { get; set; }
         public uint FemaleCount { get; set; }
