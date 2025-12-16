@@ -12,7 +12,7 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
             foreach (var request in requests)
             {
                 result.Add(new GettingIncomingOrAcceptedRequestsResponseDto(request.Travelers.First().Name + " " + request.Travelers.First().FamilyName,
-                   request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.ExitTime), request.Travelers));
+                   request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.ExitTime), request.Travelers, request.Id));
             }
             return result;
         }
@@ -22,7 +22,7 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
             foreach (var request in requests)
             {
                 result.Add(new GettingOutGoingOrAcceptedRequestsResponseDto(request.Travelers.First().Name + " " + request.Travelers.First().FamilyName,
-                   request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.EnterTime), request.Travelers));
+                   request.MaleCount, request.FemaleCount, DateOnly.FromDateTime(request.EnterTime), request.Travelers, request.Id));
             }
             return result;
         }
@@ -30,7 +30,7 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
         {
             return new PrincipalDto(principal.Name, principal.FamilyName, principal.NationalCode, principal.PassportNumber
                                     , principal.DateOfBirth, principal.Gender, principal.ContactInformation.Gmail
-                                    , principal.ContactInformation.PhoneNumber, principal.ContactInformation.EmergencyPhoneNumber);
+                                    , principal.ContactInformation.PhoneNumber, principal.ContactInformation.EmergencyPhoneNumber, principal.Id);
         }
         public static List<RequestedRequestsDto> ToRequestedRequestsDto(this List<Request> requests)
         {
