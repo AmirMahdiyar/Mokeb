@@ -29,6 +29,7 @@ namespace Mokeb.Domain.Model.Base
             Gender = gender;
             ContactInformation = contactInformation;
             IdentityInformation = identityInformation;
+            IsActive = true;
         }
 
         public string Name { get; protected set; }
@@ -39,6 +40,7 @@ namespace Mokeb.Domain.Model.Base
         public Gender Gender { get; protected set; }
         public ContactInformation ContactInformation { get; protected set; }
         public IdentityInformation IdentityInformation { get; protected set; }
+        public bool IsActive { get; protected set; }
 
         public IEnumerable<Request> Requests => _requests.AsReadOnly();
 
@@ -82,6 +84,8 @@ namespace Mokeb.Domain.Model.Base
                 throw new RequestNotFoundException();
             _requests.Remove(request);
         }
+        public void ActiveThePrincipal() => IsActive = true;
+        public void DeactiveThePrincipal() => IsActive = false;
         #endregion
         #region Validations
         public void CheckUsername(string username)
