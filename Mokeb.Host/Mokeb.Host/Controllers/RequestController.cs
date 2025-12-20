@@ -5,6 +5,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipa
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance;
 
 namespace Mokeb.Host.Controllers
 {
@@ -70,6 +71,16 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("ExitDate Changed Successfully");
             return BadRequest("ExitDate Didn't change");
+        }
+        [HttpGet("IncomingOrAccepted/{date}/Search/{input}")]
+        public async Task<IActionResult> SearchFroIncomingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var command = new SearchForEnteredOrDelayInEntranceCommand();
+            command.Input = input;
+            command.Date = date;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            return Ok(result.Response);
         }
     }
 }
