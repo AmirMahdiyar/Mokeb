@@ -1,16 +1,16 @@
 ﻿using MediatR;
-using Mokeb.Application.CommandHandler.Base;
 using Mokeb.Application.CommandHandler.Base.Extension;
+using Mokeb.Application.QueryHandler.Base;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance
 {
-    public class SearchForEnteredOrDelayInEntranceCommand : CommandBase, IRequest<SearchForEnteredOrDelayInEntranceCommandResponse>
+    public class SearchForEnteredOrDelayInEntranceQuery : QueryBase, IRequest<SearchForEnteredOrDelayInEntranceQueryResponse>
     {
         public string Input { get; set; }
         public DateOnly Date { get; set; }
         public override void Validate()
         {
-            new SearchForEnteredOrDelayInEntranceCommandValidator().Validate(this).ThrowIfNeeded();
+            new SearchForEnteredOrDelayInEntranceQueryValidator().Validate(this).ThrowIfNeeded();
         }
     }
 }

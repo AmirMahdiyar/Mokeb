@@ -2,11 +2,11 @@
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance
 {
-    public class SearchForEnteredOrDelayInEntranceCommandResponse
+    public class SearchForEnteredOrDelayInEntranceQueryResponse
     {
-        public static SearchForEnteredOrDelayInEntranceCommandResponse SucceededResponse(List<GettingIncomingOrAcceptedRequestsResponseDto> response)
+        public static SearchForEnteredOrDelayInEntranceQueryResponse SucceededResponse(List<GettingIncomingOrAcceptedRequestsResponseDto> response)
         {
-            return new SearchForEnteredOrDelayInEntranceCommandResponse()
+            return new SearchForEnteredOrDelayInEntranceQueryResponse()
             {
                 Response = response,
             };
