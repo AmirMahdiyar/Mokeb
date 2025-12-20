@@ -2,13 +2,13 @@
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans
 {
-    public class SearchInCaravansCommandResponse
+    public class SearchInCaravansQueryResponse
     {
-        public static SearchInCaravansCommandResponse Response()
+        public static SearchInCaravansQueryResponse Response()
         {
-            return new SearchInCaravansCommandResponse();
+            return new SearchInCaravansQueryResponse();
         }
-        public SearchInCaravansCommandResponse WithResponse(List<CaravanPrincipalDto> caravanPrincipals)
+        public SearchInCaravansQueryResponse WithResponse(List<CaravanPrincipalDto> caravanPrincipals)
         {
             CaravanPrincipals = caravanPrincipals;
             return this;

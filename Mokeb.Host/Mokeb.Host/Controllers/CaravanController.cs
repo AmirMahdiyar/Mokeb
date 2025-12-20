@@ -98,10 +98,10 @@ namespace Mokeb.Host.Controllers
             return BadRequest("درخواست انجام نشد");
         }
         [HttpPost("Search")]
-        public async Task<IActionResult> SearchInCaravans([FromBody] SearchInCaravansCommand command, CancellationToken ct)
+        public async Task<IActionResult> SearchInCaravans([FromBody] SearchInCaravansQuery query, CancellationToken ct)
         {
-            command.Validate();
-            var result = await _mediator.Send(command, ct);
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
             return Ok(result.CaravanPrincipals);
         }
     }

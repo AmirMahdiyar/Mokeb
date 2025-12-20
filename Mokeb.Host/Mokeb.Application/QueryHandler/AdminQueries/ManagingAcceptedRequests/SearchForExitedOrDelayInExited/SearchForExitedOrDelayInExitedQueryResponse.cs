@@ -2,11 +2,11 @@
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForExitedOrDelayInExited
 {
-    public class SearchForExitedOrDelayInExitedCommandResponse
+    public class SearchForExitedOrDelayInExitedQueryResponse
     {
-        public static SearchForExitedOrDelayInExitedCommandResponse SucceededResponse(List<GettingOutGoingOrAcceptedRequestsResponseDto> response)
+        public static SearchForExitedOrDelayInExitedQueryResponse SucceededResponse(List<GettingOutGoingOrAcceptedRequestsResponseDto> response)
         {
-            return new SearchForExitedOrDelayInExitedCommandResponse()
+            return new SearchForExitedOrDelayInExitedQueryResponse()
             {
                 Response = response,
             };
