@@ -4,6 +4,9 @@ using Mokeb.Application.CommandHandler.AdminCommands.AddingRoom;
 using Mokeb.Application.CommandHandler.AdminCommands.AddingRoomAvailability;
 using Mokeb.Application.CommandHandler.AdminCommands.RemovingRoom;
 using Mokeb.Application.CommandHandler.AdminCommands.RemovingRoomAvailability;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.CapacityReportByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.LookingOnRoomAvailabilitiesOnARangeOfDates;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.GettingRoomAvailabilitiesOnADateRange;
 
 namespace Mokeb.Host.Controllers
 {
@@ -55,6 +58,34 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("Date Changed Successfully");
             return BadRequest("Date Didn't change");
+        }
+        [HttpGet("{date}/ReportStats")]
+        public async Task<IActionResult> GettingStats([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new CapacityReportByDateQuery();
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
+        }
+        [HttpGet("RoomAvailabilities/{requestId}/DistinctRoomAvailabilities")]
+        public async Task<IActionResult> LookingDistinctOnRoomAvailabilitiesToAddInRequest([FromRoute] Guid requestId, CancellationToken ct)
+        {
+            var query = new LookingOnRoomAvailabilitiesOnARangeOfDatesQuery();
+            query.RequestId = requestId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
+        }
+        [HttpGet("RoomAvailabilities/{enterDate}/{exitDate}")]
+        public async Task<IActionResult> GettingRoomAvailabilitiesOnARange([FromRoute] DateOnly enterDate, [FromRoute] DateOnly exitDate, CancellationToken ct)
+        {
+            var query = new GettingRoomAvailabilitiesOnADateRangeQuery();
+            query.EnterTime = enterDate;
+            query.ExitTime = exitDate;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
         }
     }
 }
