@@ -4,12 +4,12 @@ using Mokeb.Application.QueryHandler.Base;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans
 {
-    public class SearchInCaravansCommand : QueryBase, IRequest<SearchInCaravansCommandResponse>
+    public class SearchInCaravansQuery : QueryBase, IRequest<SearchInCaravansQueryResponse>
     {
         public string Input { get; set; }
         public override void Validate()
         {
-            new SearchInCaravansCommandValidator().Validate(this).ThrowIfNeeded();
+            new SearchInCaravansQueryValidator().Validate(this).ThrowIfNeeded();
         }
     }
 }

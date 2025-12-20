@@ -79,21 +79,21 @@ namespace Mokeb.Host.Controllers
         [HttpGet("IncomingOrAccepted/{date}/Search/{input}")]
         public async Task<IActionResult> SearchForIncomingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
         {
-            var command = new SearchForEnteredOrDelayInEntranceCommand();
-            command.Input = input;
-            command.Date = date;
-            command.Validate();
-            var result = await _mediator.Send(command, ct);
+            var query = new SearchForEnteredOrDelayInEntranceQuery();
+            query.Input = input;
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
             return Ok(result.Response);
         }
         [HttpGet("OutgoingOrAccepted/{date}/Search/{input}")]
         public async Task<IActionResult> SearchForOutgoingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
         {
-            var command = new SearchForExitedOrDelayInExitedCommand();
-            command.Input = input;
-            command.Date = date;
-            command.Validate();
-            var result = await _mediator.Send(command, ct);
+            var query = new SearchForExitedOrDelayInExitedQuery();
+            query.Input = input;
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
             return Ok(result.Response);
         }
         [HttpGet("RequestedRequests/{entranceDate}")]

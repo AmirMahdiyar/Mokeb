@@ -8,6 +8,7 @@ using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSig
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.LookingOnIndividuals;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.SearchInIndividuals;
 
 namespace Mokeb.Host.Controllers
 {
@@ -95,6 +96,13 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("شخص با موفقیت حذف شد");
             return BadRequest("شخص حذف نشد");
+        }
+        [HttpPost("Search")]
+        public async Task<IActionResult> SearchInIndividuals([FromBody] SearchInIndividualsQuery query, CancellationToken ct)
+        {
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.IndividualPrincipals);
         }
     }
 }

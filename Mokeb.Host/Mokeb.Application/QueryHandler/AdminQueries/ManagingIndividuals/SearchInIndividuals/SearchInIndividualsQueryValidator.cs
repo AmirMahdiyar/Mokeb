@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans
+namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.SearchInIndividuals
 {
-    public class SearchInCaravansCommandValidator : AbstractValidator<SearchInCaravansCommand>
+    public class SearchInIndividualsQueryValidator : AbstractValidator<SearchInIndividualsQuery>
     {
-        public SearchInCaravansCommandValidator()
+        public SearchInIndividualsQueryValidator()
         {
             RuleFor(x => x.Input)
                 .NotEmpty()
