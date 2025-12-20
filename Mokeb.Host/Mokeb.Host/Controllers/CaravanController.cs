@@ -1,8 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Mokeb.Application.CommandHandler.AdminCommands.ActivingPrincipal;
+using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
+using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
 
 namespace Mokeb.Host.Controllers
 {
@@ -44,6 +49,52 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("You are logged out successfully");
             return BadRequest("You are not logged out");
+        }
+        [HttpGet("{caravanId}")]
+        public async Task<IActionResult> GettingCaravanInformation([FromRoute] Guid caravanId, CancellationToken ct)
+        {
+            var query = new GettingPrincipalInformationQuery();
+            query.PrincipalId = caravanId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Principal);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetCaravans(CancellationToken ct)
+        {
+            var query = new LookingOnCaravansQuery();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result);
+        }
+        [HttpDelete("{caravanId}")]
+        public async Task<IActionResult> DeletingCaravan([FromRoute] Guid caravanId, [FromBody] DeleteCaravanCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("کاروان با موفقیت حذف شد");
+            return BadRequest("کاروان حذف نشد");
+        }
+        [HttpPut("{caravanId}/ChangePrincipal")]
+        public async Task<IActionResult> ChangingCaravansPrincipal([FromRoute] Guid caravanId, [FromBody] ChangingCaravansPrincipalCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok(" مدیرکاروان با موفقیت تغییر کرد");
+            return BadRequest("مدیر کاروان تغییر نکرد");
+        }
+        [HttpPut("{caravanId}/ActivateOrDeactivatePrincipal")]
+        public async Task<IActionResult> ActivateOrDeactivatePrincipal([FromRoute] Guid caravanId, [FromBody] ActivingOrDeActivingPrincipalCommand command, CancellationToken ct)
+        {
+            command.PrincipalId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("درخواست با موفقیت انحام یافت");
+            return BadRequest("درخواست انجام نشد");
         }
     }
 }
