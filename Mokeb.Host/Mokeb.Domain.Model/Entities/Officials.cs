@@ -6,6 +6,7 @@ namespace Mokeb.Domain.Model.Entities
 {
     public class Officials : BaseEntity<Guid>
     {
+        private Officials() { } // for ef
         public Officials(string name, string lastName, string phoneNumber)
         {
             CheckName(name);
