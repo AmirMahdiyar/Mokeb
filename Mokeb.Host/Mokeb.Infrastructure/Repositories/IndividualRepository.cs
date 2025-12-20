@@ -128,6 +128,26 @@ namespace Mokeb.Infrastructure.Repositories
                 .SelectMany(x => x.Requests)
                 .SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
+        public async Task<List<Request>> SearchInEnteredOrDelayInEnterRequestWithNameOrFamilyName(DateOnly date, string input, CancellationToken ct)
+        {
+            return await _individual
+                .Where(x => x.Name.ToLower().Contains(input.ToLower()) || x.FamilyName.ToLower().Contains(input.ToLower()))
+                .SelectMany(x => x.Requests)
+                .Include(x => x.Travelers)
+                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date &&
+                (x.State == State.Accepted || x.State == State.DelayInEntrance || x.State == State.Entered))
+                .ToListAsync(ct);
+        }
+        public async Task<List<Request>> SearchInExitedOrDelayInExitRequestWithNameOrFamilyName(DateOnly date, string input, CancellationToken ct)
+        {
+            return await _individual
+                .Where(x => x.Name.ToLower().Contains(input.ToLower()) || x.FamilyName.ToLower().Contains(input.ToLower()))
+                .SelectMany(x => x.Requests)
+                .Include(x => x.Travelers)
+                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date &&
+                (x.State == State.Exited || x.State == State.DelayInExit || x.State == State.Accepted))
+                .ToListAsync(ct);
+        }
 
         public async Task<List<IndividualPrincipalDto>> GetAllIndividualsWithTheirCompanions(CancellationToken ct)
         {
