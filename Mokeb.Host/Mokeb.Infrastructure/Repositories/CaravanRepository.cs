@@ -189,5 +189,29 @@ namespace Mokeb.Infrastructure.Repositories
             _principal
                 .Remove(caravanPrincipal);
         }
+
+        public async Task<List<CaravanPrincipalDto>> SearchForCaravansByNameOrFamilyName(string input, CancellationToken ct)
+        {
+            return await _principal
+                .Include(x => x.IdentityInformation)
+                .Include(x => x.ContactInformation)
+                .Include(x => x.Pilgrims)
+                .Where(x => x.Name.ToLower().Contains(input.ToLower()) || x.FamilyName.ToLower().Contains(input.ToLower()))
+                .Select(x => new CaravanPrincipalDto(
+                    x.Name,
+                    x.FamilyName,
+                    x.ContactInformation.PhoneNumber,
+                    (uint)x.Pilgrims.Count(x => x.Gender == Gender.Male),
+                    (uint)x.Pilgrims.Count(x => x.Gender == Gender.Female),
+                    x.Pilgrims.Select(x => new PilgrimDto(
+                        x.Name,
+                        x.FamilyName,
+                        x.PhoneNumber,
+                        x.NationalCode)).ToList(),
+                    x.Id,
+                    x.IsActive
+                        ))
+                .ToListAsync(ct);
+        }
     }
 }
