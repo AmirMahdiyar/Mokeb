@@ -8,6 +8,7 @@ using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans;
 
 namespace Mokeb.Host.Controllers
 {
@@ -95,6 +96,13 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("درخواست با موفقیت انحام یافت");
             return BadRequest("درخواست انجام نشد");
+        }
+        [HttpPost("Search")]
+        public async Task<IActionResult> SearchInCaravans([FromBody] SearchInCaravansCommand command, CancellationToken ct)
+        {
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            return Ok(result.CaravanPrincipals);
         }
     }
 }
