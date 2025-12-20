@@ -4,6 +4,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.AddingRoom;
 using Mokeb.Application.CommandHandler.AdminCommands.AddingRoomAvailability;
 using Mokeb.Application.CommandHandler.AdminCommands.RemovingRoom;
 using Mokeb.Application.CommandHandler.AdminCommands.RemovingRoomAvailability;
+using Mokeb.Application.QueryHandler.AdminQueries.GetRoomAvailabilitiesInADate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.CapacityReportByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.LookingOnRoomAvailabilitiesOnARangeOfDates;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.GettingRoomAvailabilitiesOnADateRange;
@@ -86,6 +87,14 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result);
+        }
+        [HttpGet("RoomAvailabilities/{date}")]
+        public async Task<IActionResult> GetAvailableRoomAtDate([FromRoute] DateOnly date, GetRoomAvailabilitiesInADateQuery query, CancellationToken ct)
+        {
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.RoomAvailabilities);
         }
     }
 }
