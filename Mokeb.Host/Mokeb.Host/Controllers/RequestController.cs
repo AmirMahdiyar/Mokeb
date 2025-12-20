@@ -1,10 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Mokeb.Application.CommandHandler.AdminCommands.AcceptingARequestedRequest;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACaravan;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
+using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.LookingOnRequestedRequests;
 
 namespace Mokeb.Host.Controllers
 {
@@ -70,6 +73,34 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("ExitDate Changed Successfully");
             return BadRequest("ExitDate Didn't change");
+        }
+        [HttpGet("RequestedRequests/{entranceDate}")]
+        public async Task<IActionResult> GetRequestedRequests([FromRoute] DateOnly entranceDate, CancellationToken ct)
+        {
+            var query = new LookingOnRequestedRequestsQuery();
+            query.EntranceDate = entranceDate;
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Requests);
+        }
+        [HttpPut("{requestId}/AcceptRequest")]
+        public async Task<IActionResult> AcceptRequest([FromRoute] Guid requestId, AcceptingARequestedRequestCommand command, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Success)
+                return Ok("درخواست قبول شد");
+            return BadRequest("درخواست قبول نشد");
+        }
+        [HttpPut("{requestId}/RejectRequest")]
+        public async Task<IActionResult> RejectRequest([FromRoute] Guid requestId, RejectingARequestedRequestCommand command, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("درخواست رد شد");
+            return BadRequest("درخواست رد نشد");
         }
     }
 }
