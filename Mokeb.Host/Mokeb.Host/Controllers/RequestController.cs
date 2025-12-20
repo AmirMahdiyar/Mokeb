@@ -7,6 +7,8 @@ using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfP
 using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForExitedOrDelayInExited;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.LookingOnRequestedRequests;
 
 namespace Mokeb.Host.Controllers
@@ -73,6 +75,26 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("ExitDate Changed Successfully");
             return BadRequest("ExitDate Didn't change");
+        }
+        [HttpGet("IncomingOrAccepted/{date}/Search/{input}")]
+        public async Task<IActionResult> SearchForIncomingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var command = new SearchForEnteredOrDelayInEntranceCommand();
+            command.Input = input;
+            command.Date = date;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            return Ok(result.Response);
+        }
+        [HttpGet("OutgoingOrAccepted/{date}/Search/{input}")]
+        public async Task<IActionResult> SearchForOutgoingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var command = new SearchForExitedOrDelayInExitedCommand();
+            command.Input = input;
+            command.Date = date;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            return Ok(result.Response);
         }
         [HttpGet("RequestedRequests/{entranceDate}")]
         public async Task<IActionResult> GetRequestedRequests([FromRoute] DateOnly entranceDate, CancellationToken ct)
