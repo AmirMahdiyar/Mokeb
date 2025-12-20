@@ -16,6 +16,8 @@ namespace Mokeb.Application.Contracts
         Task<GenderStatsDto> GetEntryStatsAsync(DateOnly date, CancellationToken ct);
         Task<GenderStatsDto> GetExitStatsAsync(DateOnly date, CancellationToken ct);
         Task<GenderStatsDto> GetPresentStatsAsync(DateOnly date, CancellationToken ct);
-        Task<List<Request>> SearchInRequestWithNameOrFamilyName(DateOnly date, string input, CancellationToken ct);
+        Task<List<Request>> SearchInEnteredOrDelayInEnterRequestWithNameOrFamilyName(DateOnly date, string input, CancellationToken ct);
+        Task<List<Request>> SearchInExitedOrDelayInExitRequestWithNameOrFamilyName(DateOnly date, string input, CancellationToken ct);
+
     }
 }

@@ -6,6 +6,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfP
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForExitedOrDelayInExited;
 
 namespace Mokeb.Host.Controllers
 {
@@ -73,9 +74,19 @@ namespace Mokeb.Host.Controllers
             return BadRequest("ExitDate Didn't change");
         }
         [HttpGet("IncomingOrAccepted/{date}/Search/{input}")]
-        public async Task<IActionResult> SearchFroIncomingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
+        public async Task<IActionResult> SearchForIncomingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
         {
             var command = new SearchForEnteredOrDelayInEntranceCommand();
+            command.Input = input;
+            command.Date = date;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            return Ok(result.Response);
+        }
+        [HttpGet("OutgoingOrAccepted/{date}/Search/{input}")]
+        public async Task<IActionResult> SearchForOutgoingOrAccepted([FromRoute] string input, [FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var command = new SearchForExitedOrDelayInExitedCommand();
             command.Input = input;
             command.Date = date;
             command.Validate();

@@ -16,8 +16,8 @@ namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.S
 
         public async Task<SearchForEnteredOrDelayInEntranceCommandResponse> Handle(SearchForEnteredOrDelayInEntranceCommand request, CancellationToken cancellationToken)
         {
-            var caravanRequests = await _caravanPrincipalRepository.SearchInRequestWithNameOrFamilyName(request.Date, request.Input, cancellationToken);
-            var individualRequests = await _individualPrincipalRepository.SearchInRequestWithNameOrFamilyName(request.Date, request.Input, cancellationToken);
+            var caravanRequests = await _caravanPrincipalRepository.SearchInEnteredOrDelayInEnterRequestWithNameOrFamilyName(request.Date, request.Input, cancellationToken);
+            var individualRequests = await _individualPrincipalRepository.SearchInEnteredOrDelayInEnterRequestWithNameOrFamilyName(request.Date, request.Input, cancellationToken);
             var requests = caravanRequests.Concat(individualRequests).ToList();
             return ResponseModel
                 .SucceededResponse(requests.ToGettingAcceptedRequestResponseDto());
