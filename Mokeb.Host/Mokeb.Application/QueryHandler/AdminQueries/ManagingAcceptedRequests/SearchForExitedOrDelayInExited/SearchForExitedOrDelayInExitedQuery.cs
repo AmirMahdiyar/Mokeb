@@ -4,13 +4,13 @@ using Mokeb.Application.QueryHandler.Base;
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForExitedOrDelayInExited
 {
-    public class SearchForExitedOrDelayInExitedCommand : QueryBase, IRequest<SearchForExitedOrDelayInExitedCommandResponse>
+    public class SearchForExitedOrDelayInExitedQuery : QueryBase, IRequest<SearchForExitedOrDelayInExitedQueryResponse>
     {
         public DateOnly Date { get; set; }
         public string Input { get; set; }
         public override void Validate()
         {
-            new SearchForExitedOrDelayInExitedCommandValidator().Validate(this).ThrowIfNeeded();
+            new SearchForExitedOrDelayInExitedQueryValidator().Validate(this).ThrowIfNeeded();
         }
     }
 }
