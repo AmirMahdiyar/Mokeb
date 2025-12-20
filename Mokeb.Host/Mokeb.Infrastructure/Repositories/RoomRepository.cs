@@ -137,5 +137,19 @@ namespace Mokeb.Infrastructure.Repositories
                 .Where(x => roomAvailabilityIds.Contains(x.Id))
                 .ToListAsync(ct);
         }
+
+        public async Task<List<RoomAvailabilitiesInformationInADateDto>> GetRoomAvailabilitiesInformationInADateAsync(DateOnly date, CancellationToken ct)
+        {
+            return await _rooms
+                .SelectMany(x => x.RoomAvailabilities)
+                .Where(x => x.AvailableDay == date)
+                .Select(x => new RoomAvailabilitiesInformationInADateDto(
+                    x.AvailableDay,
+                    x.Room.Capacity - x.AvailableCapacity,
+                    x.AvailableCapacity,
+                    x.Room.Gender
+                    ))
+                .ToListAsync(ct);
+        }
     }
 }
