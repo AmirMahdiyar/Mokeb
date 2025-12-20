@@ -170,5 +170,26 @@ namespace Mokeb.Infrastructure.Repositories
         {
             _individual.Remove(individualPrincipal);
         }
+
+        public async Task<List<IndividualPrincipalDto>> SearchForIndividualsByNameOrFamilyName(string input, CancellationToken ct)
+        {
+            return await _individual
+                .Include(x => x.ContactInformation)
+                .Include(x => x.IdentityInformation)
+                .Include(x => x.Companion)
+                .Where(x => x.Name.ToLower().Contains(input.ToLower()) || x.FamilyName.ToLower().Contains(input.ToLower()))
+                .Select(x => new IndividualPrincipalDto(
+                    x.Id,
+                    x.Name,
+                    x.FamilyName,
+                    x.ContactInformation.PhoneNumber,
+                    x.Companion.Select(x => new CompanionDto(
+                        x.Name,
+                        x.FamilyName,
+                        x.PhoneNumber,
+                        x.NationalCode)).ToList(),
+                        x.IsActive))
+                .ToListAsync(ct);
+        }
     }
 }
