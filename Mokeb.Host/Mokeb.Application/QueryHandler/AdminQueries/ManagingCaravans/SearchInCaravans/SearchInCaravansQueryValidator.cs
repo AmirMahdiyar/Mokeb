@@ -2,9 +2,9 @@
 
 namespace Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans
 {
-    public class SearchInCaravansCommandValidator : AbstractValidator<SearchInCaravansCommand>
+    public class SearchInCaravansQueryValidator : AbstractValidator<SearchInCaravansQuery>
     {
-        public SearchInCaravansCommandValidator()
+        public SearchInCaravansQueryValidator()
         {
             RuleFor(x => x.Input)
                 .NotEmpty()
