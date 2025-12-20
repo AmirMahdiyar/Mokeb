@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
+using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 
 namespace Mokeb.Host.Controllers
 {
@@ -44,6 +45,15 @@ namespace Mokeb.Host.Controllers
             if (result.Success)
                 return Ok("You are logged out successfully");
             return BadRequest("You are not logged out");
+        }
+        [HttpGet("{caravanId}")]
+        public async Task<IActionResult> GettingCaravanInformation([FromRoute] Guid caravanId, CancellationToken ct)
+        {
+            var query = new GettingPrincipalInformationQuery();
+            query.PrincipalId = caravanId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Principal);
         }
     }
 }
