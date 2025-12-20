@@ -23,6 +23,8 @@ namespace Mokeb.Application.Contracts
         Task<List<Request>> SearchInExitedOrDelayInExitRequestWithNameOrFamilyName(DateOnly date, string input, CancellationToken ct);
         Task<List<IndividualPrincipalDto>> SearchForIndividualsByNameOrFamilyName(string input, CancellationToken ct);
         Task<GenderStatsInAYearDto> GetTravelersOfRequestsStatInAYear(DateOnly date, CancellationToken ct);
+        Task<int> GetAllCaravanRequestsAmountInAYear(DateOnly date, CancellationToken ct);
+
 
 
 

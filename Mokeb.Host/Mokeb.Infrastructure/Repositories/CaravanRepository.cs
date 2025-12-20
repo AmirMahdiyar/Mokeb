@@ -231,5 +231,19 @@ namespace Mokeb.Infrastructure.Repositories
                 ))
                 .FirstOrDefaultAsync(ct) ?? new GenderStatsInAYearDto();
         }
+
+        public async Task<int> GetAllCaravanRequestsAmountInAYear(DateOnly date, CancellationToken ct)
+        {
+            var startDateTime = date.ToDateTime(TimeOnly.MinValue);
+            var endDateTime = date.AddYears(1).ToDateTime(TimeOnly.MaxValue);
+            return await _principal
+                .SelectMany(x => x.Requests)
+                .Where(x =>
+                    x.EnterTime >= startDateTime &&
+                    x.ExitTime < endDateTime &&
+                    (x.State == State.Entered || x.State == State.DelayInEntrance ||
+                     x.State == State.DelayInExit || x.State == State.Exited))
+                .CountAsync(ct);
+        }
     }
 }

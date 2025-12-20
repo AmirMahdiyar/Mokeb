@@ -6,6 +6,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipa
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
 using Mokeb.Application.QueryHandler.AdminQueries.AllTravelersGenderStaticsInAYear;
+using Mokeb.Application.QueryHandler.AdminQueries.BiennialBookingStats;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance;
@@ -125,8 +126,15 @@ namespace Mokeb.Host.Controllers
                 return Ok("درخواست رد شد");
             return BadRequest("درخواست رد نشد");
         }
-        [HttpPost("GetGenderStatsInAYear")]
+        [HttpPost("GenderStatsInAYear")]
         public async Task<IActionResult> GetGenderStatsInAYear([FromBody] AllTravelersGenderStaticsInAYearQuery query, CancellationToken ct)
+        {
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Stats);
+        }
+        [HttpPost("RequestsTypeStats")]
+        public async Task<IActionResult> GetRequestsTypeStats([FromBody] BiennialBookingStatsQuery query, CancellationToken ct)
         {
             query.Validate();
             var result = await _mediator.Send(query, ct);
