@@ -5,6 +5,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ChangingEntranceDateOfACara
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingExitDateOfAPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople;
 using Mokeb.Application.CommandHandler.AdminCommands.RejectingARequestedRequest;
+using Mokeb.Application.QueryHandler.AdminQueries.AllTravelersGenderStaticsInAYear;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingIncomingOrAcceptedRequestByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingOutGoingOrAcceptedRequestsByDate;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance;
@@ -123,6 +124,13 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("درخواست رد شد");
             return BadRequest("درخواست رد نشد");
+        }
+        [HttpPost("GetGenderStatsInAYear")]
+        public async Task<IActionResult> GetGenderStatsInAYear([FromBody] AllTravelersGenderStaticsInAYearQuery query, CancellationToken ct)
+        {
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Stats);
         }
     }
 }
