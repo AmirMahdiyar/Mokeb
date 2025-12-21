@@ -9,6 +9,7 @@ using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.LookingOnIndividuals;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.SearchInIndividuals;
+using Mokeb.Application.QueryHandler.IndividualQueries.CheckCapacityForAmount;
 
 namespace Mokeb.Host.Controllers
 {
@@ -103,6 +104,14 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.IndividualPrincipals);
+        }
+        [HttpPost("{individualId}/CheckCapacity")]
+        public async Task<IActionResult> CheckCapacity([FromRoute] Guid individualId, [FromBody] CheckCapacityForAmountQuery query, CancellationToken ct)
+        {
+            query.IndividualId = individualId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Result);
         }
     }
 }

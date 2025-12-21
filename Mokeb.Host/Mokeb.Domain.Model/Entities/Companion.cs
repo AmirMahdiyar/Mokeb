@@ -33,6 +33,7 @@ namespace Mokeb.Domain.Model.Entities
         public string PassportNumber { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
         public string PhoneNumber { get; private set; }
+
         public Gender Gender { get; private set; }
 
 

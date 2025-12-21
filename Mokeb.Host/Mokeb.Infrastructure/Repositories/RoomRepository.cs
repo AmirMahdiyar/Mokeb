@@ -151,5 +151,44 @@ namespace Mokeb.Infrastructure.Repositories
                     ))
                 .ToListAsync(ct);
         }
+
+        public async Task<bool> CheckAmountForMales(List<DateOnly> dates, int maleAmount, CancellationToken ct)
+        {
+            var requiredDaysCount = dates.Distinct().Count();
+
+            var validDaysCount = await _rooms
+                .SelectMany(x => x.RoomAvailabilities)
+                .Where(x => dates.Contains(x.AvailableDay) && x.Room.Gender == Gender.Male)
+                .GroupBy(x => x.AvailableDay)
+                .Select(g => new
+                {
+                    Day = g.Key,
+                    TotalCapacity = g.Sum(x => x.AvailableCapacity)
+                })
+                .Where(x => x.TotalCapacity >= maleAmount)
+                .CountAsync(ct);
+
+            return validDaysCount == requiredDaysCount;
+        }
+
+
+        public async Task<bool> CheckAmountForFemales(List<DateOnly> dates, int femaleAmount, CancellationToken ct)
+        {
+            var requiredDaysCount = dates.Distinct().Count();
+
+            var validDaysCount = await _rooms
+                .SelectMany(x => x.RoomAvailabilities)
+                .Where(x => dates.Contains(x.AvailableDay) && x.Room.Gender == Gender.Female)
+                .GroupBy(x => x.AvailableDay)
+                .Select(g => new
+                {
+                    Day = g.Key,
+                    TotalCapacity = g.Sum(x => x.AvailableCapacity)
+                })
+                .Where(x => x.TotalCapacity >= femaleAmount)
+                .CountAsync(ct);
+
+            return validDaysCount == requiredDaysCount;
+        }
     }
 }
