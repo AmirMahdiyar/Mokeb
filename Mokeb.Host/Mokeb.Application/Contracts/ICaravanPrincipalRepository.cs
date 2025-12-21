@@ -25,6 +25,7 @@ namespace Mokeb.Application.Contracts
         Task<List<CaravanPrincipalDto>> GetAllCaravansWithTheirTravelers(CancellationToken ct);
         Task<GenderStatsInAYearDto> GetTravelersOfRequestsStatInAYear(DateOnly date, CancellationToken ct);
         Task<int> GetAllCaravanRequestsAmountInAYear(DateOnly date, CancellationToken ct);
+        Task<int> GetAllCaravanRequestedRequestsAmountInADay(DateOnly date, CancellationToken ct);
 
     }
 }

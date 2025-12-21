@@ -245,5 +245,19 @@ namespace Mokeb.Infrastructure.Repositories
                      x.State == State.DelayInExit || x.State == State.Exited))
                 .CountAsync(ct);
         }
+
+        public async Task<int> GetAllCaravanRequestedRequestsAmountInADay(DateOnly date, CancellationToken ct)
+        {
+            var startDateTime = date.ToDateTime(TimeOnly.MinValue);
+            var endDateTime = date.AddDays(1).ToDateTime(TimeOnly.MinValue);
+
+            return await _principal
+                .SelectMany(x => x.Requests)
+                .Where(x =>
+                    x.EnterTime >= startDateTime &&
+                    x.EnterTime < endDateTime &&
+                    x.State == State.Requested)
+                .CountAsync(ct);
+        }
     }
 }

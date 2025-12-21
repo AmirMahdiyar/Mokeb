@@ -12,6 +12,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.Getti
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForEnteredOrDelayInEntrance;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForExitedOrDelayInExited;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.LookingOnRequestedRequests;
+using Mokeb.Application.QueryHandler.AdminQueries.RequestedRequestsAtADayAmount;
 
 namespace Mokeb.Host.Controllers
 {
@@ -139,6 +140,15 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Stats);
+        }
+        [HttpGet("{date}/RequestedRequestsAmount")]
+        public async Task<IActionResult> GetRequestedRequestsAmount([FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new RequestedRequestsAtADayAmountQuery();
+            query.Date = date;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Amount);
         }
     }
 }
