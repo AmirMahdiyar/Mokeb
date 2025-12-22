@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mokeb.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using Mokeb.Infrastructure.Context;
 namespace Mokeb.Infrastructure.Migrations
 {
     [DbContext(typeof(MokebDbContext))]
-    partial class MokebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251221154040_ChangeTravelerConfiguration")]
+    partial class ChangeTravelerConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,6 +69,7 @@ namespace Mokeb.Infrastructure.Migrations
             modelBuilder.Entity("Mokeb.Domain.Model.Entities.Companion", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateOnly>("DateOfBirth")

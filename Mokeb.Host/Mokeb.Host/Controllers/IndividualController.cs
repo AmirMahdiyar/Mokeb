@@ -5,6 +5,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ChangingIndividualPrincipal
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteIndividual;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalLogIn;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn;
+using Mokeb.Application.CommandHandler.IndividualCommands.ReserveRoom;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.LookingOnIndividuals;
@@ -112,6 +113,13 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Result);
+        }
+        [HttpPost("{individualId}/Reserve")]
+        public async Task<IActionResult> Reserve([FromRoute] Guid individualId, [FromBody] ReserveRoomCommand command, CancellationToken ct)
+        {
+            command.IndividualId = individualId;
+            var result = await _mediator.Send(command, ct);
+            return Ok(result);
         }
     }
 }

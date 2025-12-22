@@ -24,5 +24,7 @@ namespace Mokeb.Application.Contracts
         Task<List<RoomAvailabilitiesInformationInADateDto>> GetRoomAvailabilitiesInformationInADateAsync(DateOnly date, CancellationToken ct);
         Task<bool> CheckAmountForMales(List<DateOnly> dates, int maleAmount, CancellationToken ct);
         Task<bool> CheckAmountForFemales(List<DateOnly> dates, int femaleAmount, CancellationToken ct);
+        Task<List<RoomAvailability>> GetRoomAvailabilitiesWithValidCapacityAtDatesAsync(List<DateOnly> dateRange, CancellationToken ct);
+
     }
 }

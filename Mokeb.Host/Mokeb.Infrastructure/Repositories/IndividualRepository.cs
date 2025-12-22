@@ -43,7 +43,9 @@ namespace Mokeb.Infrastructure.Repositories
 
         public async Task<IndividualPrincipal> GetIndividualByIdAsync(Guid Id, CancellationToken ct)
         {
-            return await _individual.SingleOrDefaultAsync(x => x.Id == Id, ct);
+            return await _individual
+                .Include(x => x.Companion)
+                .SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
 
         public async Task<List<Request>> GetAcceptedOrOutGoingCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct)

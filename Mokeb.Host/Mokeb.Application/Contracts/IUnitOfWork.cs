@@ -1,8 +1,11 @@
-﻿namespace Mokeb.Application.Contracts
+﻿using Mokeb.Domain.Model.Entities;
+
+namespace Mokeb.Application.Contracts
 {
     public interface IUnitOfWork
     {
         public Task<SavingResult> Commit(CancellationToken ct);
+        public List<RoomAvailability> ChangedRoomAvailabilities();
         public class SavingResult
         {
             public int ChangesCount { get; set; }

@@ -10,6 +10,7 @@ namespace Mokeb.Infrastructure.Configuration
         {
             builder.ToTable("Travelers");
 
+            builder.Property(x => x.Id).ValueGeneratedNever();
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
             builder.Property(x => x.FamilyName).IsRequired().HasMaxLength(100);
             builder.Property(x => x.NationalCode).IsRequired().HasMaxLength(10);

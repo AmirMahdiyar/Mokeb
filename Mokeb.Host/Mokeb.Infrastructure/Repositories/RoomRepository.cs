@@ -190,5 +190,15 @@ namespace Mokeb.Infrastructure.Repositories
 
             return validDaysCount == requiredDaysCount;
         }
+
+        public async Task<List<RoomAvailability>> GetRoomAvailabilitiesWithValidCapacityAtDatesAsync(List<DateOnly> dateRange, CancellationToken ct)
+        {
+            return await _rooms
+                .SelectMany(x => x.RoomAvailabilities)
+                .Where(x => dateRange.Contains(x.AvailableDay) && x.AvailableCapacity > 0)
+                .Include(x => x.Room)
+                .OrderBy(x => x.AvailableCapacity)
+                .ToListAsync(ct);
+        }
     }
 }

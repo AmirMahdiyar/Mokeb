@@ -7,13 +7,14 @@ namespace Mokeb.Domain.Model.Entities
 {
     public class Companion : BaseEntity<Guid>, IEquatable<Companion>
     {
-        public Companion(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber, Guid principalId)
+        public Companion(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber, Guid principalId, string emergencyPhoneNumber)
         {
             CheckName(name);
             CheckFamilyName(familyName);
             CheckNationalCode(nationalCode);
             CheckPassportNumber(passportNumber);
             CheckPhoneNumber(phoneNumber);
+            CheckPhoneNumber(emergencyPhoneNumber);
 
             Id = Guid.NewGuid();
             Name = name;
@@ -24,6 +25,7 @@ namespace Mokeb.Domain.Model.Entities
             Gender = gender;
             PassportNumber = passportNumber;
             PrincipalId = principalId;
+            EmergencyPhoneNumber = emergencyPhoneNumber;
         }
 
         private Companion() { } // For ef
@@ -33,7 +35,7 @@ namespace Mokeb.Domain.Model.Entities
         public string PassportNumber { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
         public string PhoneNumber { get; private set; }
-
+        public string EmergencyPhoneNumber { get; private set; }
         public Gender Gender { get; private set; }
 
 
