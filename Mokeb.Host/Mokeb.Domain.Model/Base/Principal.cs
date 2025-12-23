@@ -84,8 +84,8 @@ namespace Mokeb.Domain.Model.Base
                 throw new RequestNotFoundException();
             _requests.Remove(request);
         }
-        public void ActiveThePrincipal() => IsActive = true;
-        public void DeactiveThePrincipal() => IsActive = false;
+        public void Active() => IsActive = true;
+        public void Deactive() => IsActive = false;
         #endregion
         #region Validations
         public void CheckUsername(string username)

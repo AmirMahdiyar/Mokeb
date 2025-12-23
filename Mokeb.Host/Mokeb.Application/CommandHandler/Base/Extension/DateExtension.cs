@@ -2,6 +2,10 @@
 
 namespace Mokeb.Application.CommandHandler.Base.Extension
 {
+    public static class NumbersExtensions
+    {
+        public static int AsInt(this bool value) => value ? 1 : 0;
+    }
     public static class DateExtensions
     {
         public static List<DateOnly> GetRangeTo(this DateOnly startDate, DateOnly endDate)

@@ -27,10 +27,10 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.ReserveRoom
             var individual = await GetIndividualPrincipal(request.IndividualId, cancellationToken);
             CheckIndividualGender(request, individual);
 
-            var listOfDates = DateOnly.FromDateTime(request.DateOfEntrance).GetRangeTo(DateOnly.FromDateTime(request.DateOfExit));
-            var roomAvailabilities = await _roomRepository.GetRoomAvailabilitiesWithValidCapacityAtDatesAsync(listOfDates, cancellationToken);
+            var reservedDates = DateOnly.FromDateTime(request.DateOfEntrance).GetRangeTo(DateOnly.FromDateTime(request.DateOfExit));
+            var availableRooms = await _roomRepository.GetRoomAvailabilities(reservedDates, cancellationToken);
 
-            RoomAvailabilitiesCalculator.DecreaseFromRoomAvailableCapacity(roomAvailabilities, (uint)request.MaleAmount, (uint)request.FemaleAmount);
+            RoomAvailabilitiesCalculator.DecreaseFromRoomAvailableCapacity(availableRooms, (uint)request.MaleAmount, (uint)request.FemaleAmount);
 
             var individualRequest = MakeRequestAndAddItToIndividual(request, individual);
             GetChangedRoomAvailabilitiesAndAddTheirNameToIndividual(individualRequest);
@@ -57,10 +57,12 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.ReserveRoom
             var individual = await _individualRepository.GetIndividualByIdAsync(individualId, ct);
             if (individual is null)
                 throw new PrincipalNotFoundApplicationException();
-            return individual;
+            return individual!;
         }
         private void CheckIndividualGender(ReserveRoomCommand request, IndividualPrincipal individual)
         {
+            //request.MaleAmount += (individual.Gender == Gender.Male).AsInt();
+            //request.FemaleAmount += (individual.Gender == Gender.Female).AsInt();
             if (individual.Gender == Gender.Male)
                 request.MaleAmount++;
             else

@@ -50,9 +50,9 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.ActivingPrincipal
         private void ChangeIsActiveStatus(Principal principal, bool isActive)
         {
             if (!isActive)
-                principal.DeactiveThePrincipal();
+                principal.Deactive();
             else
-                principal.ActiveThePrincipal();
+                principal.Active();
         }
         #endregion
     }
