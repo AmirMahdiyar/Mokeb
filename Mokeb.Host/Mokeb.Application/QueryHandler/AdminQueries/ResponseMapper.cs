@@ -52,5 +52,15 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
             }
             return result;
         }
+        public static List<RequestDto> ToRequestDto(this IEnumerable<Request> requests)
+        {
+            var requestsDto = new List<RequestDto>();
+            foreach (var request in requests)
+            {
+                var newRequest = new RequestDto(DateOnly.FromDateTime(request.EnterTime), DateOnly.FromDateTime(request.ExitTime), request.Travelers.Count(), request.Travelers);
+                requestsDto.Add(newRequest);
+            }
+            return requestsDto;
+        }
     }
 }

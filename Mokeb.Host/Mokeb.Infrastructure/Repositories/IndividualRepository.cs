@@ -45,6 +45,8 @@ namespace Mokeb.Infrastructure.Repositories
         {
             return await _individual
                 .Include(x => x.Companion)
+                .Include(x => x.Requests)
+                .ThenInclude(x => x.Travelers)
                 .SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
 
