@@ -25,7 +25,7 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.AcceptingARequestedRequ
         public async Task<AcceptingARequestedRequestCommandResponse> Handle(AcceptingARequestedRequestCommand command, CancellationToken ct)
         {
             var request = await GetRequest(command.RequestId, ct);
-            var roomAvailabilities = await _roomRepository.GetRoomAvailabilitiesByRoomAvailabilityIdsAsync(command.RoomAvailabilityIds, ct);
+            var roomAvailabilities = await GetRoomAvailabilities(command, ct);
             RoomAvailabilitiesCalculator.DecreaseFromRoomAvailableCapacity(roomAvailabilities, request.MaleCount, request.FemaleCount);
             var requestRoom = GetRequestRooms(roomAvailabilities);
             AddingRequestRoomsToRequest(requestRoom, request);
@@ -41,6 +41,14 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.AcceptingARequestedRequ
             return ResponseModel
                         .Succeded()
                         .WithResult(true);
+        }
+
+        private async Task<List<RoomAvailability>> GetRoomAvailabilities(AcceptingARequestedRequestCommand command, CancellationToken ct)
+        {
+            var roomAvailabilities = await _roomRepository.GetRoomAvailabilitiesByRoomAvailabilityIdsAsync(command.RoomAvailabilityIds, ct);
+            if (roomAvailabilities.Count() == 0)
+                throw new RoomAvailabilityNotFoundException();
+            return roomAvailabilities;
         }
         #region Private Methods
         private async Task<Request> GetRequest(Guid requestId, CancellationToken ct)

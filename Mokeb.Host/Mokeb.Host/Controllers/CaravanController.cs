@@ -5,6 +5,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
+using Mokeb.Application.CommandHandler.CaravanCommands.CaravanSendsRequest;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
@@ -103,6 +104,16 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.CaravanPrincipals);
+        }
+        [HttpPost("{caravanId}/SendRequest")]
+        public async Task<IActionResult> SendRequest([FromRoute] Guid caravanId, CaravanSendsRequestCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("درخواست با موفقیت ارسال شد");
+            return BadRequest("درخواست ارسال نشد !");
         }
     }
 }
