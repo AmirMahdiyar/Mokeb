@@ -26,4 +26,15 @@
     <ProjectReference Include="..\Mokeb.Infrastructure\Mokeb.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ReportTemplate\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReportTemplate\MokebIndividualReport2.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
+    

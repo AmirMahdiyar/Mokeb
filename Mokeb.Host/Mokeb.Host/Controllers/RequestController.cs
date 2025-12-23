@@ -13,6 +13,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.Searc
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.SearchForExitedOrDelayInExited;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingRequestedRequests.LookingOnRequestedRequests;
 using Mokeb.Application.QueryHandler.AdminQueries.RequestedRequestsAtADayAmount;
+using Mokeb.Application.QueryHandler.IndividualQueries.CreateRequestPdf;
 
 namespace Mokeb.Host.Controllers
 {
@@ -149,6 +150,15 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Amount);
+        }
+        [HttpGet("{requestId}/DownloadIndividualRequestPdf")]
+        public async Task<IActionResult> DownloadIndividualRequestPdf([FromRoute] Guid requestId, CancellationToken ct)
+        {
+            var query = new CreateRequestPdfQuery();
+            query.RequestId = requestId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return File(result.StreamArray, "application/pdf");
         }
     }
 }

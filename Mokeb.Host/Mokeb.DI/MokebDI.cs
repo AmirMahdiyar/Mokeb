@@ -37,6 +37,7 @@ namespace Mokeb.DI
             service.AddScoped<IRoomRepository, RoomRepository>();
             service.AddScoped<IFAQRepository, FAQRepository>();
             service.AddScoped<IOfficialsRepository, OffiacialsRepository>();
+            service.AddScoped<IPdfCreator, PdfCreator>();
 
             service.AddMediatR(cfg =>
             {

@@ -128,6 +128,8 @@ namespace Mokeb.Infrastructure.Repositories
             return await _individual
                 .Include(x => x.Requests)
                 .SelectMany(x => x.Requests)
+                .Include(x => x.Travelers)
+                .Include(x => x.Rooms)
                 .SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
         public async Task<List<Request>> SearchInEnteredOrDelayInEnterRequestWithNameOrFamilyName(DateOnly date, string input, CancellationToken ct)
