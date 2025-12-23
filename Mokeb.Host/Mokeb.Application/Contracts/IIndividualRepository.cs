@@ -24,6 +24,7 @@ namespace Mokeb.Application.Contracts
         Task<List<IndividualPrincipalDto>> SearchForIndividualsByNameOrFamilyName(string input, CancellationToken ct);
         Task<GenderStatsInAYearDto> GetTravelersOfRequestsStatInAYear(DateOnly date, CancellationToken ct);
         Task<int> GetAllCaravanRequestsAmountInAYear(DateOnly date, CancellationToken ct);
+        Task<List<Request>> SearchInRequestAsync(Guid individualId, DateOnly date, CancellationToken ct);
 
 
 

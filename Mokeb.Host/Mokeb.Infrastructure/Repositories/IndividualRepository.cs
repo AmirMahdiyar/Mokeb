@@ -227,5 +227,15 @@ namespace Mokeb.Infrastructure.Repositories
                      x.State == State.DelayInExit || x.State == State.Exited))
                 .CountAsync(ct);
         }
+
+        public async Task<List<Request>> SearchInRequestAsync(Guid individualId, DateOnly date, CancellationToken ct)
+        {
+            return await _individual
+                .Where(x => x.Id == individualId)
+                .SelectMany(x => x.Requests)
+                .Include(x => x.Travelers)
+                .Where(x => DateOnly.FromDateTime(x.EnterTime) == date || DateOnly.FromDateTime(x.ExitTime) == date)
+                .ToListAsync(ct);
+        }
     }
 }

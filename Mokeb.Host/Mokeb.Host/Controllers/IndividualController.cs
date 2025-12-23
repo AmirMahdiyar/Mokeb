@@ -12,6 +12,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.LookingOnI
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.SearchInIndividuals;
 using Mokeb.Application.QueryHandler.IndividualQueries.CheckCapacityForAmount;
 using Mokeb.Application.QueryHandler.IndividualQueries.IndividualRequests;
+using Mokeb.Application.QueryHandler.IndividualQueries.SearchInIndividualRequests;
 
 namespace Mokeb.Host.Controllers
 {
@@ -127,6 +128,16 @@ namespace Mokeb.Host.Controllers
         {
             var query = new IndividualRequestsQuery();
             query.IndividualId = individualId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Requests);
+        }
+        [HttpGet("{individualId}/Requests/{date}")]
+        public async Task<IActionResult> GetRequestsByDate([FromRoute] Guid individualId, [FromRoute] DateOnly date, CancellationToken ct)
+        {
+            var query = new SearchInIndividualRequestsQuery();
+            query.IndividualId = individualId;
+            query.Date = date;
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Requests);
