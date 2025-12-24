@@ -4,6 +4,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ActivingPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingIndividualPrincipalInformation;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteIndividual;
 using Mokeb.Application.CommandHandler.IndividualCommands.AddCompanion;
+using Mokeb.Application.CommandHandler.IndividualCommands.AddCompanionsWithExcel;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalLogIn;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn;
 using Mokeb.Application.CommandHandler.IndividualCommands.RemoveCompanion;
@@ -183,6 +184,16 @@ namespace Mokeb.Host.Controllers
             query.IndividualId = individualId;
             var result = await _mediator.Send(query, ct);
             return Ok(result.Companions);
+        }
+        [HttpPost("{individualId}/Companions/File")]
+        public async Task<IActionResult> AddCompanion([FromRoute] Guid individualId, [FromForm] AddCompanionsWithExcelCommand command, CancellationToken ct)
+        {
+            command.IndividualId = individualId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("همسفر با موفقیت اضافه شد");
+            return BadRequest("همسفر ایجاد نشد");
         }
     }
 }

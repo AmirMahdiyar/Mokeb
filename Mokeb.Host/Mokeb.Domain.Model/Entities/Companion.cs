@@ -7,6 +7,25 @@ namespace Mokeb.Domain.Model.Entities
 {
     public class Companion : BaseEntity<Guid>, IEquatable<Companion>
     {
+        public Companion(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber, string emergencyPhoneNumber)
+        {
+            CheckName(name);
+            CheckFamilyName(familyName);
+            CheckNationalCode(nationalCode);
+            CheckPassportNumber(passportNumber);
+            CheckPhoneNumber(phoneNumber);
+            CheckPhoneNumber(emergencyPhoneNumber);
+
+            Id = Guid.NewGuid();
+            Name = name;
+            FamilyName = familyName;
+            NationalCode = nationalCode;
+            DateOfBirth = dateOfBirth;
+            PhoneNumber = phoneNumber;
+            Gender = gender;
+            PassportNumber = passportNumber;
+            EmergencyPhoneNumber = emergencyPhoneNumber;
+        }
         public Companion(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber, Guid principalId, string emergencyPhoneNumber)
         {
             CheckName(name);
