@@ -6,6 +6,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.DeleteIndividual;
 using Mokeb.Application.CommandHandler.IndividualCommands.AddCompanion;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalLogIn;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn;
+using Mokeb.Application.CommandHandler.IndividualCommands.RemoveCompanion;
 using Mokeb.Application.CommandHandler.IndividualCommands.ReserveRoom;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
@@ -152,6 +153,17 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("همسفر با موفقیت اضافه شد");
             return BadRequest("همسفر ایجاد نشد");
+        }
+        [HttpDelete("{individualId}/Companions/{companionId}")]
+        public async Task<IActionResult> RemoveCompanion([FromRoute] Guid individualId, [FromRoute] Guid companionId, [FromBody] RemoveCompanionCommand command, CancellationToken ct)
+        {
+            command.IndividualId = individualId;
+            command.CompanionId = companionId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("همسفر با موفقیت حذف شد");
+            return BadRequest("همسفر حذف نشد");
         }
     }
 }
