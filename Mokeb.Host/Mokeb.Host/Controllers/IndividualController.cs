@@ -15,6 +15,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.SearchInIn
 using Mokeb.Application.QueryHandler.IndividualQueries.CheckCapacityForAmount;
 using Mokeb.Application.QueryHandler.IndividualQueries.GetCompanions;
 using Mokeb.Application.QueryHandler.IndividualQueries.IndividualRequests;
+using Mokeb.Application.QueryHandler.IndividualQueries.SearchInIndividualCompanions;
 using Mokeb.Application.QueryHandler.IndividualQueries.SearchInIndividualRequests;
 
 namespace Mokeb.Host.Controllers
@@ -170,6 +171,15 @@ namespace Mokeb.Host.Controllers
         public async Task<IActionResult> GetCompanions([FromRoute] Guid individualId, CancellationToken ct)
         {
             var query = new GetCompanionsQuery();
+            query.IndividualId = individualId;
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Companions);
+        }
+        [HttpGet("{individualId}/Companions/Search")]
+        public async Task<IActionResult> GetCompanions([FromRoute] Guid individualId, [FromQuery] string input, CancellationToken ct)
+        {
+            var query = new SearchInIndividualCompanionsQuery();
+            query.Input = input;
             query.IndividualId = individualId;
             var result = await _mediator.Send(query, ct);
             return Ok(result.Companions);
