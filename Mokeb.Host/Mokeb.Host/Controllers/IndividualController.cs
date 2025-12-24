@@ -13,6 +13,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.Getti
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.LookingOnIndividuals;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.SearchInIndividuals;
 using Mokeb.Application.QueryHandler.IndividualQueries.CheckCapacityForAmount;
+using Mokeb.Application.QueryHandler.IndividualQueries.GetCompanions;
 using Mokeb.Application.QueryHandler.IndividualQueries.IndividualRequests;
 using Mokeb.Application.QueryHandler.IndividualQueries.SearchInIndividualRequests;
 
@@ -164,6 +165,14 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("همسفر با موفقیت حذف شد");
             return BadRequest("همسفر حذف نشد");
+        }
+        [HttpGet("{individualId}/Companions")]
+        public async Task<IActionResult> GetCompanions([FromRoute] Guid individualId, CancellationToken ct)
+        {
+            var query = new GetCompanionsQuery();
+            query.IndividualId = individualId;
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Companions);
         }
     }
 }
