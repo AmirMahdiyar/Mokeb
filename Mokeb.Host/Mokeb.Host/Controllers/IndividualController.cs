@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.ActivingPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingIndividualPrincipalInformation;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteIndividual;
+using Mokeb.Application.CommandHandler.IndividualCommands.AddCompanion;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalLogIn;
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn;
 using Mokeb.Application.CommandHandler.IndividualCommands.ReserveRoom;
@@ -141,6 +142,16 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Requests);
+        }
+        [HttpPost("{individualId}/Companions")]
+        public async Task<IActionResult> AddCompanion([FromRoute] Guid individualId, [FromBody] AddCompanionCommand command, CancellationToken ct)
+        {
+            command.IndividualId = individualId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("همسفر با موفقیت اضافه شد");
+            return BadRequest("همسفر ایجاد نشد");
         }
     }
 }

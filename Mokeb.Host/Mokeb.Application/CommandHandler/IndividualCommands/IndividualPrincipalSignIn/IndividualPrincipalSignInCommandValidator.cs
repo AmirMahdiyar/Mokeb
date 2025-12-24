@@ -55,6 +55,10 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipa
                 .WithMessage("Email Cant Be Null")
                 .Matches(@"^[a-zA-Z0-9._%+-]+@gmail\.com$")
                 .WithMessage("Only Gmail Is Allowed On this Field !");
+
+            RuleFor(x => x.NationalCode)
+                .NotEmpty()
+                .WithMessage("کد ملی نمیتواند خالی باشد");
         }
     }
 }
