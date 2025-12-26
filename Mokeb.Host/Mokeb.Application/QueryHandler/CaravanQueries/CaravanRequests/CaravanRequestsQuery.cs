@@ -2,7 +2,7 @@
 using Mokeb.Application.CommandHandler.Base.Extension;
 using Mokeb.Application.QueryHandler.Base;
 
-namespace Mokeb.Application.QueryHandler.CaravanRequests
+namespace Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests
 {
     public class CaravanRequestsQuery : QueryBase, IRequest<CaravanRequestsQueryResponse>
     {

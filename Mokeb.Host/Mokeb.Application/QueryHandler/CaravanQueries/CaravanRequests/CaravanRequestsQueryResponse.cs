@@ -1,6 +1,6 @@
 ﻿using Mokeb.Application.Dtos;
 
-namespace Mokeb.Application.QueryHandler.CaravanRequests
+namespace Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests
 {
     public class CaravanRequestsQueryResponse
     {

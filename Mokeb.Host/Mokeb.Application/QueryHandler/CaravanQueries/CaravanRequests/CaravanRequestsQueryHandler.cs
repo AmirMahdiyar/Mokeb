@@ -3,10 +3,10 @@ using Mokeb.Application.Contracts;
 using Mokeb.Application.Exceptions;
 using Mokeb.Application.QueryHandler.AdminQueries;
 using Mokeb.Domain.Model.Entities;
-using ResponseModel = Mokeb.Application.QueryHandler.CaravanRequests.CaravanRequestsQueryResponse;
-namespace Mokeb.Application.QueryHandler.CaravanRequests
+using ResponseModel = Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests.CaravanRequestsQueryResponse;
+namespace Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests
 {
-    public class CaravanRequestsQueryHandler : IRequestHandler<CaravanRequestsQuery, CaravanRequestsQueryResponse>
+    public class CaravanRequestsQueryHandler : IRequestHandler<CaravanRequestsQuery, ResponseModel>
     {
         private readonly ICaravanPrincipalRepository _caravanPrincipalRepository;
 
@@ -15,7 +15,7 @@ namespace Mokeb.Application.QueryHandler.CaravanRequests
             _caravanPrincipalRepository = caravanPrincipalRepository;
         }
 
-        public async Task<CaravanRequestsQueryResponse> Handle(CaravanRequestsQuery request, CancellationToken cancellationToken)
+        public async Task<ResponseModel> Handle(CaravanRequestsQuery request, CancellationToken cancellationToken)
         {
             var caravan = await GetPrincipal(request.CaravanId, cancellationToken);
             return ResponseModel

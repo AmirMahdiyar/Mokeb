@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Mokeb.Application.QueryHandler.CaravanRequests
+namespace Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests
 {
     public class CaravanRequestsQueryValidator : AbstractValidator<CaravanRequestsQuery>
     {

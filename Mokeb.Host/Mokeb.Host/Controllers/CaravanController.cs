@@ -10,7 +10,8 @@ using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans;
-using Mokeb.Application.QueryHandler.CaravanRequests;
+using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests;
+using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequestsByDate;
 
 namespace Mokeb.Host.Controllers
 {
@@ -121,6 +122,16 @@ namespace Mokeb.Host.Controllers
         {
             var query = new CaravanRequestsQuery();
             query.CaravanId = caravanId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Requests);
+        }
+        [HttpGet("{caravanId}/Requests/Search")]
+        public async Task<IActionResult> GetCaravanRequestsAtDate([FromRoute] Guid caravanId, [FromQuery] DateOnly date, CancellationToken ct)
+        {
+            var query = new CaravanRequestsByDateQuery();
+            query.CaravanId = caravanId;
+            query.Date = date;
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Requests);
