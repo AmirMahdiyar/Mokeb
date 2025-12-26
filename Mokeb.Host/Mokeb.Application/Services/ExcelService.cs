@@ -21,7 +21,7 @@ namespace Mokeb.Application.Services
                 using (var wb = new XLWorkbook(stream))
                 {
                     var workSheet = wb.Worksheet(1);
-                    var workSheetColumns = workSheet.ColumnCount();
+                    //var workSheetColumns = workSheet.ColumnCount();
                     var rows = workSheet.RowsUsed();
                     foreach (var row in rows)
                     {
