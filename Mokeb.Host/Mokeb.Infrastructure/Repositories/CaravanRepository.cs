@@ -44,7 +44,10 @@ namespace Mokeb.Infrastructure.Repositories
 
         public async Task<CaravanPrincipal> GetCaravanByIdAsync(Guid Id, CancellationToken ct)
         {
-            return await _principal.SingleOrDefaultAsync(x => x.Id == Id, ct);
+            return await _principal
+                .Include(x => x.Requests)
+                .ThenInclude(x => x.Travelers)
+                .SingleOrDefaultAsync(x => x.Id == Id, ct);
         }
 
         public async Task<List<Request>> GetAcceptedOrOutGoingCaravansRequestsByDateAsync(DateOnly date, CancellationToken ct)

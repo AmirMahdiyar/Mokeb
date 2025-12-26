@@ -10,6 +10,7 @@ using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans;
+using Mokeb.Application.QueryHandler.CaravanRequests;
 
 namespace Mokeb.Host.Controllers
 {
@@ -114,6 +115,15 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("درخواست با موفقیت ارسال شد");
             return BadRequest("درخواست ارسال نشد !");
+        }
+        [HttpGet("{caravanId}/Requests")]
+        public async Task<IActionResult> GetCaravanRequests([FromRoute] Guid caravanId, CancellationToken ct)
+        {
+            var query = new CaravanRequestsQuery();
+            query.CaravanId = caravanId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Requests);
         }
     }
 }
