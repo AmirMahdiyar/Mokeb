@@ -20,5 +20,9 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.ReserveRoom
         public static Travelers ToTravelers(this CaravanPrincipal principal) => new Travelers(principal.Name, principal.FamilyName
             , principal.NationalCode, principal.DateOfBirth, principal.ContactInformation.PhoneNumber,
             principal.Gender, principal.PassportNumber, principal.ContactInformation.EmergencyPhoneNumber);
+
+        public static Travelers ToTravelers(this Pilgrim pilgrim) => new Travelers(pilgrim.Name, pilgrim.FamilyName
+            , pilgrim.NationalCode, pilgrim.DateOfBirth, pilgrim.PhoneNumber,
+            pilgrim.Gender, pilgrim.PassportNumber, pilgrim.EmergencyPhoneNumber);
     }
 }
