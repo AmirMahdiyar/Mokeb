@@ -9,6 +9,7 @@ using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalLog
 using Mokeb.Application.CommandHandler.IndividualCommands.IndividualPrincipalSignIn;
 using Mokeb.Application.CommandHandler.IndividualCommands.RemoveCompanion;
 using Mokeb.Application.CommandHandler.IndividualCommands.ReserveRoom;
+using Mokeb.Application.CommandHandler.PrincipalsChangePassword;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingIndividuals.LookingOnIndividuals;
@@ -194,6 +195,16 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("همسفر با موفقیت اضافه شد");
             return BadRequest("همسفر ایجاد نشد");
+        }
+        [HttpPut("{individualId}/Password")]
+        public async Task<IActionResult> ChangePassword([FromRoute] Guid individualId, [FromBody] PrincipalsChangePasswordCommand command, CancellationToken ct)
+        {
+            command.Id = individualId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("رمز با موفقیت تغییر کرد");
+            return BadRequest("رمز تغییر نکرد");
         }
     }
 }

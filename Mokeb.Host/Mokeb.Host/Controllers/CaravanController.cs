@@ -11,6 +11,7 @@ using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanSendsRequest;
 using Mokeb.Application.CommandHandler.CaravanCommands.RemovePilgrim;
+using Mokeb.Application.CommandHandler.PrincipalsChangePassword;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
@@ -227,6 +228,16 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("زاعر با موفقیت اضافه شد");
             return BadRequest("زاعر ایجاد نشد");
+        }
+        [HttpPut("{caravanId}/Password")]
+        public async Task<IActionResult> ChangePassword([FromRoute] Guid caravanId, [FromBody] PrincipalsChangePasswordCommand command, CancellationToken ct)
+        {
+            command.Id = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("رمز با موفقیت تغییر کرد");
+            return BadRequest("رمز تغییر نکرد");
         }
     }
 }

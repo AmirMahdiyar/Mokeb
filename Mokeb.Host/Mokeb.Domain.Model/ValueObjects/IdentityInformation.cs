@@ -33,7 +33,7 @@ namespace Mokeb.Domain.Model.ValueObjects
         public void ChangePassword(string password)
         {
             CheckPassword(password);
-            Password = password;
+            Password = Hasher.HashData(password);
         }
         #endregion
         #region Validations
