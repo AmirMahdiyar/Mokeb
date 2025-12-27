@@ -5,6 +5,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
 using Mokeb.Application.CommandHandler.CaravanCommands.AddPilgrim;
 using Mokeb.Application.CommandHandler.CaravanCommands.AddPilgrimsWithExcel;
+using Mokeb.Application.CommandHandler.CaravanCommands.AddTravelersToRequest;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanSendsRequest;
@@ -201,6 +202,18 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Requests);
+        }
+        [HttpPost("{caravanId}/Requests/{requestId}/Travelers")]
+        public async Task<IActionResult> AddTravelersToRequest([FromRoute] Guid caravanId, [FromRoute] Guid requestId
+            , [FromBody] AddTravelersToRequestCommand command, CancellationToken ct)
+        {
+            command.RequestId = requestId;
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("مسافران اضافه شدند");
+            return BadRequest("مسافران اضافه نشدند");
         }
     }
 }
