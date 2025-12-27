@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 using Mokeb.Application.CommandHandler.AdminCommands.ActivingPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
+using Mokeb.Application.CommandHandler.CaravanCommands.AddPilgrim;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanSendsRequest;
+using Mokeb.Application.CommandHandler.CaravanCommands.RemovePilgrim;
 using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans;
+using Mokeb.Application.QueryHandler.CaravanQueries.CaravanPilgrims;
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests;
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequestsByDate;
 
@@ -135,6 +138,37 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Requests);
+        }
+        [HttpPost("{caravanId}/Pilgrims")]
+        public async Task<IActionResult> AddPilgrim([FromRoute] Guid caravanId, [FromBody] AddPilgrimCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("زاعر با موفقیت اضافه شد");
+            return BadRequest("زاعر اضافه نشد");
+        }
+        [HttpDelete("{caravanId}/Pilgrims/{pilgrimNationalCode}")]
+        public async Task<IActionResult> RemovePilgrim([FromRoute] Guid caravanId, [FromRoute] string pilgrimNationalCode,
+                            [FromBody] RemovePilgrimCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.NationalCode = pilgrimNationalCode;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("زاعر حذف شد");
+            return BadRequest("زاعر حذف نشد");
+        }
+        [HttpGet("{caravanId}/Pilgrims")]
+        public async Task<IActionResult> GetPilgrims([FromRoute] Guid caravanId, CancellationToken ct)
+        {
+            var query = new CaravanPilgrimsQuery();
+            query.CaravanId = caravanId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Pilgrims);
         }
     }
 }

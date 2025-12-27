@@ -45,6 +45,7 @@ namespace Mokeb.Infrastructure.Repositories
         public async Task<CaravanPrincipal> GetCaravanByIdAsync(Guid Id, CancellationToken ct)
         {
             return await _principal
+                .Include(x => x.Pilgrims)
                 .Include(x => x.Requests)
                 .ThenInclude(x => x.Travelers)
                 .SingleOrDefaultAsync(x => x.Id == Id, ct);
