@@ -34,7 +34,7 @@ namespace Mokeb.Application.CommandHandler.CaravanCommands.AddTravelersToRequest
                     dto.NationalCode,
                     dto.DateOfBirth.ToGregorianDateOnly(),
                     dto.PhoneNumber,
-                    dto.Gender == "اقا" || dto.Gender == "اقا" ? Gender.Male : Gender.Female,
+                    dto.Gender == "اقا" || dto.Gender == "آقا" ? Gender.Male : Gender.Female,
                     dto.PassportNumber,
                     dto.EmergencyPhoneNumber
                 ),
