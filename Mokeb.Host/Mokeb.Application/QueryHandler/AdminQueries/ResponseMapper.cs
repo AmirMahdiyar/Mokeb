@@ -62,5 +62,15 @@ namespace Mokeb.Application.QueryHandler.AdminQueries
             }
             return requestsDto;
         }
+        public static List<AcceptedRequestDto> ToAcceptedRequestDto(this List<Request> requests)
+        {
+            var requestsDto = new List<AcceptedRequestDto>();
+            foreach (var request in requests)
+            {
+                var newRequest = new AcceptedRequestDto(request.Id, DateOnly.FromDateTime(request.EnterTime), DateOnly.FromDateTime(request.ExitTime), request.State);
+                requestsDto.Add(newRequest);
+            }
+            return requestsDto;
+        }
     }
 }

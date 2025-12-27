@@ -13,6 +13,7 @@ using Mokeb.Application.CommandHandler.PrincipalsLogOut;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingAcceptedRequests.GettingPrincipalInformation;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.LookingOnCaravans;
 using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCaravans;
+using Mokeb.Application.QueryHandler.CaravanQueries.CaravanAcceptedRequests;
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanPilgrims;
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests;
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequestsByDate;
@@ -191,6 +192,15 @@ namespace Mokeb.Host.Controllers
             if (result.Result)
                 return Ok("زاعر با موفقیت اضافه شد");
             return BadRequest("زاعر ایجاد نشد");
+        }
+        [HttpGet("{caravanId}/Requests/AcceptedOrRequestedRequests")]
+        public async Task<IActionResult> GetAcceptedOrRequestedRequests([FromRoute] Guid caravanId, CancellationToken ct)
+        {
+            var query = new CaravanAcceptedRequestsQuery();
+            query.CaravanId = caravanId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Requests);
         }
     }
 }
