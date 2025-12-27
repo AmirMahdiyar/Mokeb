@@ -48,6 +48,6 @@ namespace Mokeb.Application.CommandHandler.CaravanCommands.AddPilgrim
     public static class PilgrimMapper
     {
         public static Pilgrim ToPilgrim(this AddPilgrimCommand command) => new Pilgrim(command.Name, command.FamilyName, command.NationalCode
-                                                , command.DateOfBirth, command.PhoneNumber, command.Gender, command.PassportNumber);
+                                                , command.DateOfBirth, command.PhoneNumber, command.Gender, command.PassportNumber, command.EmergencyPhoneNumber);
     }
 }

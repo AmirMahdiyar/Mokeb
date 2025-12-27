@@ -25,7 +25,7 @@ namespace Mokeb.Application.CommandHandler.IndividualCommands.AddCompanionsWithE
         public async Task<AddCompanionsWithExcelCommandResponse> Handle(AddCompanionsWithExcelCommand request, CancellationToken cancellationToken)
         {
             var individual = await GetIndividual(request.IndividualId, cancellationToken);
-            var companions = await ExcelService.GenereateObjectFromExcelAsync<Companion, ExcelCompanionDto>(request.ExcelFile, (dto) => new Companion
+            var companions = await ExcelService.GenereateObjectFromExcelAsync<Companion, ExcelCompanionAndPilgrimDto>(request.ExcelFile, (dto) => new Companion
             (
                 dto.Name,
                 dto.FamilyName,

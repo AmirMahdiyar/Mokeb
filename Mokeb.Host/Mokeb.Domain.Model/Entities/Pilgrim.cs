@@ -6,7 +6,7 @@ namespace Mokeb.Domain.Model.Entities
 {
     public class Pilgrim : IEquatable<Pilgrim>
     {
-        public Pilgrim(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber)
+        public Pilgrim(string name, string familyName, string nationalCode, DateOnly dateOfBirth, string phoneNumber, Gender gender, string passportNumber, string emergencyPhoneNumber)
         {
             CheckName(name);
             CheckFamilyName(familyName);
@@ -21,6 +21,7 @@ namespace Mokeb.Domain.Model.Entities
             PhoneNumber = phoneNumber;
             Gender = gender;
             PassportNumber = passportNumber;
+            EmergencyPhoneNumber = emergencyPhoneNumber;
         }
 
         private Pilgrim() { } // For ef
@@ -30,6 +31,8 @@ namespace Mokeb.Domain.Model.Entities
         public string PassportNumber { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
         public string PhoneNumber { get; private set; }
+        public string EmergencyPhoneNumber { get; private set; }
+
         public Gender Gender { get; private set; }
 
 

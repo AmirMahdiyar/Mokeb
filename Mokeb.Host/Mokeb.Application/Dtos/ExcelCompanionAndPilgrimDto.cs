@@ -1,6 +1,6 @@
 ﻿namespace Mokeb.Application.Dtos
 {
-    public class ExcelCompanionDto
+    public class ExcelCompanionAndPilgrimDto
     {
         public string Name { get; set; }
         public string FamilyName { get; set; }

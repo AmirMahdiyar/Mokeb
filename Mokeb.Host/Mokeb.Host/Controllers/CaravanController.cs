@@ -4,6 +4,7 @@ using Mokeb.Application.CommandHandler.AdminCommands.ActivingPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.ChangingCaravansPrincipal;
 using Mokeb.Application.CommandHandler.AdminCommands.DeleteCaravan;
 using Mokeb.Application.CommandHandler.CaravanCommands.AddPilgrim;
+using Mokeb.Application.CommandHandler.CaravanCommands.AddPilgrimsWithExcel;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalLogIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanPrincipalSignIn;
 using Mokeb.Application.CommandHandler.CaravanCommands.CaravanSendsRequest;
@@ -15,6 +16,7 @@ using Mokeb.Application.QueryHandler.AdminQueries.ManagingCaravans.SearchInCarav
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanPilgrims;
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequests;
 using Mokeb.Application.QueryHandler.CaravanQueries.CaravanRequestsByDate;
+using Mokeb.Application.QueryHandler.CaravanQueries.SearchInPilgrims;
 
 namespace Mokeb.Host.Controllers
 {
@@ -169,6 +171,26 @@ namespace Mokeb.Host.Controllers
             query.Validate();
             var result = await _mediator.Send(query, ct);
             return Ok(result.Pilgrims);
+        }
+        [HttpGet("{caravanId}/Pilgrims/Search")]
+        public async Task<IActionResult> GetPilgrimsBySearch([FromRoute] Guid caravanId, [FromQuery] string input, CancellationToken ct)
+        {
+            var query = new SearchInPilgrimsQuery();
+            query.Input = input;
+            query.CaravanId = caravanId;
+            query.Validate();
+            var result = await _mediator.Send(query, ct);
+            return Ok(result.Pilgrims);
+        }
+        [HttpPost("{caravanId}/Pilgrims/File")]
+        public async Task<IActionResult> AddPilgrims([FromRoute] Guid caravanId, [FromForm] AddPilgrimsWithExcelCommand command, CancellationToken ct)
+        {
+            command.CaravanId = caravanId;
+            command.Validate();
+            var result = await _mediator.Send(command, ct);
+            if (result.Result)
+                return Ok("زاعر با موفقیت اضافه شد");
+            return BadRequest("زاعر ایجاد نشد");
         }
     }
 }
