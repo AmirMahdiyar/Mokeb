@@ -1,0 +1,25 @@
+﻿using Mokeb.Domain.Model.Entities;
+
+namespace Mokeb.Application.Dtos
+{
+    public class GettingIncomingOrAcceptedRequestsResponseDto
+    {
+        public GettingIncomingOrAcceptedRequestsResponseDto(string fullName, uint maleCount, uint femaleCount, DateOnly exitDate, IEnumerable<Travelers> travelers, Guid requestId)
+        {
+            FullName = fullName;
+            MaleCount = maleCount;
+            FemaleCount = femaleCount;
+            ExitDate = exitDate;
+            Travelers = travelers;
+            RequestId = requestId;
+        }
+        public Guid RequestId { get; set; }
+        public string FullName { get; set; }
+        public uint MaleCount { get; set; }
+        public uint FemaleCount { get; set; }
+        public uint OverallCount => MaleCount + FemaleCount;
+        public string PrincipalType => OverallCount > 5 ? "Caravan" : "Individual";
+        public DateOnly ExitDate { get; set; }
+        public IEnumerable<Travelers> Travelers { get; set; }
+    }
+}
