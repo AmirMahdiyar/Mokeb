@@ -30,7 +30,19 @@
 • Execute **complex queries** for operational insights  
 • Centralized control for high-load periods  
 
+════════════════════════════════════════
 
+🔐 **Security**
+
+• **JWT-based Authentication:**  
+  Users authenticate via **JSON Web Tokens (JWT)**, ensuring secure, stateless access to the API.
+
+• **Role & Permission-Based Authorization:**  
+  Access to endpoints and actions is controlled through **roles and permissions**, allowing fine-grained control for admins, staff, and regular users.
+
+• **Redis Caching for JWT Tokens:**  
+  Active JWT tokens are cached in **Redis**, improving performance for token validation and supporting scalable, distributed deployments.
+  
 ════════════════════════════════════════
 
 📊 **Reports & Documents**
