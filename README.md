@@ -1,5 +1,7 @@
 ✨ A private hospitality and reservation system built to support pilgrims and caravans .
 
+════════════════════════════════════════
+
 🎯 Purpose
 
 • Organize pilgrim and caravan reservations
@@ -11,12 +13,17 @@
 • Maintain dignity, order, and efficiency in service
 
 
+════════════════════════════════════════
+
 
 🚍 Supported Reservation Types
 
 ✔️ Individual pilgrims
 ✔️ Group / Caravan reservations
 ✔️ Date-based capacity management
+
+
+════════════════════════════════════════
 
 
 🛠️ Technical Overview
