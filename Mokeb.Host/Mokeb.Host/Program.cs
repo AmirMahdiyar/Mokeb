@@ -1,8 +1,17 @@
-using Mokeb.DI;
+﻿using Mokeb.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    // ۱. تنظیم پیش‌فرض برای تمام پورت‌ها (فقط HTTP1)
+    serverOptions.ConfigureEndpointDefaults(listenOptions =>
+    {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1;
+    });
+}).UseKestrel();
 
 builder.Services.AddControllers();
 builder.Services.MokebDependencyInjection(builder.Configuration);
