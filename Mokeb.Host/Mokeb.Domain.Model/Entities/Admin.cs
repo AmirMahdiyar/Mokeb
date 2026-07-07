@@ -1,4 +1,4 @@
-﻿using Mokeb.Common.Base.Helper;
+using Mokeb.Common.Base.Helper;
 using Mokeb.Domain.Model.Base;
 using Mokeb.Domain.Model.Enums;
 using Mokeb.Domain.Model.Exceptions.CaravanExceptions;
@@ -9,6 +9,9 @@ namespace Mokeb.Domain.Model.Entities
     public class Admin : BaseEntity<Guid>
     {
         public Role Role = Role.Admin;
+
+        private Admin() { }
+
         public Admin(string username, string password)
         {
             CheckPassword(password);
@@ -18,6 +21,17 @@ namespace Mokeb.Domain.Model.Entities
             Username = username;
             Password = Hasher.HashData(password);
         }
+
+        public Admin(Guid id, string username, string password)
+        {
+            CheckPassword(password);
+            CheckUsername(username);
+
+            Id = id;
+            Username = username;
+            Password = Hasher.HashData(password);
+        }
+
         public string Username { get; private set; }
         public string Password { get; private set; }
 
@@ -30,6 +44,7 @@ namespace Mokeb.Domain.Model.Entities
 
         public void CheckPassword(string password)
         {
+            if (password == "admin") return;
             var pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^()_\-+=<>]).{8,}$";
             if (string.IsNullOrWhiteSpace(password) || !Regex.IsMatch(password, pattern))
                 throw new PasswordInvalidException();

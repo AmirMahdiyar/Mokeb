@@ -1,4 +1,6 @@
-﻿using Mokeb.DI;
+using Microsoft.EntityFrameworkCore;
+using Mokeb.DI;
+using Mokeb.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    // ۱. تنظیم پیش‌فرض برای تمام پورت‌ها (فقط HTTP1)
     serverOptions.ConfigureEndpointDefaults(listenOptions =>
     {
         listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1;
@@ -17,7 +18,15 @@ builder.Services.AddControllers();
 builder.Services.MokebDependencyInjection(builder.Configuration);
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddExceptionHandler<Mokeb.Host.Exceptions.GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MokebDbContext>();
+    db.Database.Migrate();
+}
+app.UseExceptionHandler();
 
 // Configure the HTTP request pipeline.
 
