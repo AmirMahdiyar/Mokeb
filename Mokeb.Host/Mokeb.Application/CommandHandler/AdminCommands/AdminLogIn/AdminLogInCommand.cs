@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Mokeb.Application.CommandHandler.Base;
+using Mokeb.Application.CommandHandler.Base.Extension;
 
 namespace Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn
 {
@@ -9,7 +10,7 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.AdminLogIn
         public string Password { get; set; }
         public override void Validate()
         {
-            throw new NotImplementedException();
+            new AdminLogInCommandValidator().Validate(this).ThrowIfNeeded();
         }
     }
 }

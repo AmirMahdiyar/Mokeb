@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Mokeb.Application.CommandHandler.Base;
+using Mokeb.Application.CommandHandler.Base.Extension;
 
 namespace Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumberOfPeople
 {
@@ -10,7 +11,7 @@ namespace Mokeb.Application.CommandHandler.AdminCommands.IncreasingRequestsNumbe
         public uint Amount { get; set; }
         public override void Validate()
         {
-            throw new NotImplementedException();
+            new AddingRoomAvailabilityToAnAcceptedRequestCommandValidator().Validate(this).ThrowIfNeeded();
         }
     }
 }

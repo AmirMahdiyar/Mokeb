@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Mokeb.Domain.Model.Entities;
 using Mokeb.Infrastructure.Configuration;
 
@@ -19,6 +19,7 @@ namespace Mokeb.Infrastructure.Context
         public DbSet<Room> Rooms { get; set; }
         public DbSet<FAQ> FAQs { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
